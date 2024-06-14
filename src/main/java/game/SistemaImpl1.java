@@ -25,8 +25,8 @@ public class SistemaImpl1 implements Sistema{
     private boolean lancioEffettuato;
     private enum Variante{
         DADO_SINGOLO,
-        DADO_SINGOLO_FINALE,
-        DOPPIO_SEI,
+        DADO_SINGOLO_FINALE, //=> !DADO_SINGOLO
+        DOPPIO_SEI, //=> !DADO_SINGOLO
         CASELLA_SOSTA,
         CASELLA_PREMIO,
         CASELLA_PESCA,
@@ -58,6 +58,15 @@ public class SistemaImpl1 implements Sistema{
             varianti.put(v,false);
     }
 
+    public void setDadoSingolo(){varianti.put(Variante.DADO_SINGOLO,true);}
+
+    public void setDadoSingoloFinale(){varianti.put(Variante.DADO_SINGOLO_FINALE,true);}
+    public void setDoppioSei(){varianti.put(Variante.DOPPIO_SEI,true);}
+    public void setCasellaSosta(){varianti.put(Variante.CASELLA_SOSTA,true);}
+    public void setCasellaPremio(){varianti.put(Variante.CASELLA_PREMIO,true);}
+    public void setCasellaPesca(){varianti.put(Variante.CASELLA_PESCA,true);}
+    public void setUlterioriCarte(){varianti.put(Variante.ULTERIORI_CARTE,true);}
+
     public void setTabellone(int r, int c){
         tabellone = new TabelloneMatrix(r,c);
     }
@@ -72,9 +81,6 @@ public class SistemaImpl1 implements Sistema{
             pedine[i] = new Pedina(start); //tutte le pedine iniziano dalla casella start
         }
     }
-
-    public void dadoSingolo(){varianti.put(Variante.DADO_SINGOLO,true);}
-    public boolean isDadoSingolo(){return varianti.get(Variante.DADO_SINGOLO);}
 
     public void setDadi()
     {
@@ -122,6 +128,16 @@ public class SistemaImpl1 implements Sistema{
     }
 //--------------------------------------------UTIL--------------------------------------------
 
+    public boolean isDadoSingolo(){return varianti.get(Variante.DADO_SINGOLO);}
+    public boolean isDadoSingoloFinale(){return varianti.get(Variante.DADO_SINGOLO_FINALE);}
+    public boolean isDoppioSei(){return varianti.get(Variante.DOPPIO_SEI);}
+    public boolean isCasellaSosta(){return varianti.get(Variante.CASELLA_SOSTA);}
+    public boolean isCasellaPremio(){return varianti.get(Variante.CASELLA_PREMIO);}
+    public boolean isCasellaPesca(){return varianti.get(Variante.CASELLA_PESCA);}
+    public boolean isUlterioriCarte(){return varianti.get(Variante.ULTERIORI_CARTE);}
+
+
+
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
         if(tipo== TipoMezzo.SERPENTE)
             return new SerpenteFactory();
@@ -152,6 +168,15 @@ public class SistemaImpl1 implements Sistema{
         }
     }
 
+    private boolean isUltimeCaselle() {
+        int pos = pedine[turno].getCasella().getPos();
+        return pos>=totCaselle-6;
+    }
+
+    private boolean isLancioDoppioSei(){
+        return lancio%6==0;
+    }
+
     public void undo(){commandHandler.undo();}
     public void redo(){commandHandler.redo();}
 
@@ -159,17 +184,20 @@ public class SistemaImpl1 implements Sistema{
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------
 
     public void prossimoTurno(){
-        turno = (turno+1)%pedine.length; //così turn rimane nel range [0,pedine.lenght-1]
+        //NO DADO SINGOLO + l'ultimo lancio è doppio 6 + IS DOPPIO SEI => non effettuo l'aumento del turno
+        if(!(!isDadoSingolo() && isLancioDoppioSei() && isDoppioSei()))
+            turno = (turno+1)%pedine.length; //così turn rimane nel range [0,pedine.lenght-1]
     }
 
     public void lancia(){
         if(dadi == null || dadi.isEmpty())
             throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
         lancio = 0;
-        if(isDadoSingolo())
+        if(isUltimeCaselle() && !isDadoSingolo())
             lancio = dadi.get(0).lancia();
-        for(Dado d: dadi)
-            lancio += d.lancia();
+        else
+            for(Dado d: dadi)
+                lancio += d.lancia();
         lancioEffettuato=true;
     }
 
