@@ -62,9 +62,9 @@ public class SistemaImpl1 implements Sistema{
 
     public void setDadoSingoloFinale(){varianti.put(Variante.DADO_SINGOLO_FINALE,true);}
     public void setDoppioSei(){varianti.put(Variante.DOPPIO_SEI,true);}
-    public void setCasellaSosta(){varianti.put(Variante.CASELLA_SOSTA,true);}
-    public void setCasellaPremio(){varianti.put(Variante.CASELLA_PREMIO,true);}
-    public void setCasellaPesca(){varianti.put(Variante.CASELLA_PESCA,true);}
+    public void setCaselleSosta(){varianti.put(Variante.CASELLA_SOSTA,true);}
+    public void setCasellePremio(){varianti.put(Variante.CASELLA_PREMIO,true);}
+    public void setCasellePesca(){varianti.put(Variante.CASELLA_PESCA,true);}
     public void setUlterioriCarte(){varianti.put(Variante.ULTERIORI_CARTE,true);}
 
     public void setTabellone(int r, int c){
@@ -131,12 +131,10 @@ public class SistemaImpl1 implements Sistema{
     public boolean isDadoSingolo(){return varianti.get(Variante.DADO_SINGOLO);}
     public boolean isDadoSingoloFinale(){return varianti.get(Variante.DADO_SINGOLO_FINALE);}
     public boolean isDoppioSei(){return varianti.get(Variante.DOPPIO_SEI);}
-    public boolean isCasellaSosta(){return varianti.get(Variante.CASELLA_SOSTA);}
+    public boolean isCaselleSosta(){return varianti.get(Variante.CASELLA_SOSTA);}
     public boolean isCasellaPremio(){return varianti.get(Variante.CASELLA_PREMIO);}
     public boolean isCasellaPesca(){return varianti.get(Variante.CASELLA_PESCA);}
     public boolean isUlterioriCarte(){return varianti.get(Variante.ULTERIORI_CARTE);}
-
-
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
         if(tipo== TipoMezzo.SERPENTE)
@@ -152,7 +150,8 @@ public class SistemaImpl1 implements Sistema{
             Mezzo m = mezzi.get(casella);
             cmd = new VehicleCommand(m, giocatore);
             commandHandler.handle(cmd);
-            return;
+        }else if(giocatore.isInSosta()){
+            giocatore.setSosta();
         }
         //TODO: le altre tipologie di caselle speciali
     }
@@ -187,6 +186,7 @@ public class SistemaImpl1 implements Sistema{
         //NO DADO SINGOLO + l'ultimo lancio è doppio 6 + IS DOPPIO SEI => non effettuo l'aumento del turno
         if(!(!isDadoSingolo() && isLancioDoppioSei() && isDoppioSei()))
             turno = (turno+1)%pedine.length; //così turn rimane nel range [0,pedine.lenght-1]
+        
     }
 
     public void lancia(){
@@ -201,6 +201,8 @@ public class SistemaImpl1 implements Sistema{
         lancioEffettuato=true;
     }
 
+    //ritorna se il giocatore che è avanzato ha effettuato un numero esatto di dadi per
+    //l'ultima casella
     public boolean avanza(){
         Pedina giocatore = pedine[turno];
         Casella casellaCorrente = giocatore.getCasella();
@@ -208,6 +210,8 @@ public class SistemaImpl1 implements Sistema{
         if(!lancioEffettuato)
             throw new IllegalArgumentException("Sistema: il lancio non è stato ancora effettuato");
         int posSuccessiva = posCorrente+lancio;
+
+        //deve essere il numero esatto di caselle, altrimenti "rimbalza" dall'ultima casella
         if(posSuccessiva>totCaselle)
             rimbalza(posSuccessiva,lancio);
         if(posSuccessiva<totCaselle){

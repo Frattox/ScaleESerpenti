@@ -48,4 +48,6 @@ public abstract class Tabellone {
     public int getC() {
         return c;
     }
+
+
 }

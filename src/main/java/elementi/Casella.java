@@ -2,6 +2,8 @@ package elementi;
 
 public class Casella {
 
+    public enum Tipo{NORMALE,PANCHINA,LOCANDA,DADI,MOLLA}
+
     //variabile utilizzata dai Mezzi (serpenti o scale) per verificare
     //che la casella non sia una casella speciale oppure già coperta
     //da un'altra scala o serpente
@@ -23,8 +25,6 @@ public class Casella {
     public boolean isCovered() {
         return covered;
     }
-
-    public enum Tipo{NORMALE,PANCHINA,LOCANDA,DADI,MOLLA}
 
     public Casella(){
         this.tipo = Tipo.NORMALE;
