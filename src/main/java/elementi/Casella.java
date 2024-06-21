@@ -2,12 +2,7 @@ package elementi;
 
 public class Casella {
 
-    public enum Tipo{NORMALE,PANCHINA,LOCANDA,DADI,MOLLA}
-
-    //variabile utilizzata dai Mezzi (serpenti o scale) per verificare
-    //che la casella non sia una casella speciale oppure già coperta
-    //da un'altra scala o serpente
-    private boolean covered = false;
+    public enum Tipo{NORMALE,MEZZO,PANCHINA,LOCANDA,DADI,MOLLA}
     private Tipo tipo;
 
     //rappresenta il numero dove si trova la casella nel tabellone
@@ -22,26 +17,18 @@ public class Casella {
         this.pos = pos;
     }
 
-    public boolean isCovered() {
-        return covered;
-    }
+    public boolean isCovered() {return tipo!=Tipo.NORMALE;}
 
     public Casella(){
         this.tipo = Tipo.NORMALE;
-        this.covered = false;
         this.pos = -1;
     }
 
     public Casella(Tipo tipo, int pos){
         this.tipo = tipo;
-        if(this.tipo!=Tipo.NORMALE)
-            this.covered = true;
         this.pos = pos;
     }
-
-    //metodo utilizzato dai mezzi
-    public void coverUp(){this.covered = true;}
-    public void uncover(){this.covered = false;}
+    public void setTipo(Tipo tipo){this.tipo = tipo;}
 
     public Tipo getTipo(){return this.tipo;}
 

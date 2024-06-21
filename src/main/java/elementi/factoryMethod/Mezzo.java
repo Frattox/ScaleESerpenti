@@ -19,8 +19,8 @@ public abstract class Mezzo {
         this.caselleCorrette(from,to);
         this.from = from;
         this.to = to;
-        this.from.coverUp();
-        this.to.coverUp();
+        this.from.setTipo(Casella.Tipo.MEZZO);
+        this.to.setTipo(Casella.Tipo.MEZZO);
     }
 
     public Casella getFrom() {
@@ -34,15 +34,26 @@ public abstract class Mezzo {
     public void setCaselle(Casella from, Casella to) {
         caselleCorrette(from, to);
         this.from = from;
+        this.from.setTipo(Casella.Tipo.MEZZO);
         this.to = to;
+        this.to.setTipo(Casella.Tipo.MEZZO);
     }
 
     public void autoSet(Tabellone tabellone){
         Casella from = new Casella();
         Casella to = new Casella();
         caselleBuone(tabellone,from,to);
-        this.from = from;
-        this.to = to;
+        setCaselle(from,to);
+    }
+
+    protected Casella casellaRandomDaA(Tabellone tabellone, int start, int end){
+        Casella ret;
+        do {
+            int pos = start + (int) (Math.random() * end);
+            Posizione position = tabellone.getPosCasella(pos);
+            ret = tabellone.getCasella(position.getX(), position.getY());
+        } while (ret.isCovered());
+        return ret;
     }
 
     protected abstract void caselleBuone(Tabellone tabellone, Casella from, Casella to);

@@ -21,17 +21,6 @@ public class Scala extends Mezzo{
         this.to = casellaRandomDaA(tabellone,c*(posFrom.getX()+1),totCaselle-2);// to appartiente al range [primaCasellaRigaDopoDiPosFrom, ultimaCasella)
     }
 
-    private Casella casellaRandomDaA(Tabellone tabellone, int start, int end){
-        Casella ret;
-        for(;;){
-            int pos = start + (int)(Math.random()*end);
-            Posizione position = tabellone.getPosCasella(pos);
-            ret = tabellone.getCasella(position.getX(), position.getY());
-            if(!ret.isCovered()) break;
-        }
-        return ret;
-    }
-
     @Override
     public void caselleCorrette(Casella from, Casella to) {
         if(from.compareTo(to)>=0)

@@ -28,17 +28,4 @@ public class Serpente extends Mezzo{
         this.to = casellaRandomDaA(tabellone,1,c*posFrom.getX()-1);// to appartiente al range [secondaCasella, ultimaCasellaPrimaDellaRigaDiNewFrom]
     }
 
-
-
-    private Casella casellaRandomDaA(Tabellone tabellone, int start, int end){
-        Casella ret;
-        for(;;){
-            int pos = start + (int)(Math.random()*end);
-            Posizione position = tabellone.getPosCasella(pos);
-            ret = tabellone.getCasella(position.getX(), position.getY());
-            if(!ret.isCovered()) break;
-        }
-        return ret;
-    }
-
 }

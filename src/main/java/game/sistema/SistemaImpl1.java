@@ -1,4 +1,4 @@
-package game;
+package game.sistema;
 
 import elementi.*;
 import elementi.factoryMethod.*;
@@ -13,15 +13,17 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------VARIABILI-------------------------------------------
     private Tabellone tabellone;
-    private final int totCaselle;
     private MezzoFactory mezzoFactory;
     private HashMap<Casella,Mezzo> mezzi;
 
     //per ogni tipo di mezzo, la sua quantità corrispondente
     private HashMap<TipoMezzo,Integer> mezziQuantita;
-    private int nMezzi;
-    private int turno;
-    private int lancio;
+    private int
+            nMezzi,
+            turno,
+            lancio,
+            caselleCoperte,
+            totCaselle; //utile per il setting dei tipi di caselle
     private boolean lancioEffettuato;
     private enum Variante{
         DADO_SINGOLO,
@@ -52,6 +54,7 @@ public class SistemaImpl1 implements Sistema{
         pedine = new Pedina[2]; //default
         dadi = new ArrayList<>();
         nMezzi=0;
+        caselleCoperte=0;
         turno=-1;
         varianti = new HashMap<>();
         for(Variante v: Variante.values())
@@ -93,13 +96,21 @@ public class SistemaImpl1 implements Sistema{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di "+ tipo.toString() +" invalido");
         //non è possibile inserire un numero di mezzi totale superiore alla
-        //metà del numero totale di caselle
-        int nMaxMezzi = (tabellone.getR()* tabellone.getC()-2)/2;
+        //metà del numero totale di caselle (normali)
+        int nMaxMezzi = (totCaselle-caselleCoperte-2)/2;
         if((nMezzi+n)<=nMaxMezzi)
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
         mezziQuantita.put(tipo,n);
+        caselleCoperte+=n;
     }
 
+    public void setNumberCaselleSosta(int n){
+        if(n<0)
+            throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
+        if(n>totCaselle)
+            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
+        //TODO
+    }
 
     public void setMezziAutomatico(){
         for(TipoMezzo t: mezziQuantita.keySet()) {
@@ -150,7 +161,8 @@ public class SistemaImpl1 implements Sistema{
             Mezzo m = mezzi.get(casella);
             cmd = new VehicleCommand(m, giocatore);
             commandHandler.handle(cmd);
-        }else if(giocatore.isInSosta()){
+        }else if(isCaselleSosta() && giocatore.isInSosta()){
+            //TODO: forse ci starebbe inserire un command di sosta
             giocatore.setSosta();
         }
         //TODO: le altre tipologie di caselle speciali
