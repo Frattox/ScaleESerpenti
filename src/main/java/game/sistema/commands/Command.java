@@ -1,4 +1,4 @@
-package game.commands;
+package game.sistema.commands;
 
 public interface Command {
     boolean doIt();

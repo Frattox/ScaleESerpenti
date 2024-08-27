@@ -1,4 +1,4 @@
-package game.commands;
+package game.sistema.commands;
 
 import java.util.LinkedList;
 

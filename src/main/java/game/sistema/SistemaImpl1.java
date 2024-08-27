@@ -2,7 +2,7 @@ package game.sistema;
 
 import elementi.*;
 import elementi.factoryMethod.*;
-import game.commands.*;
+import game.sistema.commands.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -137,6 +137,9 @@ public class SistemaImpl1 implements Sistema{
     public List<Dado> getDadi() {
         return dadi;
     }
+    public int getTotCaselle(){return totCaselle;}
+    public Pedina[] getPedine(){return pedine;}
+
 //--------------------------------------------UTIL--------------------------------------------
 
     public boolean isDadoSingolo(){return varianti.get(Variante.DADO_SINGOLO);}
@@ -201,11 +204,11 @@ public class SistemaImpl1 implements Sistema{
         
     }
 
-    public void lancia(){
+    public void lancia(boolean flag){
         if(dadi == null || dadi.isEmpty())
             throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
         lancio = 0;
-        if(isUltimeCaselle() && !isDadoSingolo())
+        if(flag)
             lancio = dadi.get(0).lancia();
         else
             for(Dado d: dadi)

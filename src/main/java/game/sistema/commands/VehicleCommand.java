@@ -1,4 +1,4 @@
-package game.commands;
+package game.sistema.commands;
 
 import elementi.Pedina;
 import elementi.factoryMethod.Mezzo;
