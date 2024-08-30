@@ -7,7 +7,7 @@ import game.sistema.SistemaImpl1;
 import java.util.List;
 
 //SINGLETON
-public class VarianteDadoSingolo implements Variante{
+public class VarianteDadoSingolo extends AbstractVariante{
 
     private VarianteDadoSingolo(){}
 
@@ -18,7 +18,7 @@ public class VarianteDadoSingolo implements Variante{
         List<Dado> dadi = s.getDadi();
         dadi.add(new Dado());
         //controllo
-        if(!s.isDadoSingolo()){
+        if(!this.isActivated()){
             //azione
             dadi.add(new Dado());
         }

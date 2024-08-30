@@ -17,6 +17,11 @@ public class Control1 implements Control{
     }
 
     @Override
+    public void forward() {
+
+    }
+
+    @Override
     public void quit() {
 
     }

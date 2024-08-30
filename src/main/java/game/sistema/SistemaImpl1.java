@@ -3,11 +3,14 @@ package game.sistema;
 import elementi.*;
 import elementi.factoryMethod.*;
 import game.sistema.commands.*;
+import game.sistema.varianti.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+//NOTAZIONI:
+// PDR -> Probabilmente da rimuovere
 
 public class SistemaImpl1 implements Sistema{
 
@@ -25,16 +28,20 @@ public class SistemaImpl1 implements Sistema{
             caselleCoperte,
             totCaselle; //utile per il setting dei tipi di caselle
     private boolean lancioEffettuato;
-    private enum Variante{
-        DADO_SINGOLO,
-        DADO_SINGOLO_FINALE, //=> !DADO_SINGOLO
-        DOPPIO_SEI, //=> !DADO_SINGOLO
-        CASELLA_SOSTA,
-        CASELLA_PREMIO,
-        CASELLA_PESCA,
-        ULTERIORI_CARTE
-    }
-    private Map<Variante,Boolean> varianti;
+
+    //PDR
+//    private enum Variante{
+//        DADO_SINGOLO,
+//        DADO_SINGOLO_FINALE, //=> !DADO_SINGOLO
+//        DOPPIO_SEI, //=> !DADO_SINGOLO
+//        CASELLA_SOSTA,
+//        CASELLA_PREMIO,
+//        CASELLA_PESCA,
+//        ULTERIORI_CARTE //=> CASELLA_PESCA
+//    }
+
+    private Variante VDadoSingolo, VDadoSingoloFinale;
+
     private Pedina[] pedine;
     private HistoryCommandHandler commandHandler;
 
@@ -56,19 +63,22 @@ public class SistemaImpl1 implements Sistema{
         nMezzi=0;
         caselleCoperte=0;
         turno=-1;
-        varianti = new HashMap<>();
-        for(Variante v: Variante.values())
-            varianti.put(v,false);
+        //PDR
+//        varianti = new HashMap<>();
+//        for(Variante v: Variante.values())
+//            varianti.put(v,false);
+        VDadoSingolo = VarianteDadoSingolo.getInstance();
+        VDadoSingoloFinale = VarianteDadoSingoloFinale.getInstance();
+
     }
 
-    public void setDadoSingolo(){varianti.put(Variante.DADO_SINGOLO,true);}
+    public void setDadoSingolo(boolean flag){VDadoSingolo.setActivated(flag);}
 
-    public void setDadoSingoloFinale(){varianti.put(Variante.DADO_SINGOLO_FINALE,true);}
-    public void setDoppioSei(){varianti.put(Variante.DOPPIO_SEI,true);}
-    public void setCaselleSosta(){varianti.put(Variante.CASELLA_SOSTA,true);}
-    public void setCasellePremio(){varianti.put(Variante.CASELLA_PREMIO,true);}
-    public void setCasellePesca(){varianti.put(Variante.CASELLA_PESCA,true);}
-    public void setUlterioriCarte(){varianti.put(Variante.ULTERIORI_CARTE,true);}
+    public void setDadoSingoloFinale(boolean flag){VDadoSingoloFinale.setActivated(flag);}
+    //TODO: gli altri set delle varianti rimanenti
+
+
+    public void setLancio(int lancio) {this.lancio=lancio;}
 
     public void setTabellone(int r, int c){
         tabellone = new TabelloneMatrix(r,c);
@@ -87,9 +97,7 @@ public class SistemaImpl1 implements Sistema{
 
     public void setDadi()
     {
-        if(!varianti.get(Variante.DADO_SINGOLO))
-            dadi.add(new Dado());
-        dadi.add(new Dado());
+        VDadoSingolo.action(this);
     }
 
     public void setNumberMezzi(TipoMezzo tipo, int n){
@@ -142,13 +150,8 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------UTIL--------------------------------------------
 
-    public boolean isDadoSingolo(){return varianti.get(Variante.DADO_SINGOLO);}
-    public boolean isDadoSingoloFinale(){return varianti.get(Variante.DADO_SINGOLO_FINALE);}
-    public boolean isDoppioSei(){return varianti.get(Variante.DOPPIO_SEI);}
-    public boolean isCaselleSosta(){return varianti.get(Variante.CASELLA_SOSTA);}
-    public boolean isCasellaPremio(){return varianti.get(Variante.CASELLA_PREMIO);}
-    public boolean isCasellaPesca(){return varianti.get(Variante.CASELLA_PESCA);}
-    public boolean isUlterioriCarte(){return varianti.get(Variante.ULTERIORI_CARTE);}
+    public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}
+    public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
         if(tipo== TipoMezzo.SERPENTE)
@@ -164,14 +167,12 @@ public class SistemaImpl1 implements Sistema{
             Mezzo m = mezzi.get(casella);
             cmd = new VehicleCommand(m, giocatore);
             commandHandler.handle(cmd);
-        }else if(isCaselleSosta() && giocatore.isInSosta()){
-            //TODO: forse ci starebbe inserire un command di sosta
-            giocatore.setSosta();
+        }else {
+            //TODO: le altre tipologie di caselle speciali
         }
-        //TODO: le altre tipologie di caselle speciali
     }
 
-    private void rimbalza(int pos, int lancio){pos = totCaselle - (pos-totCaselle);}
+    private int rimbalza(int pos, int lancio){return totCaselle - (pos-totCaselle);}
 
     public void verificaCasella(){
         if(lancioEffettuato)
@@ -182,6 +183,7 @@ public class SistemaImpl1 implements Sistema{
         }
     }
 
+    //PDR
     private boolean isUltimeCaselle() {
         int pos = pedine[turno].getCasella().getPos();
         return pos>=totCaselle-6;
@@ -204,6 +206,7 @@ public class SistemaImpl1 implements Sistema{
         
     }
 
+    //PDR
     public void lancia(boolean flag){
         if(dadi == null || dadi.isEmpty())
             throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
@@ -216,27 +219,33 @@ public class SistemaImpl1 implements Sistema{
         lancioEffettuato=true;
     }
 
-    //ritorna se il giocatore che è avanzato ha effettuato un numero esatto di dadi per
-    //l'ultima casella
+    public void lancia()
+    {
+        if(dadi == null || dadi.isEmpty())
+            throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
+        lancio = 0;
+        VDadoSingoloFinale.action(this);
+        lancioEffettuato = true;
+    }
+
+    //ritorna true se il giocatore ha vinto
     public boolean avanza(){
+        if(!lancioEffettuato)
+            throw new IllegalArgumentException("Sistema: il lancio non è stato ancora effettuato");
+
         Pedina giocatore = pedine[turno];
         Casella casellaCorrente = giocatore.getCasella();
         int posCorrente = casellaCorrente.getPos();
-        if(!lancioEffettuato)
-            throw new IllegalArgumentException("Sistema: il lancio non è stato ancora effettuato");
         int posSuccessiva = posCorrente+lancio;
 
         //deve essere il numero esatto di caselle, altrimenti "rimbalza" dall'ultima casella
         if(posSuccessiva>totCaselle)
-            rimbalza(posSuccessiva,lancio);
-        if(posSuccessiva<totCaselle){
-            Casella casellaSuccessiva = tabellone.getCasella(posSuccessiva);
-            Command avanzamento = new StepCommand(casellaCorrente,casellaSuccessiva,giocatore);
-            commandHandler.handle(avanzamento);
-        }
+            posSuccessiva = rimbalza(posSuccessiva,lancio);
+
+        Casella casellaSuccessiva = tabellone.getCasella(posSuccessiva);
+        Command avanzamento = new StepCommand(casellaCorrente,casellaSuccessiva,giocatore);
+        commandHandler.handle(avanzamento);
         lancioEffettuato = false;
         return posSuccessiva==totCaselle;
     }
-
-
 }
