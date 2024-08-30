@@ -4,7 +4,7 @@ import game.sistema.SistemaImpl1;
 
 public abstract class AbstractVariante implements Variante{
 
-    private boolean activated;
+    private boolean activated = false;
 
     @Override
     public void setActivated(boolean activated){this.activated=activated;}

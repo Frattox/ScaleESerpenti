@@ -40,7 +40,11 @@ public class SistemaImpl1 implements Sistema{
 //        ULTERIORI_CARTE //=> CASELLA_PESCA
 //    }
 
-    private Variante VDadoSingolo, VDadoSingoloFinale;
+    //varianti
+    private Variante
+            VDadoSingolo,
+            VDadoSingoloFinale,
+            VDoppioSei;
 
     private Pedina[] pedine;
     private HistoryCommandHandler commandHandler;
@@ -69,16 +73,18 @@ public class SistemaImpl1 implements Sistema{
 //            varianti.put(v,false);
         VDadoSingolo = VarianteDadoSingolo.getInstance();
         VDadoSingoloFinale = VarianteDadoSingoloFinale.getInstance();
+        VDoppioSei = VarianteDoppioSei.getInstance();
 
     }
 
     public void setDadoSingolo(boolean flag){VDadoSingolo.setActivated(flag);}
-
     public void setDadoSingoloFinale(boolean flag){VDadoSingoloFinale.setActivated(flag);}
+    public void setDoppioSei(boolean flag){VDoppioSei.setActivated(flag);}
     //TODO: gli altri set delle varianti rimanenti
 
 
     public void setLancio(int lancio) {this.lancio=lancio;}
+    public void setTurno(int turno) {this.turno=turno;}
 
     public void setTabellone(int r, int c){
         tabellone = new TabelloneMatrix(r,c);
@@ -152,6 +158,7 @@ public class SistemaImpl1 implements Sistema{
 
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}
     public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
+    public boolean isDoppioSei(){return VDoppioSei.isActivated();}
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
         if(tipo== TipoMezzo.SERPENTE)
@@ -189,21 +196,13 @@ public class SistemaImpl1 implements Sistema{
         return pos>=totCaselle-6;
     }
 
-    private boolean isLancioDoppioSei(){
-        return lancio%6==0;
-    }
-
     public void undo(){commandHandler.undo();}
     public void redo(){commandHandler.redo();}
 
 
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------
-
     public void prossimoTurno(){
-        //NO DADO SINGOLO + l'ultimo lancio è doppio 6 + IS DOPPIO SEI => non effettuo l'aumento del turno
-        if(!(!isDadoSingolo() && isLancioDoppioSei() && isDoppioSei()))
-            turno = (turno+1)%pedine.length; //così turn rimane nel range [0,pedine.lenght-1]
-        
+        VDoppioSei.action(this);
     }
 
     //PDR
