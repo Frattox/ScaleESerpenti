@@ -6,9 +6,15 @@ import game.sistema.SistemaImpl1;
 //INSTANCE
 public class VarianteDoppioSei extends AbstractVariante{
 
+    private static Variante varianteDoppioSei;
+
     private VarianteDoppioSei(){}
 
-    public static Variante getInstance(){return new VarianteDoppioSei();}
+    public static Variante getInstance(){
+        if(varianteDoppioSei==null)
+            varianteDoppioSei = new VarianteDoppioSei();
+        return new VarianteDoppioSei();
+    }
 
     //NO DADO SINGOLO + l'ultimo lancio è doppio 6 + IS DOPPIO SEI => non effettuo l'avanzamento del turno
     @Override

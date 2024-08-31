@@ -9,9 +9,15 @@ import java.util.List;
 //SINGLETON
 public class VarianteDadoSingolo extends AbstractVariante{
 
+    private static Variante varianteDadoSingolo;
+
     private VarianteDadoSingolo(){}
 
-    public static Variante getInstance(){return new VarianteDadoSingolo();}
+    public static Variante getInstance(){
+        if(varianteDadoSingolo==null)
+            varianteDadoSingolo = new VarianteDadoSingolo();
+        return varianteDadoSingolo;
+    }
 
     @Override
     public void action(SistemaImpl1 s) {
