@@ -16,7 +16,7 @@ public class VarianteDadoSingoloFinale extends AbstractVariante{
     public static Variante getInstance(){
         if(varianteDadoSingoloFinale==null)
             varianteDadoSingoloFinale = new VarianteDadoSingoloFinale();
-        return new VarianteDadoSingoloFinale();
+        return varianteDadoSingoloFinale;
     }
 
     @Override

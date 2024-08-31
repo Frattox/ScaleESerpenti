@@ -3,7 +3,7 @@ package game.sistema.varianti;
 import elementi.Pedina;
 import game.sistema.SistemaImpl1;
 
-//INSTANCE
+//SINGLETON
 public class VarianteDoppioSei extends AbstractVariante{
 
     private static Variante varianteDoppioSei;
@@ -13,7 +13,7 @@ public class VarianteDoppioSei extends AbstractVariante{
     public static Variante getInstance(){
         if(varianteDoppioSei==null)
             varianteDoppioSei = new VarianteDoppioSei();
-        return new VarianteDoppioSei();
+        return varianteDoppioSei;
     }
 
     //NO DADO SINGOLO + l'ultimo lancio è doppio 6 + IS DOPPIO SEI => non effettuo l'avanzamento del turno

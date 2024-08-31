@@ -11,11 +11,13 @@ import java.util.List;
 
 //NOTAZIONI:
 // PDR -> Probabilmente da rimuovere
+// DS -> Da Sistemare
 
 public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------VARIABILI-------------------------------------------
     private Tabellone tabellone;
+    private ArrayList<Casella> caselleLibere;
     private MezzoFactory mezzoFactory;
     private HashMap<Casella,Mezzo> mezzi;
 
@@ -23,6 +25,7 @@ public class SistemaImpl1 implements Sistema{
     private HashMap<TipoMezzo,Integer> mezziQuantita;
     private int
             nMezzi,
+            nCaselleSosta,
             turno,
             lancio,
             caselleCoperte,
@@ -33,7 +36,8 @@ public class SistemaImpl1 implements Sistema{
     private Variante
             VDadoSingolo,
             VDadoSingoloFinale,
-            VDoppioSei;
+            VDoppioSei,
+            VCaselleSosta;
 
     private Pedina[] pedine;
     private HistoryCommandHandler commandHandler;
@@ -45,6 +49,7 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------SETTING--------------------------------------------
 
+    //DS
     public SistemaImpl1(){
         tabellone = new TabelloneMatrix();
         commandHandler = new HistoryCommandHandler(); //maxHistoryLenght di default = 100
@@ -54,17 +59,28 @@ public class SistemaImpl1 implements Sistema{
         pedine = new Pedina[2]; //default
         dadi = new ArrayList<>();
         nMezzi=0;
+        nCaselleSosta=0;
         caselleCoperte=0;
         turno=-1;
-        VDadoSingolo = VarianteDadoSingolo.getInstance();
-        VDadoSingoloFinale = VarianteDadoSingoloFinale.getInstance();
-        VDoppioSei = VarianteDoppioSei.getInstance();
-
+        caselleLibere = caselleLibereIniziali();
     }
 
-    public void setDadoSingolo(boolean flag){VDadoSingolo.setActivated(flag);}
-    public void setDadoSingoloFinale(boolean flag){VDadoSingoloFinale.setActivated(flag);}
-    public void setDoppioSei(boolean flag){VDoppioSei.setActivated(flag);}
+    public void setDadoSingolo(boolean flag){
+        VDadoSingolo = VarianteDadoSingolo.getInstance();
+        VDadoSingolo.setActivated(flag);
+    }
+    public void setDadoSingoloFinale(boolean flag){
+        VDadoSingoloFinale = VarianteDadoSingoloFinale.getInstance();
+        VDadoSingoloFinale.setActivated(flag);
+    }
+    public void setDoppioSei(boolean flag){
+        VDoppioSei = VarianteDoppioSei.getInstance();
+        VDoppioSei.setActivated(flag);
+    }
+    public void setCaselleSosta(boolean flag){
+        VCaselleSosta = VarianteCaselleSosta.getInstance();
+        VCaselleSosta.setActivated(flag);
+    }
     //TODO: gli altri set delle varianti rimanenti
 
 
@@ -80,8 +96,8 @@ public class SistemaImpl1 implements Sistema{
         if(n<1)
             throw new IllegalArgumentException("Sistema: numero di pedine invalido");
         pedine = new Pedina[n];
+        Casella start = tabellone.getCasella(0,0);
         for(int i=0; i<n; i++){
-            Casella start = tabellone.getCasella(0,0);
             pedine[i] = new Pedina(start); //tutte le pedine iniziano dalla casella start
         }
     }
@@ -94,21 +110,21 @@ public class SistemaImpl1 implements Sistema{
     public void setNumberMezzi(TipoMezzo tipo, int n){
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di "+ tipo.toString() +" invalido");
-        //non è possibile inserire un numero di mezzi totale superiore alla
-        //metà del numero totale di caselle (normali)
-        int nMaxMezzi = (totCaselle-caselleCoperte-2)/2;
-        if((nMezzi+n)<=nMaxMezzi)
+        if(!isNumberMezziOk(n))
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
         mezziQuantita.put(tipo,n);
+        nMezzi+=n;
         caselleCoperte+=n;
     }
 
     public void setNumberCaselleSosta(int n){
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
-        if(n>totCaselle)
+        if(!isNumberCaselleSpecialiOk(n))
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
-        //TODO
+        nCaselleSosta=n;
+        caselleCoperte+=n;
+        VCaselleSosta.action(this);
     }
 
     public void setMezziAutomatico(){
@@ -137,6 +153,8 @@ public class SistemaImpl1 implements Sistema{
         return dadi;
     }
     public int getTotCaselle(){return totCaselle;}
+    public int getCaselleCoperte(){return caselleCoperte;}
+    public int getnCaselleSosta(){return nCaselleSosta;}
     public Pedina[] getPedine(){return pedine;}
 
 //--------------------------------------------UTIL--------------------------------------------
@@ -144,9 +162,23 @@ public class SistemaImpl1 implements Sistema{
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}
     public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
     public boolean isDoppioSei(){return VDoppioSei.isActivated();}
+    public boolean isCaselleSosta(){return VCaselleSosta.isActivated();}
+
+    private boolean isNumberMezziOk(int n){
+        //non è possibile inserire un numero di mezzi totale superiore alla
+        //metà del numero totale di caselle disponibili(normali)
+        int nMaxMezzi = (totCaselle-caselleCoperte-2)/2;
+        return (nMezzi+n)<=nMaxMezzi;
+    }
+
+    private boolean isNumberCaselleSpecialiOk(int n) {
+        //non è possibile inserire un numero di caselle speciali superiore al numero totale di caselle disponibili
+        int nMaxCaselleSpeciali = totCaselle-caselleCoperte-2;
+        return n<=nMaxCaselleSpeciali;
+    }
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
-        if(tipo== TipoMezzo.SERPENTE)
+        if(tipo==TipoMezzo.SERPENTE)
             return new SerpenteFactory();
         return new ScalaFactory();
     }
@@ -183,6 +215,17 @@ public class SistemaImpl1 implements Sistema{
 
     public void undo(){commandHandler.undo();}
     public void redo(){commandHandler.redo();}
+
+    private ArrayList<Casella> caselleLibereIniziali(){
+        ArrayList<Casella> ret = new ArrayList<>();
+        //esclusa la pos (0,0), ovvero la prima casella
+        for(int i=1;i<tabellone.getR();i++)
+            for(int j=0;j< tabellone.getC();j++)
+                ret.add(tabellone.getCasella(i,j));
+        //esclusa la pos (R-1,C-2), ovvero l'ultima casella
+        ret.remove(ret.size()-1);
+        return ret;
+    }
 
 
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------

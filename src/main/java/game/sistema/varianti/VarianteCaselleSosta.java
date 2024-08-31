@@ -6,6 +6,7 @@ import game.sistema.SistemaImpl1;
 public class VarianteCaselleSosta extends AbstractVariante{
 
     private static Variante varianteCaselleSosta;
+
     private VarianteCaselleSosta(){}
 
     public static Variante getInstance(){
@@ -16,6 +17,7 @@ public class VarianteCaselleSosta extends AbstractVariante{
 
     @Override
     public void action(SistemaImpl1 s) {
+        int nCaselleSosta = s.getnCaselleSosta();
 
     }
 }
