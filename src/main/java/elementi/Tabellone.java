@@ -1,7 +1,5 @@
 package elementi;
 
-import elementi.factoryMethod.Posizione;
-
 public abstract class Tabellone {
 
     protected int r,c;

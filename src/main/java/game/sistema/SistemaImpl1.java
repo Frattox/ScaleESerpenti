@@ -29,17 +29,6 @@ public class SistemaImpl1 implements Sistema{
             totCaselle; //utile per il setting dei tipi di caselle
     private boolean lancioEffettuato;
 
-    //PDR
-//    private enum Variante{
-//        DADO_SINGOLO,
-//        DADO_SINGOLO_FINALE, //=> !DADO_SINGOLO
-//        DOPPIO_SEI, //=> !DADO_SINGOLO
-//        CASELLA_SOSTA,
-//        CASELLA_PREMIO,
-//        CASELLA_PESCA,
-//        ULTERIORI_CARTE //=> CASELLA_PESCA
-//    }
-
     //varianti
     private Variante
             VDadoSingolo,
@@ -67,10 +56,6 @@ public class SistemaImpl1 implements Sistema{
         nMezzi=0;
         caselleCoperte=0;
         turno=-1;
-        //PDR
-//        varianti = new HashMap<>();
-//        for(Variante v: Variante.values())
-//            varianti.put(v,false);
         VDadoSingolo = VarianteDadoSingolo.getInstance();
         VDadoSingoloFinale = VarianteDadoSingoloFinale.getInstance();
         VDoppioSei = VarianteDoppioSei.getInstance();
@@ -203,19 +188,6 @@ public class SistemaImpl1 implements Sistema{
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------
     public void prossimoTurno(){
         VDoppioSei.action(this);
-    }
-
-    //PDR
-    public void lancia(boolean flag){
-        if(dadi == null || dadi.isEmpty())
-            throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
-        lancio = 0;
-        if(flag)
-            lancio = dadi.get(0).lancia();
-        else
-            for(Dado d: dadi)
-                lancio += d.lancia();
-        lancioEffettuato=true;
     }
 
     public void lancia()

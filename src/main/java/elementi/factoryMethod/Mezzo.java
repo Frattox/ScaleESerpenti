@@ -1,6 +1,7 @@
 package elementi.factoryMethod;
 
 import elementi.Casella;
+import elementi.Posizione;
 import elementi.Tabellone;
 
 //Classe astratta che definisce elementi di "movimento" da una casella ad un'altra della tabella

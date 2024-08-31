@@ -1,4 +1,4 @@
-package elementi.factoryMethod;
+package elementi;
 
 public class Posizione {
     private int x, y;

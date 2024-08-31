@@ -1,6 +1,7 @@
 package elementi.factoryMethod;
 
 import elementi.Casella;
+import elementi.Posizione;
 import elementi.Tabellone;
 
 public class Scala extends Mezzo{

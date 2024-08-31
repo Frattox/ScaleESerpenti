@@ -1,7 +1,5 @@
 package elementi;
 
-import elementi.factoryMethod.Posizione;
-
 public class TabelloneMatrix extends Tabellone{
 
     private Casella[][] tabella;

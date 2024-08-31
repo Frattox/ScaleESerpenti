@@ -1,7 +1,5 @@
 package elementi;
 
-import elementi.factoryMethod.Posizione;
-
 public class Pedina {
     private static final int SOSTA_PANCHINA = 1, SOSTA_LOCANDA = 3;
     private Casella curr;
