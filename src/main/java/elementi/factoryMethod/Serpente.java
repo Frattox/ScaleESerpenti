@@ -18,15 +18,14 @@ public class Serpente extends Mezzo{
             throw new IllegalArgumentException("Serpente: Caselle non idonee");
     }
 
+    @Override
+    protected int casellaFrom(int nCaselleLibere) {
+        return (int) (1 + Math.random()*nCaselleLibere);//casella libera random in [1,nCaselleLibere-1]
+    }
 
     @Override
-    protected void caselleBuone(Tabellone tabellone, Casella from, Casella to){
-        int c = tabellone.getC();
-        int r = tabellone.getR();
-        int totCaselle = r*c;
-        this.from = casellaRandomDaA(tabellone,c,totCaselle-2);// from appartiene al range [primaCellaSecondaRiga,ultimaCasella)
-        Posizione posFrom = tabellone.getPosCasella(this.from);
-        this.to = casellaRandomDaA(tabellone,1,c*posFrom.getX()-1);// to appartiente al range [secondaCasella, ultimaCasellaPrimaDellaRigaDiNewFrom]
+    protected int casellaTo(int iFrom, int nCaselleLibere){
+        return (int) (Math.random()*iFrom);//casella libera random in [0,iFrom-1]
     }
 
 }

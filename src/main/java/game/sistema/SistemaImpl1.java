@@ -1,6 +1,8 @@
 package game.sistema;
 
 import elementi.*;
+import elementi.GestoreCaselleLibere.GestoreCaselleLibere;
+import elementi.GestoreCaselleLibere.GestoreCaselleLibereImpl;
 import elementi.factoryMethod.*;
 import game.sistema.commands.*;
 import game.sistema.varianti.*;
@@ -17,15 +19,17 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------VARIABILI-------------------------------------------
     private Tabellone tabellone;
-    private ArrayList<Casella> caselleLibere;
     private MezzoFactory mezzoFactory;
     private HashMap<Casella,Mezzo> mezzi;
+    //Utile per le caselle speciali e mezzi
+    private GestoreCaselleLibere caselleLibere;
 
     //per ogni tipo di mezzo, la sua quantità corrispondente
     private HashMap<TipoMezzo,Integer> mezziQuantita;
     private int
             nMezzi,
             nCaselleSosta,
+            nCasellePremio,
             turno,
             lancio,
             caselleCoperte,
@@ -60,9 +64,10 @@ public class SistemaImpl1 implements Sistema{
         dadi = new ArrayList<>();
         nMezzi=0;
         nCaselleSosta=0;
+        nCasellePremio=0;
         caselleCoperte=0;
         turno=-1;
-        caselleLibere = caselleLibereIniziali();
+        caselleLibere = new GestoreCaselleLibereImpl(this);
     }
 
     public void setDadoSingolo(boolean flag){
@@ -83,6 +88,9 @@ public class SistemaImpl1 implements Sistema{
     }
     //TODO: gli altri set delle varianti rimanenti
 
+
+    public void setRandomCasellaLibera(Casella.Tipo tipo){caselleLibere.setRandomCasellaLibera(tipo);}
+    public void setCasellaLibera(int i,Casella.Tipo tipo){caselleLibere.setCasellaLibera(i,tipo);}
 
     public void setLancio(int lancio) {this.lancio=lancio;}
     public void setTurno(int turno) {this.turno=turno;}
@@ -114,7 +122,7 @@ public class SistemaImpl1 implements Sistema{
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
         mezziQuantita.put(tipo,n);
         nMezzi+=n;
-        caselleCoperte+=n;
+        setMezziAutomatico();
     }
 
     public void setNumberCaselleSosta(int n){
@@ -123,17 +131,25 @@ public class SistemaImpl1 implements Sistema{
         if(!isNumberCaselleSpecialiOk(n))
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
         nCaselleSosta=n;
-        caselleCoperte+=n;
         VCaselleSosta.action(this);
     }
 
-    public void setMezziAutomatico(){
+    public void setNumberCasellePremio(int n){
+        if(n<0)
+            throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
+        if(!isNumberCaselleSpecialiOk(n))
+            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
+        nCaselleSosta=n;
+        VCaselleSosta.action(this);
+    }
+
+    private void setMezziAutomatico(){
         for(TipoMezzo t: mezziQuantita.keySet()) {
             mezzoFactory = createMezzoFactory(t);
             int quantita = mezziQuantita.get(t);
             for(int i=0; i<quantita; i++){
                 Mezzo m = mezzoFactory.factory();
-                m.autoSet(tabellone);
+                m.autoSet(this);
             }
         }
     }
@@ -154,8 +170,11 @@ public class SistemaImpl1 implements Sistema{
     }
     public int getTotCaselle(){return totCaselle;}
     public int getCaselleCoperte(){return caselleCoperte;}
+    public int getSizeCaselleLibere(){return caselleLibere.getSize();}
     public int getnCaselleSosta(){return nCaselleSosta;}
+    public int getnCasellePremio() {return nCasellePremio;}
     public Pedina[] getPedine(){return pedine;}
+    public Tabellone getTabellone(){return tabellone;}
 
 //--------------------------------------------UTIL--------------------------------------------
 
@@ -166,15 +185,14 @@ public class SistemaImpl1 implements Sistema{
 
     private boolean isNumberMezziOk(int n){
         //non è possibile inserire un numero di mezzi totale superiore alla
-        //metà del numero totale di caselle disponibili(normali)
-        int nMaxMezzi = (totCaselle-caselleCoperte-2)/2;
+        //metà del numero totale di caselle libere (normali)
+        int nMaxMezzi = getSizeCaselleLibere()/2;
         return (nMezzi+n)<=nMaxMezzi;
     }
 
     private boolean isNumberCaselleSpecialiOk(int n) {
         //non è possibile inserire un numero di caselle speciali superiore al numero totale di caselle disponibili
-        int nMaxCaselleSpeciali = totCaselle-caselleCoperte-2;
-        return n<=nMaxCaselleSpeciali;
+        return n<=getSizeCaselleLibere();
     }
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
@@ -215,17 +233,6 @@ public class SistemaImpl1 implements Sistema{
 
     public void undo(){commandHandler.undo();}
     public void redo(){commandHandler.redo();}
-
-    private ArrayList<Casella> caselleLibereIniziali(){
-        ArrayList<Casella> ret = new ArrayList<>();
-        //esclusa la pos (0,0), ovvero la prima casella
-        for(int i=1;i<tabellone.getR();i++)
-            for(int j=0;j< tabellone.getC();j++)
-                ret.add(tabellone.getCasella(i,j));
-        //esclusa la pos (R-1,C-2), ovvero l'ultima casella
-        ret.remove(ret.size()-1);
-        return ret;
-    }
 
 
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------

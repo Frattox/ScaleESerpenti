@@ -3,6 +3,9 @@ package elementi.factoryMethod;
 import elementi.Casella;
 import elementi.Posizione;
 import elementi.Tabellone;
+import game.sistema.SistemaImpl1;
+
+import java.util.ArrayList;
 
 //Classe astratta che definisce elementi di "movimento" da una casella ad un'altra della tabella
 public abstract class Mezzo {
@@ -32,7 +35,11 @@ public abstract class Mezzo {
         return to;
     }
 
-    public void setCaselle(Casella from, Casella to) {
+    protected void setCaselle(Casella from, Casella to) {
+        if(this.from!=null)
+            this.from.setTipo(Casella.Tipo.NORMALE);
+        if(this.to!=null)
+            this.to.setTipo(Casella.Tipo.NORMALE);
         caselleCorrette(from, to);
         this.from = from;
         this.from.setTipo(Casella.Tipo.MEZZO);
@@ -40,24 +47,17 @@ public abstract class Mezzo {
         this.to.setTipo(Casella.Tipo.MEZZO);
     }
 
-    public void autoSet(Tabellone tabellone){
-        Casella from = new Casella();
-        Casella to = new Casella();
-        caselleBuone(tabellone,from,to);
-        setCaselle(from,to);
+    public void autoSet(SistemaImpl1 s){
+        int nCaselleLibere = s.getSizeCaselleLibere();
+        int iFrom = casellaFrom(nCaselleLibere);
+        int iTo = casellaTo(iFrom,nCaselleLibere);
+        s.setCasellaLibera(iFrom, Casella.Tipo.MEZZO);
+        s.setCasellaLibera(iTo, Casella.Tipo.MEZZO);
     }
 
-    protected Casella casellaRandomDaA(Tabellone tabellone, int start, int end){
-        Casella ret;
-        do {
-            int pos = start + (int) (Math.random() * end);
-            Posizione position = tabellone.getPosCasella(pos);
-            ret = tabellone.getCasella(position.getX(), position.getY());
-        } while (ret.isCovered());
-        return ret;
-    }
+    protected abstract void caselleCorrette(Casella from, Casella to);
 
-    protected abstract void caselleBuone(Tabellone tabellone, Casella from, Casella to);
+    protected abstract int casellaFrom(int nCaselleLibere);
 
-    public abstract void caselleCorrette(Casella from, Casella to);
+    protected abstract int casellaTo(int iFrom, int nCaselleLibere);
 }

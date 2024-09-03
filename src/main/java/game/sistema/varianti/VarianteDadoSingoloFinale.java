@@ -30,7 +30,7 @@ public class VarianteDadoSingoloFinale extends AbstractVariante{
         indiceDado++;
 
         //controllo: DadoSingoloFinale => !DadoSingolo
-        if(!s.isDadoSingolo() && this.isActivated()){
+        if(!s.isDadoSingolo() && varianteDadoSingoloFinale.isActivated()){
             //azione
             Pedina[] pedine = s.getPedine();
             int turno = s.getTurno();

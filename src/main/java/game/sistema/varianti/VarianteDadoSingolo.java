@@ -24,7 +24,7 @@ public class VarianteDadoSingolo extends AbstractVariante{
         List<Dado> dadi = s.getDadi();
         dadi.add(new Dado());
         //controllo
-        if(!this.isActivated()){
+        if(!varianteDadoSingolo.isActivated()){
             //azione
             dadi.add(new Dado());
         }

@@ -29,6 +29,17 @@ public class Casella {
         this.pos = pos;
     }
     public void setTipo(Tipo tipo){this.tipo = tipo;}
+    public void setTipoSosta(){
+        int tipoSosta = (int) (Math.random()*2);
+        if(tipoSosta==0) tipo=Tipo.PANCHINA;
+        else tipo=Tipo.LOCANDA;
+    }
+
+    public void setTipoPremio() {
+        int tipoSosta = (int) (Math.random()*2);
+        if(tipoSosta==0) tipo=Tipo.DADI;
+        else tipo=Tipo.MOLLA;
+    }
 
     public Tipo getTipo(){return this.tipo;}
 

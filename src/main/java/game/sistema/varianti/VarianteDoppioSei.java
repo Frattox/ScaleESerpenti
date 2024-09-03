@@ -20,7 +20,7 @@ public class VarianteDoppioSei extends AbstractVariante{
     @Override
     public void action(SistemaImpl1 s) {
         //controllo: DoppioSei => !DadoSingolo
-        if(!s.isDadoSingolo() && this.isActivated()){
+        if(!s.isDadoSingolo() && varianteDoppioSei.isActivated()){
             //azione
             int lancio = s.getLancio();
             if(isLancioDoppioSei(lancio))
