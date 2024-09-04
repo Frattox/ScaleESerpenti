@@ -1,4 +1,4 @@
-package elementi.factoryMethod;
+package elementi.Mezzi;
 
 public enum TipoMezzo {
     SERPENTE,

@@ -1,11 +1,7 @@
-package elementi.factoryMethod;
+package elementi.Mezzi;
 
 import elementi.Casella;
-import elementi.Posizione;
-import elementi.Tabellone;
 import game.sistema.SistemaImpl1;
-
-import java.util.ArrayList;
 
 //Classe astratta che definisce elementi di "movimento" da una casella ad un'altra della tabella
 public abstract class Mezzo {

@@ -1,8 +1,6 @@
-package elementi.factoryMethod;
+package elementi.Mezzi;
 
 import elementi.Casella;
-import elementi.Posizione;
-import elementi.Tabellone;
 
 public class Serpente extends Mezzo{
 

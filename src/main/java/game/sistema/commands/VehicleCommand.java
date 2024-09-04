@@ -1,7 +1,7 @@
 package game.sistema.commands;
 
 import elementi.Pedina;
-import elementi.factoryMethod.Mezzo;
+import elementi.Mezzi.Mezzo;
 
 public class VehicleCommand implements Command{
 

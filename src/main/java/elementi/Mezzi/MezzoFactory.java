@@ -1,6 +1,4 @@
-package elementi.factoryMethod;
-
-import elementi.Casella;
+package elementi.Mezzi;
 
 public abstract class MezzoFactory {
 

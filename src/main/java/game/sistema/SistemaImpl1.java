@@ -3,7 +3,7 @@ package game.sistema;
 import elementi.*;
 import elementi.GestoreCaselleLibere.GestoreCaselleLibere;
 import elementi.GestoreCaselleLibere.GestoreCaselleLibereImpl;
-import elementi.factoryMethod.*;
+import elementi.Mezzi.*;
 import game.sistema.commands.*;
 import game.sistema.varianti.*;
 
@@ -182,6 +182,7 @@ public class SistemaImpl1 implements Sistema{
     public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
     public boolean isDoppioSei(){return VDoppioSei.isActivated();}
     public boolean isCaselleSosta(){return VCaselleSosta.isActivated();}
+    public boolean isUlterioriCarte(){return true;}//TODO
 
     private boolean isNumberMezziOk(int n){
         //non è possibile inserire un numero di mezzi totale superiore alla
