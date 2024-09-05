@@ -3,7 +3,9 @@ package game.sistema;
 import elementi.*;
 import elementi.GestoreCaselleLibere.GestoreCaselleLibere;
 import elementi.GestoreCaselleLibere.GestoreCaselleLibereImpl;
-import elementi.Mattaro.Carta;
+import game.sistema.GestoreEffetti.GestoreEffetti;
+import game.sistema.GestoreEffetti.GestoreEffettiImpl;
+import game.sistema.Mattaro.Carta;
 import elementi.Mezzi.*;
 import game.sistema.commands.*;
 import game.sistema.varianti.*;
@@ -45,7 +47,8 @@ public class SistemaImpl1 implements Sistema{
             VDoppioSei,
             VCaselleSosta,
             VCasellePremio,
-            VCasellePescaCarta;
+            VCasellePescaCarta,
+            VUlterioriCarte;
 
     private Pedina[] pedine;
     private HistoryCommandHandler commandHandler;
@@ -55,6 +58,7 @@ public class SistemaImpl1 implements Sistema{
     // implementazioni future
     private List<Dado> dadi;
     private Carta cartaPescata;
+    private GestoreEffetti gestoreEffetti;
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -75,17 +79,18 @@ public class SistemaImpl1 implements Sistema{
         turno=-1;
         caselleLibere = new GestoreCaselleLibereImpl(this);
         cartaPescata = null;
+        gestoreEffetti = new GestoreEffettiImpl(this);
     }
 
     public void setDadoSingolo(boolean flag){
         VDadoSingolo = new VarianteDadoSingolo();
         VDadoSingolo.setActivated(flag,this);
     }
-    public void setDadoSingoloFinale(boolean flag){
+    public void setDadoSingoloFinale(boolean flag) throws IllegalArgumentException{
         VDadoSingoloFinale = new VarianteDadoSingoloFinale();
         VDadoSingoloFinale.setActivated(flag,this);
     }
-    public void setDoppioSei(boolean flag){
+    public void setDoppioSei(boolean flag) throws IllegalArgumentException{
         VDoppioSei = new VarianteDoppioSei();
         VDoppioSei.setActivated(flag,this);
     }
@@ -101,8 +106,10 @@ public class SistemaImpl1 implements Sistema{
         VCasellePescaCarta = new VarianteCasellePescaCarta(this);
         VCasellePescaCarta.setActivated(flag,this);
     }
-    //TODO: gli altri set delle varianti rimanenti
-
+    public void setUlterioriCarte(boolean flag) throws IllegalArgumentException{
+        VUlterioriCarte = new VarianteUlterioriCarte();
+        VUlterioriCarte.setActivated(flag,this);
+    }
 
     public void setRandomCasellaLibera(Casella.Tipo tipo){caselleLibere.setRandomCasellaLibera(tipo);}
     public void setCasellaLibera(int i,Casella.Tipo tipo){caselleLibere.setCasellaLibera(i,tipo);}
@@ -174,11 +181,13 @@ public class SistemaImpl1 implements Sistema{
             for(int i=0; i<quantita; i++){
                 Mezzo m = mezzoFactory.factory();
                 m.autoSet(this);
+                mezzi.put(m.getFrom(),m);
             }
         }
     }
 
     public void setCartaPescata(Carta cartaPescata){this.cartaPescata=cartaPescata;}
+    public void setLancioEffettuato(boolean lancioEffettuato){this.lancioEffettuato=lancioEffettuato;}
 
 //--------------------------------------------GETTERS--------------------------------------------
     //utili per fornire informazioni durante il gioco
@@ -203,6 +212,8 @@ public class SistemaImpl1 implements Sistema{
     public Pedina[] getPedine(){return pedine;}
     public Tabellone getTabellone(){return tabellone;}
     public Carta getCartaPescata(){return cartaPescata;}
+    public CommandHandler getCommandHandler(){return commandHandler;}
+    public HashMap<Casella,Mezzo> getMezzi(){return mezzi;}
 
 //--------------------------------------------UTIL--------------------------------------------
 
@@ -233,20 +244,12 @@ public class SistemaImpl1 implements Sistema{
     }
 
     private void azionaCasella(Pedina giocatore) {
-        Command cmd;
-        Casella casella = giocatore.getCasella();
-        //se la casella è il punto di partenza di un mezzo
-        if(mezzi.containsKey(casella)) {
-            Mezzo m = mezzi.get(casella);
-            cmd = new VehicleCommand(m, giocatore);
-            commandHandler.handle(cmd);
-        }else {
-            //TODO: le altre tipologie di caselle speciali
-        }
+        gestoreEffetti.azionaCasella();
     }
 
     private int rimbalza(int pos, int lancio){return totCaselle - (pos-totCaselle);}
 
+    //DS
     public void verificaCasella(){
         if(lancioEffettuato)
             throw new IllegalArgumentException("Sistema: bisogna far avanzare la pedina prima");
@@ -254,12 +257,6 @@ public class SistemaImpl1 implements Sistema{
         if(giocatore.getCasella().isCovered()){ //se la casella corrente NON è una normale
             azionaCasella(giocatore);
         }
-    }
-
-    //PDR
-    private boolean isUltimeCaselle() {
-        int pos = pedine[turno].getCasella().getPos();
-        return pos>=totCaselle-6;
     }
 
     public void undo(){commandHandler.undo();}
@@ -271,15 +268,20 @@ public class SistemaImpl1 implements Sistema{
         VDoppioSei.action(this);
     }
 
+    //DS
     public void lancia()
     {
         if(dadi == null || dadi.isEmpty())
             throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
+        int lancioPrima = lancio;
         lancio = 0;
         VDadoSingoloFinale.action(this);
+        int lancioDopo = lancio;
+        commandHandler.handle(new DadiCommand(this,lancioPrima,lancioDopo));
         lancioEffettuato = true;
     }
 
+    //DS
     //ritorna true se il giocatore ha vinto
     public boolean avanza(){
         if(!lancioEffettuato)
@@ -295,7 +297,7 @@ public class SistemaImpl1 implements Sistema{
             posSuccessiva = rimbalza(posSuccessiva,lancio);
 
         Casella casellaSuccessiva = tabellone.getCasella(posSuccessiva);
-        Command avanzamento = new StepCommand(casellaCorrente,casellaSuccessiva,giocatore);
+        Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
         lancioEffettuato = false;
         return posSuccessiva==totCaselle;

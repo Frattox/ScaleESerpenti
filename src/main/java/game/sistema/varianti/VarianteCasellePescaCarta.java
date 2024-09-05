@@ -1,8 +1,8 @@
 package game.sistema.varianti;
 
 import elementi.Casella;
-import elementi.Mattaro.Mattaro;
-import elementi.Mattaro.MattaroImpl;
+import game.sistema.Mattaro.Mattaro;
+import game.sistema.Mattaro.MattaroImpl;
 import game.sistema.SistemaImpl1;
 
 //SINGLETON

@@ -1,4 +1,4 @@
-package elementi.Mattaro;
+package game.sistema.Mattaro;
 
 import game.sistema.SistemaImpl1;
 

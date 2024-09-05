@@ -19,8 +19,8 @@ public abstract class Mezzo {
         this.caselleCorrette(from,to);
         this.from = from;
         this.to = to;
-        this.from.setTipo(Casella.Tipo.MEZZO);
-        this.to.setTipo(Casella.Tipo.MEZZO);
+        this.from.setTipo(Casella.Tipo.MEZZO_FROM);
+        this.to.setTipo(Casella.Tipo.MEZZO_TO);
     }
 
     public Casella getFrom() {
@@ -38,17 +38,17 @@ public abstract class Mezzo {
             this.to.setTipo(Casella.Tipo.NORMALE);
         caselleCorrette(from, to);
         this.from = from;
-        this.from.setTipo(Casella.Tipo.MEZZO);
+        this.from.setTipo(Casella.Tipo.MEZZO_FROM);
         this.to = to;
-        this.to.setTipo(Casella.Tipo.MEZZO);
+        this.to.setTipo(Casella.Tipo.MEZZO_TO);
     }
 
     public void autoSet(SistemaImpl1 s){
         int nCaselleLibere = s.getSizeCaselleLibere();
         int iFrom = casellaFrom(nCaselleLibere);
         int iTo = casellaTo(iFrom,nCaselleLibere);
-        s.setCasellaLibera(iFrom, Casella.Tipo.MEZZO);
-        s.setCasellaLibera(iTo, Casella.Tipo.MEZZO);
+        s.setCasellaLibera(iFrom, Casella.Tipo.MEZZO_FROM);
+        s.setCasellaLibera(iTo, Casella.Tipo.MEZZO_TO);
     }
 
     protected abstract void caselleCorrette(Casella from, Casella to);

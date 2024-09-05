@@ -3,12 +3,12 @@ package game.sistema.commands;
 import elementi.Pedina;
 import elementi.Mezzi.Mezzo;
 
-public class VehicleCommand implements Command{
+public class MezzoCommand implements Command{
 
     private final Mezzo m;
     private final Pedina p;
 
-    public VehicleCommand(Mezzo m, Pedina p) {
+    public MezzoCommand(Mezzo m, Pedina p) {
         this.m = m;
         this.p = p;
     }
