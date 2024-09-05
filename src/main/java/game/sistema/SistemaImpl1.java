@@ -3,6 +3,7 @@ package game.sistema;
 import elementi.*;
 import elementi.GestoreCaselleLibere.GestoreCaselleLibere;
 import elementi.GestoreCaselleLibere.GestoreCaselleLibereImpl;
+import elementi.Mattaro.Carta;
 import elementi.Mezzi.*;
 import game.sistema.commands.*;
 import game.sistema.varianti.*;
@@ -30,6 +31,7 @@ public class SistemaImpl1 implements Sistema{
             nMezzi,
             nCaselleSosta,
             nCasellePremio,
+            nCasellePescaCarta,
             turno,
             lancio,
             caselleCoperte,
@@ -41,7 +43,9 @@ public class SistemaImpl1 implements Sistema{
             VDadoSingolo,
             VDadoSingoloFinale,
             VDoppioSei,
-            VCaselleSosta;
+            VCaselleSosta,
+            VCasellePremio,
+            VCasellePescaCarta;
 
     private Pedina[] pedine;
     private HistoryCommandHandler commandHandler;
@@ -50,6 +54,7 @@ public class SistemaImpl1 implements Sistema{
     // lista di dadi nel caso si utilizzassero più di 2 dadi per delle
     // implementazioni future
     private List<Dado> dadi;
+    private Carta cartaPescata;
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -65,26 +70,36 @@ public class SistemaImpl1 implements Sistema{
         nMezzi=0;
         nCaselleSosta=0;
         nCasellePremio=0;
+        nCasellePescaCarta=0;
         caselleCoperte=0;
         turno=-1;
         caselleLibere = new GestoreCaselleLibereImpl(this);
+        cartaPescata = null;
     }
 
     public void setDadoSingolo(boolean flag){
-        VDadoSingolo = VarianteDadoSingolo.getInstance();
-        VDadoSingolo.setActivated(flag);
+        VDadoSingolo = new VarianteDadoSingolo();
+        VDadoSingolo.setActivated(flag,this);
     }
     public void setDadoSingoloFinale(boolean flag){
-        VDadoSingoloFinale = VarianteDadoSingoloFinale.getInstance();
-        VDadoSingoloFinale.setActivated(flag);
+        VDadoSingoloFinale = new VarianteDadoSingoloFinale();
+        VDadoSingoloFinale.setActivated(flag,this);
     }
     public void setDoppioSei(boolean flag){
-        VDoppioSei = VarianteDoppioSei.getInstance();
-        VDoppioSei.setActivated(flag);
+        VDoppioSei = new VarianteDoppioSei();
+        VDoppioSei.setActivated(flag,this);
     }
     public void setCaselleSosta(boolean flag){
-        VCaselleSosta = VarianteCaselleSosta.getInstance();
-        VCaselleSosta.setActivated(flag);
+        VCaselleSosta = new VarianteCaselleSosta();
+        VCaselleSosta.setActivated(flag,this);
+    }
+    public void setCasellePremio(boolean flag){
+        VCasellePremio = new VarianteCasellePremio();
+        VCasellePremio.setActivated(flag,this);
+    }
+    public void setPescaCarta(boolean flag){
+        VCasellePescaCarta = new VarianteCasellePescaCarta(this);
+        VCasellePescaCarta.setActivated(flag,this);
     }
     //TODO: gli altri set delle varianti rimanenti
 
@@ -129,7 +144,7 @@ public class SistemaImpl1 implements Sistema{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
         if(!isNumberCaselleSpecialiOk(n))
-            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
+            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
         nCaselleSosta=n;
         VCaselleSosta.action(this);
     }
@@ -138,9 +153,18 @@ public class SistemaImpl1 implements Sistema{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
         if(!isNumberCaselleSpecialiOk(n))
-            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
-        nCaselleSosta=n;
-        VCaselleSosta.action(this);
+            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
+        nCasellePremio=n;
+        VCasellePremio.action(this);
+    }
+
+    public void setNumberCasellePescaCarta(int n){
+        if(n<0)
+            throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
+        if(!isNumberCaselleSpecialiOk(n))
+            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
+        nCasellePescaCarta=n;
+        VCasellePescaCarta.action(this);
     }
 
     private void setMezziAutomatico(){
@@ -153,6 +177,8 @@ public class SistemaImpl1 implements Sistema{
             }
         }
     }
+
+    public void setCartaPescata(Carta cartaPescata){this.cartaPescata=cartaPescata;}
 
 //--------------------------------------------GETTERS--------------------------------------------
     //utili per fornire informazioni durante il gioco
@@ -173,8 +199,10 @@ public class SistemaImpl1 implements Sistema{
     public int getSizeCaselleLibere(){return caselleLibere.getSize();}
     public int getnCaselleSosta(){return nCaselleSosta;}
     public int getnCasellePremio() {return nCasellePremio;}
+    public int getnCasellePescaCarta(){return nCasellePescaCarta;}
     public Pedina[] getPedine(){return pedine;}
     public Tabellone getTabellone(){return tabellone;}
+    public Carta getCartaPescata(){return cartaPescata;}
 
 //--------------------------------------------UTIL--------------------------------------------
 
@@ -182,6 +210,8 @@ public class SistemaImpl1 implements Sistema{
     public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
     public boolean isDoppioSei(){return VDoppioSei.isActivated();}
     public boolean isCaselleSosta(){return VCaselleSosta.isActivated();}
+    public boolean isCasellePremio(){return VCasellePremio.isActivated();}
+    public boolean isPescaCarta(){return VCasellePescaCarta.isActivated();}
     public boolean isUlterioriCarte(){return true;}//TODO
 
     private boolean isNumberMezziOk(int n){

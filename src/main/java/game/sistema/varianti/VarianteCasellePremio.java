@@ -3,26 +3,18 @@ package game.sistema.varianti;
 import elementi.Casella;
 import game.sistema.SistemaImpl1;
 
-
-//SINGLETON
 public class VarianteCasellePremio extends AbstractVariante{
-    private static Variante varianteCasellePremio;
+    public VarianteCasellePremio(){}
 
-    private VarianteCasellePremio(){}
-
-    public static Variante getInstance(){
-        if(varianteCasellePremio==null)
-            varianteCasellePremio = new VarianteCasellePremio();
-        return varianteCasellePremio;
-    }
+    @Override
+    public void setActivated(boolean activated, SistemaImpl1 s) {this.activated=activated;}
 
     @Override
     public void action(SistemaImpl1 s){
-        if(!varianteCasellePremio.isActivated())
+        if(!this.isActivated())
             return;
         int nCasellePremio = s.getnCasellePremio();
         for(int i=0;i<nCasellePremio;i++){
-            int nCaselleLibere = s.getSizeCaselleLibere();
             s.setRandomCasellaLibera(tipoPremioRandom());
         }
     }

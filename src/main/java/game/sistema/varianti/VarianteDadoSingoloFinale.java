@@ -6,17 +6,16 @@ import game.sistema.SistemaImpl1;
 
 import java.util.List;
 
-//SINGLETON
 public class VarianteDadoSingoloFinale extends AbstractVariante{
 
-    private static Variante varianteDadoSingoloFinale;
+    public VarianteDadoSingoloFinale(){}
 
-    private VarianteDadoSingoloFinale(){}
-
-    public static Variante getInstance(){
-        if(varianteDadoSingoloFinale==null)
-            varianteDadoSingoloFinale = new VarianteDadoSingoloFinale();
-        return varianteDadoSingoloFinale;
+    @Override
+    public void setActivated(boolean activated, SistemaImpl1 s) {
+        //controllo: DadoSingoloFinale => !DadoSingolo
+        if(this.activated && s.isDadoSingolo())
+            throw new IllegalArgumentException("VarianteDadoSingoloFinale: non puoi attivare questa variante insieme a VarianteDadoSingolo");
+        this.activated = activated;
     }
 
     @Override
@@ -29,8 +28,8 @@ public class VarianteDadoSingoloFinale extends AbstractVariante{
         lancio += dadi.get(indiceDado).lancia();
         indiceDado++;
 
-        //controllo: DadoSingoloFinale => !DadoSingolo
-        if(!s.isDadoSingolo() && varianteDadoSingoloFinale.isActivated()){
+        //controllo
+        if(this.isActivated()){
             //azione
             Pedina[] pedine = s.getPedine();
             int turno = s.getTurno();

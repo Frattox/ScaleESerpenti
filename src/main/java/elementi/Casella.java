@@ -2,7 +2,7 @@ package elementi;
 
 public class Casella {
 
-    public enum Tipo{NORMALE,MEZZO,PANCHINA,LOCANDA,DADI,MOLLA}
+    public enum Tipo{NORMALE,MEZZO,PANCHINA,LOCANDA,DADI,MOLLA,PESCA}
     private Tipo tipo;
 
     //rappresenta il numero dove si trova la casella nel tabellone

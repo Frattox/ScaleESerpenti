@@ -6,27 +6,21 @@ import game.sistema.SistemaImpl1;
 
 import java.util.ArrayList;
 
-//SINGLETON
 public class VarianteCaselleSosta extends AbstractVariante{
 
-    private static Variante varianteCaselleSosta;
+    public VarianteCaselleSosta(){}
 
-    private VarianteCaselleSosta(){}
+    @Override
+    public void setActivated(boolean activated, SistemaImpl1 s) {this.activated=activated;}
 
-    public static Variante getInstance(){
-        if(varianteCaselleSosta==null)
-            varianteCaselleSosta = new VarianteCaselleSosta();
-        return varianteCaselleSosta;
-    }
 
     //Applica le caselle sosta sul tabellone
     @Override
     public void action(SistemaImpl1 s) {
-        if(!varianteCaselleSosta.isActivated())
+        if(!this.isActivated())
             return;
         int nCaselleSosta = s.getnCaselleSosta();
         for(int i=0;i<nCaselleSosta;i++){
-            int nCaselleLibere = s.getSizeCaselleLibere();
             s.setRandomCasellaLibera(tipoSostaRandom());
         }
     }

@@ -10,6 +10,7 @@ public class MattaroImpl implements Mattaro{
 
     public MattaroImpl(SistemaImpl1 s){
         mazzo = mazzoRandom(s.isUlterioriCarte());
+        cima=0;
     }
 
     private Carta[] mazzoRandom(boolean isUlterioriCarte){
