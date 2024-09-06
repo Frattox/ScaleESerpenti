@@ -9,14 +9,9 @@ import game.sistema.Mattaro.Carta;
 import elementi.Mezzi.*;
 import game.sistema.commands.*;
 import game.sistema.varianti.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-//NOTAZIONI:
-// PDR -> Probabilmente da rimuovere
-// DS -> Da Sistemare
 
 public class SistemaImpl1 implements Sistema{
 
@@ -26,7 +21,6 @@ public class SistemaImpl1 implements Sistema{
     private HashMap<Casella,Mezzo> mezzi;
     //Utile per le caselle speciali e mezzi
     private GestoreCaselleLibere caselleLibere;
-
     //per ogni tipo di mezzo, la sua quantità corrispondente
     private HashMap<TipoMezzo,Integer> mezziQuantita;
     private int
@@ -36,7 +30,6 @@ public class SistemaImpl1 implements Sistema{
             nCasellePescaCarta,
             turno,
             lancio,
-            caselleCoperte,
             totCaselle; //utile per il setting dei tipi di caselle
     private boolean lancioEffettuato;
 
@@ -62,9 +55,8 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------SETTING--------------------------------------------
 
-    //DS
     public SistemaImpl1(){
-        tabellone = new TabelloneMatrix();
+        tabellone = new TabelloneMatrix();//tabellone di default = 10*10
         commandHandler = new HistoryCommandHandler(); //maxHistoryLenght di default = 100
         totCaselle = tabellone.getR()* tabellone.getC();
         mezzi = new HashMap<>();
@@ -75,37 +67,43 @@ public class SistemaImpl1 implements Sistema{
         nCaselleSosta=0;
         nCasellePremio=0;
         nCasellePescaCarta=0;
-        caselleCoperte=0;
         turno=-1;
         caselleLibere = new GestoreCaselleLibereImpl(this);
         cartaPescata = null;
         gestoreEffetti = new GestoreEffettiImpl(this);
     }
 
+    @Override
     public void setDadoSingolo(boolean flag){
         VDadoSingolo = new VarianteDadoSingolo();
         VDadoSingolo.setActivated(flag,this);
     }
+    @Override
     public void setDadoSingoloFinale(boolean flag) throws IllegalArgumentException{
         VDadoSingoloFinale = new VarianteDadoSingoloFinale();
         VDadoSingoloFinale.setActivated(flag,this);
     }
+    @Override
     public void setDoppioSei(boolean flag) throws IllegalArgumentException{
         VDoppioSei = new VarianteDoppioSei();
         VDoppioSei.setActivated(flag,this);
     }
+    @Override
     public void setCaselleSosta(boolean flag){
         VCaselleSosta = new VarianteCaselleSosta();
         VCaselleSosta.setActivated(flag,this);
     }
+    @Override
     public void setCasellePremio(boolean flag){
         VCasellePremio = new VarianteCasellePremio();
         VCasellePremio.setActivated(flag,this);
     }
+    @Override
     public void setPescaCarta(boolean flag){
         VCasellePescaCarta = new VarianteCasellePescaCarta(this);
         VCasellePescaCarta.setActivated(flag,this);
     }
+    @Override
     public void setUlterioriCarte(boolean flag) throws IllegalArgumentException{
         VUlterioriCarte = new VarianteUlterioriCarte();
         VUlterioriCarte.setActivated(flag,this);
@@ -117,14 +115,17 @@ public class SistemaImpl1 implements Sistema{
     public void setLancio(int lancio) {this.lancio=lancio;}
     public void setTurno(int turno) {this.turno=turno;}
 
-    public void setTabellone(int r, int c){
+    @Override
+    public void setTabellone(int r, int c) throws IllegalArgumentException{
+        if(r<2 || c<2)
+            throw new IllegalArgumentException("Sistema: numero righe e/o colonne non idonee");
         tabellone = new TabelloneMatrix(r,c);
+        totCaselle=tabellone.getR()* tabellone.getC();
     }
-
-    public void setNPedine(int n)
-    {
-        if(n<1)
-            throw new IllegalArgumentException("Sistema: numero di pedine invalido");
+    @Override
+    public void setNPedine(int n) throws IllegalArgumentException{
+        if(n<2)
+            throw new IllegalArgumentException("Sistema: numero di pedine non idoneo");
         pedine = new Pedina[n];
         Casella start = tabellone.getCasella(0,0);
         for(int i=0; i<n; i++){
@@ -132,31 +133,30 @@ public class SistemaImpl1 implements Sistema{
         }
     }
 
-    public void setDadi()
-    {
-        VDadoSingolo.action(this);
-    }
 
-    public void setNumberMezzi(TipoMezzo tipo, int n){
+    public void setDadi() {VDadoSingolo.action(this);}
+
+    @Override
+    public void setNumberMezzi(TipoMezzo tipo, int n) throws IllegalArgumentException{
         if(n<0)
-            throw new IllegalArgumentException("Sistema: numero di "+ tipo.toString() +" invalido");
+            throw new IllegalArgumentException("Sistema: numero di "+ tipo.toString() +" non idoneo");
         if(!isNumberMezziOk(n))
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
         mezziQuantita.put(tipo,n);
         nMezzi+=n;
         setMezziAutomatico();
     }
-
-    public void setNumberCaselleSosta(int n){
+    @Override
+    public void setNumberCaselleSosta(int n) throws IllegalArgumentException{
         if(n<0)
-            throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
+            throw new IllegalArgumentException("Sistema: numero di caselle sosta non idoneo");
         if(!isNumberCaselleSpecialiOk(n))
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
         nCaselleSosta=n;
         VCaselleSosta.action(this);
     }
-
-    public void setNumberCasellePremio(int n){
+    @Override
+    public void setNumberCasellePremio(int n) throws IllegalArgumentException{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
         if(!isNumberCaselleSpecialiOk(n))
@@ -164,8 +164,8 @@ public class SistemaImpl1 implements Sistema{
         nCasellePremio=n;
         VCasellePremio.action(this);
     }
-
-    public void setNumberCasellePescaCarta(int n){
+    @Override
+    public void setNumberCasellePescaCarta(int n) throws IllegalArgumentException{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
         if(!isNumberCaselleSpecialiOk(n))
@@ -175,6 +175,8 @@ public class SistemaImpl1 implements Sistema{
     }
 
     private void setMezziAutomatico(){
+        if(mezziQuantita.isEmpty())
+            return;
         for(TipoMezzo t: mezziQuantita.keySet()) {
             mezzoFactory = createMezzoFactory(t);
             int quantita = mezziQuantita.get(t);
@@ -186,7 +188,7 @@ public class SistemaImpl1 implements Sistema{
         }
     }
 
-    public void setCartaPescata(Carta cartaPescata){this.cartaPescata=cartaPescata;}
+    public void setCartaPescata(Carta cartaPescata){if(cartaPescata!=null) this.cartaPescata=cartaPescata;}
     public void setLancioEffettuato(boolean lancioEffettuato){this.lancioEffettuato=lancioEffettuato;}
 
 //--------------------------------------------GETTERS--------------------------------------------
@@ -204,7 +206,6 @@ public class SistemaImpl1 implements Sistema{
         return dadi;
     }
     public int getTotCaselle(){return totCaselle;}
-    public int getCaselleCoperte(){return caselleCoperte;}
     public int getSizeCaselleLibere(){return caselleLibere.getSize();}
     public int getnCaselleSosta(){return nCaselleSosta;}
     public int getnCasellePremio() {return nCasellePremio;}
@@ -215,62 +216,50 @@ public class SistemaImpl1 implements Sistema{
     public CommandHandler getCommandHandler(){return commandHandler;}
     public HashMap<Casella,Mezzo> getMezzi(){return mezzi;}
 
-//--------------------------------------------UTIL--------------------------------------------
-
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}
     public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
     public boolean isDoppioSei(){return VDoppioSei.isActivated();}
     public boolean isCaselleSosta(){return VCaselleSosta.isActivated();}
     public boolean isCasellePremio(){return VCasellePremio.isActivated();}
     public boolean isPescaCarta(){return VCasellePescaCarta.isActivated();}
-    public boolean isUlterioriCarte(){return true;}//TODO
-
+    public boolean isUlterioriCarte(){return VUlterioriCarte.isActivated();}
     private boolean isNumberMezziOk(int n){
         //non è possibile inserire un numero di mezzi totale superiore alla
         //metà del numero totale di caselle libere (normali)
         int nMaxMezzi = getSizeCaselleLibere()/2;
         return (nMezzi+n)<=nMaxMezzi;
     }
-
     private boolean isNumberCaselleSpecialiOk(int n) {
         //non è possibile inserire un numero di caselle speciali superiore al numero totale di caselle disponibili
         return n<=getSizeCaselleLibere();
     }
+
+//--------------------------------------------UTIL--------------------------------------------
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
         if(tipo==TipoMezzo.SERPENTE)
             return new SerpenteFactory();
         return new ScalaFactory();
     }
+    private int rimbalza(int pos){return totCaselle - (pos-totCaselle);}
 
-    private void azionaCasella(Pedina giocatore) {
-        gestoreEffetti.azionaCasella();
-    }
-
-    private int rimbalza(int pos, int lancio){return totCaselle - (pos-totCaselle);}
-
-    //DS
-    public void verificaCasella(){
-        if(lancioEffettuato)
-            throw new IllegalArgumentException("Sistema: bisogna far avanzare la pedina prima");
-        Pedina giocatore = pedine[turno];
-        if(giocatore.getCasella().isCovered()){ //se la casella corrente NON è una normale
-            azionaCasella(giocatore);
-        }
-    }
-
+    @Override
     public void undo(){commandHandler.undo();}
+    @Override
     public void redo(){commandHandler.redo();}
 
 
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------
+    @Override
     public void prossimoTurno(){
+        int turnoPrima = turno;
         VDoppioSei.action(this);
+        if(turno!=turnoPrima){
+            commandHandler.handle(new TurnoCommand(this,turnoPrima,turno));
+        }
     }
-
-    //DS
-    public void lancia()
-    {
+    @Override
+    public void lancia() {
         if(dadi == null || dadi.isEmpty())
             throw new IllegalArgumentException("Sistema: non hai inserito il numero di dadi da utilizzare.");
         int lancioPrima = lancio;
@@ -280,10 +269,9 @@ public class SistemaImpl1 implements Sistema{
         commandHandler.handle(new DadiCommand(this,lancioPrima,lancioDopo));
         lancioEffettuato = true;
     }
-
-    //DS
+    @Override
     //ritorna true se il giocatore ha vinto
-    public boolean avanza(){
+    public boolean avanza() throws IllegalArgumentException{
         if(!lancioEffettuato)
             throw new IllegalArgumentException("Sistema: il lancio non è stato ancora effettuato");
 
@@ -292,14 +280,24 @@ public class SistemaImpl1 implements Sistema{
         int posCorrente = casellaCorrente.getPos();
         int posSuccessiva = posCorrente+lancio;
 
-        //deve essere il numero esatto di caselle, altrimenti "rimbalza" dall'ultima casella
-        if(posSuccessiva>totCaselle)
-            posSuccessiva = rimbalza(posSuccessiva,lancio);
+        //per vincere, deve ottenere il numero esatto di dadi per la casella finale, altrimenti "rimbalza" dall'ultima casella
+        if(posSuccessiva>(totCaselle-1))
+            posSuccessiva = rimbalza(posSuccessiva);
 
         Casella casellaSuccessiva = tabellone.getCasella(posSuccessiva);
         Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
         lancioEffettuato = false;
-        return posSuccessiva==totCaselle;
+        return posSuccessiva==(totCaselle-1);
     }
+    @Override
+    public void azionaCasella() throws IllegalArgumentException{
+        if(lancioEffettuato)
+            throw new IllegalArgumentException("Sistema: bisogna far avanzare la pedina prima");
+        Pedina giocatore = pedine[turno];
+        if(giocatore.getCasella().isCovered()){ //se la casella corrente NON è una normale
+            gestoreEffetti.azionaCasella();
+        }
+    }
+
 }

@@ -39,7 +39,7 @@ public class HistoryCommandHandler implements CommandHandler{
     public void undo(){
         if(!history.isEmpty()){
             Command undoCmd = history.removeLast();
-            undoCmd.doIt();
+            undoCmd.undoIt();
             redoList.addFirst(undoCmd);
         }
     }
