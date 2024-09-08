@@ -18,6 +18,7 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------VARIABILI-------------------------------------------
     private Tabellone tabellone;
+    //CIAO
     private MezzoFactory mezzoFactory;
     private HashMap<Casella, Mezzo> mezzi;
     //Utile per le caselle speciali e mezzi
