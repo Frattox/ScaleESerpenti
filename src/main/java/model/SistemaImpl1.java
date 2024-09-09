@@ -219,13 +219,21 @@ public class SistemaImpl1 implements Sistema{
     public CommandHandler getCommandHandler(){return commandHandler;}
     public HashMap<Casella,Mezzo> getMezzi(){return mezzi;}
 
+    @Override
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}
+    @Override
     public boolean isDadoSingoloFinale(){return VDadoSingoloFinale.isActivated();}
+    @Override
     public boolean isDoppioSei(){return VDoppioSei.isActivated();}
+    @Override
     public boolean isCaselleSosta(){return VCaselleSosta.isActivated();}
+    @Override
     public boolean isCasellePremio(){return VCasellePremio.isActivated();}
+    @Override
     public boolean isPescaCarta(){return VCasellePescaCarta.isActivated();}
+    @Override
     public boolean isUlterioriCarte(){return VUlterioriCarte.isActivated();}
+
     private boolean isNumberMezziOk(int n){
         //non è possibile inserire un numero di mezzi totale superiore alla
         //metà del numero totale di caselle libere (normali)

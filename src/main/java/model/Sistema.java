@@ -14,6 +14,14 @@ public interface Sistema {
     void setTabellone(int r, int c) throws IllegalArgumentException;
     void setNPedine(int n) throws IllegalArgumentException;
     void setNumberMezzi(TipoMezzo tipo, int n) throws IllegalArgumentException;
+    boolean isDadoSingolo();
+    boolean isDadoSingoloFinale();
+    boolean isDoppioSei();
+    boolean isCaselleSosta();
+    boolean isCasellePremio();
+    boolean isPescaCarta();
+    boolean isUlterioriCarte();
+
     void setNumberCaselleSosta(int n) throws IllegalArgumentException;
     void setNumberCasellePremio(int n) throws IllegalArgumentException;
     void setNumberCasellePescaCarta(int n) throws IllegalArgumentException;
@@ -24,4 +32,5 @@ public interface Sistema {
     boolean avanza() throws IllegalArgumentException;
     void azionaCasella() throws IllegalArgumentException;
     Tabellone getTabellone();
+
 }

@@ -2,13 +2,26 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import model.Sistema;
+
+import java.io.IOException;
 
 public class SettingVariantiController {
     @FXML
     private Sistema sistema;
+    @FXML
+    private Parent root;
+    @FXML
+    private Scene scene;
+    @FXML
+    private Stage stage;
     @FXML
     private CheckBox dadoSingolo,dadoSingoloFinale,doppioSei,caselleSosta,casellePremio,casellePescaCarta,ulterioriCarte;
 
@@ -16,7 +29,7 @@ public class SettingVariantiController {
     public void setSistema(Sistema sistema){
         this.sistema=sistema;
     }
-    public void inviaSettingVarianti(ActionEvent e){
+    public void inviaSettingVarianti(ActionEvent e) throws IOException {
         if(sistema==null)
             throw new IllegalArgumentException("SettingController: sistema ancora non istanziato");
         sistema.setDadoSingolo(dadoSingolo.isSelected());
@@ -26,5 +39,17 @@ public class SettingVariantiController {
         sistema.setCasellePremio(casellePremio.isSelected());
         sistema.setPescaCarta(casellePescaCarta.isSelected());
         sistema.setUlterioriCarte(ulterioriCarte.isSelected());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Game.fxml"));
+        root = loader.load();
+
+        GameController gameController = loader.getController();
+        gameController.setSistema(sistema);
+        gameController.initGame();
+
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
