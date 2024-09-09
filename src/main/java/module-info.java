@@ -13,4 +13,8 @@ module org.example.scaleeserpenti5 {
 
     opens scaleeserpenti5 to javafx.fxml;
     exports scaleeserpenti5;
+    exports view;
+    opens view to javafx.fxml;
+    exports controller;
+    opens controller to javafx.fxml;
 }

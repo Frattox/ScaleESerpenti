@@ -1,4 +1,4 @@
-package scaleeserpenti5;
+package view;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
