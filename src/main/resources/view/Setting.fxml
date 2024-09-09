@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingController">
+   <children>
+      <Label layoutX="37.0" layoutY="30.0" prefHeight="18.0" prefWidth="84.0" text="Tabellone" />
+      <Label layoutX="37.0" layoutY="79.0" prefHeight="18.0" prefWidth="33.0" text="Righe" />
+      <Label layoutX="170.0" layoutY="79.0" prefHeight="18.0" prefWidth="46.0" text="Colonne" />
+      <Label layoutX="37.0" layoutY="140.0" prefHeight="18.0" prefWidth="101.0" text="Numero Giocatori" />
+      <Label layoutX="37.0" layoutY="204.0" prefHeight="18.0" prefWidth="101.0" text="Numero Scale" />
+      <Label layoutX="37.0" layoutY="271.0" prefHeight="18.0" prefWidth="101.0" text="Numero Serpenti" />
+      <TextField fx:id="numeroGiocatori" layoutX="142.0" layoutY="137.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="righe" layoutX="79.0" layoutY="75.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="colonne" layoutX="227.0" layoutY="75.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="scale" layoutX="119.0" layoutY="200.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="serpenti" layoutX="139.0" layoutY="267.0" prefHeight="26.0" prefWidth="46.0" />
+      <Button layoutX="470.0" layoutY="331.0" mnemonicParsing="false" onAction="#inviaSettingIniziale" text="Invia" />
+   </children>
+</AnchorPane>

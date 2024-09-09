@@ -71,6 +71,7 @@ public class SistemaImpl1 implements Sistema{
         nCasellePescaCarta=0;
         turno=-1;
         caselleLibere = new GestoreCaselleLibereImpl(this);
+        VUlterioriCarte = new VarianteUlterioriCarte();
         cartaPescata = null;
         gestoreEffetti = new GestoreEffettiImpl(this);
     }

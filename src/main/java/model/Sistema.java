@@ -1,6 +1,7 @@
 package model;
 
 import model.elementi.Mezzi.TipoMezzo;
+import model.elementi.Tabellone;
 
 public interface Sistema {
     void setDadoSingolo(boolean flag);
@@ -22,4 +23,5 @@ public interface Sistema {
     void lancia();
     boolean avanza() throws IllegalArgumentException;
     void azionaCasella() throws IllegalArgumentException;
+    Tabellone getTabellone();
 }

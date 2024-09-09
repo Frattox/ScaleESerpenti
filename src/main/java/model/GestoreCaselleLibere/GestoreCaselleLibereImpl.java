@@ -13,10 +13,11 @@ public class GestoreCaselleLibereImpl implements GestoreCaselleLibere {
     {
         caselleLibere = new ArrayList<>();
         Tabellone tabellone = s.getTabellone();
-        //esclusa la pos (0,0), ovvero la prima casella
-        for(int i=1;i<tabellone.getR();i++)
+        for(int i=0;i<tabellone.getR();i++)
             for(int j=0;j< tabellone.getC();j++)
                 caselleLibere.add(tabellone.getCasella(i,j));
+        //esclusa la pos (0,0), ovvero la prima casella
+        caselleLibere.remove(0);
         //esclusa la pos (R-1,C-2), ovvero l'ultima casella
         caselleLibere.remove(caselleLibere.size()-1);
     }

@@ -1,4 +1,4 @@
-module org.example.scaleeserpenti5 {
+module scaleeserpenti {
     requires javafx.controls;
     requires javafx.fxml;
     requires javafx.web;
@@ -10,10 +10,10 @@ module org.example.scaleeserpenti5 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
-
-    opens scaleeserpenti5 to javafx.fxml;
-    exports view;
-    opens view to javafx.fxml;
-    exports controller;
     opens controller to javafx.fxml;
+    opens view to javafx.fxml;
+    opens model to javafx.fxml;
+    exports view;
+    exports controller;
+    exports model;
 }

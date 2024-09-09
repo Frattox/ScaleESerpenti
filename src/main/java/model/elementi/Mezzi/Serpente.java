@@ -18,7 +18,7 @@ public class Serpente extends Mezzo{
 
     @Override
     protected int casellaFrom(int nCaselleLibere) {
-        return (int) (1 + Math.random()*nCaselleLibere);//casella libera random in [1,nCaselleLibere-1]
+        return 1 + (int) (Math.random()*(nCaselleLibere-1));//casella libera random in [1,nCaselleLibere-1]
     }
 
     @Override

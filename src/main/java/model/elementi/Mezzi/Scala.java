@@ -10,8 +10,15 @@ public class Scala extends Mezzo{
         super(from, to);
     }
 
-    protected int casellaFrom(int nCaselleLibere){return (int) (Math.random()*nCaselleLibere-1);}
-    protected int casellaTo(int iFrom, int nCaselleLibere) {return (int) (iFrom + (Math.random()*nCaselleLibere));} //casella libera random in [iFrom,nCaselleLibere-1]
+    protected int casellaFrom(int nCaselleLibere) {
+        // Genera una posizione casuale per iFrom nell'intervallo [0, nCaselleLibere - 2]
+        return (int) (Math.random() * (nCaselleLibere - 1));
+    }
+
+    protected int casellaTo(int iFrom, int nCaselleLibere) {
+        // Genera una posizione casuale per iTo nell'intervallo [iFrom + 1, nCaselleLibere - 1]
+        return iFrom + 1 + (int) (Math.random() * (nCaselleLibere - iFrom - 1));
+    }
 
 
     @Override
