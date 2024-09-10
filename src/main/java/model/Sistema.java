@@ -32,5 +32,6 @@ public interface Sistema {
     boolean avanza() throws IllegalArgumentException;
     void azionaCasella() throws IllegalArgumentException;
     Tabellone getTabellone();
+    int getNPedine();
 
 }

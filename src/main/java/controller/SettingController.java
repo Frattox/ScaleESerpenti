@@ -16,8 +16,6 @@ import model.elementi.Mezzi.TipoMezzo;
 import java.io.IOException;
 
 public class SettingController {
-
-
     @FXML
     private Sistema sistema;
     @FXML

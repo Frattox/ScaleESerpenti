@@ -20,6 +20,7 @@ public class VarianteCaselleSosta extends AbstractVariante{
         for(int i=0;i<nCaselleSosta;i++){
             s.setRandomCasellaLibera(tipoSostaRandom());
         }
+
     }
 
     private Casella.Tipo tipoSostaRandom()

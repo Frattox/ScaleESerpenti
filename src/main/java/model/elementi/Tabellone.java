@@ -29,7 +29,7 @@ public abstract class Tabellone {
 
     public Posizione getPosCasella(int pos){
         if(pos>=this.r*this.c)
-            throw new IllegalArgumentException("Tabellone: posizione non appartenente alla tabella");
+            throw new IllegalArgumentException("Tabellone: posizione "+pos+" non appartenente alla tabella r:"+this.r+" c:"+this.c);
         int x = pos/this.c;
         int y = pos%this.c;
         return new Posizione(x,y);

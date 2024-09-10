@@ -7,10 +7,12 @@ import model.SistemaImpl1;
 import java.util.ArrayList;
 
 public class GestoreCaselleLibereImpl implements GestoreCaselleLibere {
+    private SistemaImpl1 s;
     private ArrayList<Casella> caselleLibere;
 
     public GestoreCaselleLibereImpl(SistemaImpl1 s)
     {
+        this.s = s;
         caselleLibere = new ArrayList<>();
         Tabellone tabellone = s.getTabellone();
         for(int i=0;i<tabellone.getR();i++)
@@ -26,13 +28,15 @@ public class GestoreCaselleLibereImpl implements GestoreCaselleLibere {
     @Override
     public void setRandomCasellaLibera(Casella.Tipo tipo) {
         int i = (int) (Math.random()*getSize());
-        caselleLibere.get(i).setTipo(tipo);
+        Casella casellaDaSettare = caselleLibere.get(i);
+        s.getTabellone().getCasella(casellaDaSettare.getPos()).setTipo(tipo);
         caselleLibere.remove(i);
     }
 
     @Override
     public void setCasellaLibera(int i, Casella.Tipo tipo) {
-        caselleLibere.get(i).setTipo(tipo);
+        Casella casellaDaSettare = caselleLibere.get(i);
+        s.getTabellone().getCasella(casellaDaSettare.getPos()).setTipo(tipo);
         caselleLibere.remove(i);
     }
 

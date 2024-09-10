@@ -70,7 +70,6 @@ public class SistemaImpl1 implements Sistema{
         nCasellePremio=0;
         nCasellePescaCarta=0;
         turno=-1;
-        caselleLibere = new GestoreCaselleLibereImpl(this);
         VUlterioriCarte = new VarianteUlterioriCarte();
         cartaPescata = null;
         gestoreEffetti = new GestoreEffettiImpl(this);
@@ -124,6 +123,7 @@ public class SistemaImpl1 implements Sistema{
             throw new IllegalArgumentException("Sistema: numero righe e/o colonne non idonee");
         tabellone = new TabelloneMatrix(r,c);
         totCaselle=tabellone.getR()* tabellone.getC();
+        caselleLibere = new GestoreCaselleLibereImpl(this);
     }
     @Override
     public void setNPedine(int n) throws IllegalArgumentException{
@@ -147,7 +147,7 @@ public class SistemaImpl1 implements Sistema{
             throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di mezzi.");
         mezziQuantita.put(tipo,n);
         nMezzi+=n;
-        setMezziAutomatico();
+        setMezziAutomatico(tipo,n);
     }
     @Override
     public void setNumberCaselleSosta(int n) throws IllegalArgumentException{
@@ -177,17 +177,12 @@ public class SistemaImpl1 implements Sistema{
         VCasellePescaCarta.action(this);
     }
 
-    private void setMezziAutomatico(){
-        if(mezziQuantita.isEmpty())
-            return;
-        for(TipoMezzo t: mezziQuantita.keySet()) {
-            mezzoFactory = createMezzoFactory(t);
-            int quantita = mezziQuantita.get(t);
-            for(int i=0; i<quantita; i++){
-                Mezzo m = mezzoFactory.factory();
-                m.autoSet(this);
-                mezzi.put(m.getFrom(),m);
-            }
+    private void setMezziAutomatico(TipoMezzo tipo, int n){
+        mezzoFactory = createMezzoFactory(tipo);
+        for(int i=0; i<n; i++){
+            Mezzo m = mezzoFactory.factory();
+            m.autoSet(this);
+            mezzi.put(m.getFrom(),m);
         }
     }
 
@@ -213,6 +208,7 @@ public class SistemaImpl1 implements Sistema{
     public int getnCaselleSosta(){return nCaselleSosta;}
     public int getnCasellePremio() {return nCasellePremio;}
     public int getnCasellePescaCarta(){return nCasellePescaCarta;}
+    public int getNPedine(){return pedine.length;}
     public Pedina[] getPedine(){return pedine;}
     public Tabellone getTabellone(){return tabellone;}
     public Carta getCartaPescata(){return cartaPescata;}

@@ -40,12 +40,12 @@ public class SettingVariantiController {
         sistema.setPescaCarta(casellePescaCarta.isSelected());
         sistema.setUlterioriCarte(ulterioriCarte.isSelected());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Game.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SettingNumeroCaselleSpeciali.fxml"));
         root = loader.load();
 
-        GameController gameController = loader.getController();
-        gameController.setSistema(sistema);
-        gameController.initGame();
+        SettingNumeroCaselleSpecialiController settingNumeroCaselleSpecialiController = loader.getController();
+        settingNumeroCaselleSpecialiController.setSistema(sistema);
+        settingNumeroCaselleSpecialiController.init();
 
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);

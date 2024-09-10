@@ -16,7 +16,5 @@
       <CheckBox fx:id="casellePescaCarta" layoutX="50.0" layoutY="218.0" mnemonicParsing="false" text="Caselle Pesca Carta" />
       <Button layoutX="477.0" layoutY="310.0" mnemonicParsing="false" onAction="#inviaSettingVarianti" text="Invia" />
       <CheckBox fx:id="ulterioriCarte" layoutX="50.0" layoutY="236.0" mnemonicParsing="false" text="Ulteriori Carte" />
-      <Label fx:id="hoDetto" layoutX="394.0" layoutY="182.0" text="HO DETTO SCEGLI GRETA." visible="false" />
-      <Label fx:id="ecco" layoutX="393.0" layoutY="209.0" text="Ecco bravo :D." visible="false" />
    </children>
 </AnchorPane>
