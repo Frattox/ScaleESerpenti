@@ -214,6 +214,8 @@ public class SistemaImpl1 implements Sistema{
     public Carta getCartaPescata(){return cartaPescata;}
     public CommandHandler getCommandHandler(){return commandHandler;}
     public HashMap<Casella,Mezzo> getMezzi(){return mezzi;}
+    @Override
+    public Casella getCasellaCorrente(){return pedine[turno].getCasella();}
 
     @Override
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}
@@ -264,6 +266,7 @@ public class SistemaImpl1 implements Sistema{
         if(turno!=turnoPrima){
             commandHandler.handle(new TurnoCommand(this,turnoPrima,turno));
         }
+        System.out.println("proxTurno");
     }
     @Override
     public void lancia() {
@@ -275,6 +278,7 @@ public class SistemaImpl1 implements Sistema{
         int lancioDopo = lancio;
         commandHandler.handle(new DadiCommand(this,lancioPrima,lancioDopo));
         lancioEffettuato = true;
+        System.out.println("lancia");
     }
     @Override
     //ritorna true se il giocatore ha vinto
@@ -295,7 +299,9 @@ public class SistemaImpl1 implements Sistema{
         Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
         lancioEffettuato = false;
+        System.out.println("avanza");
         return posSuccessiva==(totCaselle-1);
+
     }
     @Override
     public void azionaCasella() throws IllegalArgumentException{
@@ -305,6 +311,7 @@ public class SistemaImpl1 implements Sistema{
         if(giocatore.getCasella().isCovered()){ //se la casella corrente NON è una normale
             gestoreEffetti.azionaCasella();
         }
+        System.out.println("azionaCasella");
     }
 
 }

@@ -1,5 +1,6 @@
 package model;
 
+import model.elementi.Casella;
 import model.elementi.Mezzi.TipoMezzo;
 import model.elementi.Tabellone;
 
@@ -25,6 +26,7 @@ public interface Sistema {
     void setNumberCaselleSosta(int n) throws IllegalArgumentException;
     void setNumberCasellePremio(int n) throws IllegalArgumentException;
     void setNumberCasellePescaCarta(int n) throws IllegalArgumentException;
+    void setDadi();
     void undo();
     void redo();
     void prossimoTurno();
@@ -33,5 +35,8 @@ public interface Sistema {
     void azionaCasella() throws IllegalArgumentException;
     Tabellone getTabellone();
     int getNPedine();
+    int getTurno();
+    int getLancio();
+    Casella getCasellaCorrente();
 
 }

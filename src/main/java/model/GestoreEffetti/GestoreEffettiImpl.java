@@ -81,8 +81,7 @@ public class GestoreEffettiImpl implements GestoreEffetti{
         azionaCarta(cartaPescata, pedinaCorrente);
     }
     private void mezzo(Pedina pedinaCorrente){
-        HashMap<Casella,Mezzo> mezzi = sistema.getMezzi();
-        Mezzo m = mezzi.get(pedinaCorrente.getCasella());
+        Mezzo m = sistema.getMezzi().get(pedinaCorrente.getCasella());
         commandHandler.handle(new MezzoCommand(m,pedinaCorrente));
     }
 

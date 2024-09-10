@@ -14,8 +14,8 @@
       <Label layoutX="37.0" layoutY="204.0" prefHeight="18.0" prefWidth="101.0" text="Numero Scale" />
       <Label layoutX="37.0" layoutY="271.0" prefHeight="18.0" prefWidth="101.0" text="Numero Serpenti" />
       <TextField fx:id="numeroGiocatori" layoutX="142.0" layoutY="137.0" prefHeight="26.0" prefWidth="46.0" text="3" />
-      <TextField fx:id="righe" layoutX="79.0" layoutY="75.0" prefHeight="26.0" prefWidth="46.0" />
-      <TextField fx:id="colonne" layoutX="227.0" layoutY="75.0" prefHeight="26.0" prefWidth="46.0" />
+      <TextField fx:id="righe" layoutX="79.0" layoutY="75.0" prefHeight="26.0" prefWidth="46.0" text="10" />
+      <TextField fx:id="colonne" layoutX="227.0" layoutY="75.0" prefHeight="26.0" prefWidth="46.0" text="12" />
       <TextField fx:id="scale" layoutX="119.0" layoutY="200.0" prefHeight="26.0" prefWidth="46.0" text="4" />
       <TextField fx:id="serpenti" layoutX="139.0" layoutY="267.0" prefHeight="26.0" prefWidth="46.0" text="4" />
       <Button layoutX="470.0" layoutY="331.0" mnemonicParsing="false" onAction="#inviaSettingIniziale" text="Invia" />

@@ -40,6 +40,8 @@ public class SettingVariantiController {
         sistema.setPescaCarta(casellePescaCarta.isSelected());
         sistema.setUlterioriCarte(ulterioriCarte.isSelected());
 
+        sistema.setDadi();
+
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SettingNumeroCaselleSpeciali.fxml"));
         root = loader.load();
 

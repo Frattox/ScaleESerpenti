@@ -13,6 +13,8 @@ public class HistoryCommandHandler implements CommandHandler{
     }
 
     public HistoryCommandHandler(int maxHistoryLenght){
+        history = new LinkedList<>();
+        redoList = new LinkedList<>();
         if(maxHistoryLenght<0)
             throw new IllegalArgumentException();
         this.maxHistoryLenght = maxHistoryLenght;

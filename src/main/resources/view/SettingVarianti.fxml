@@ -11,9 +11,9 @@
       <CheckBox fx:id="dadoSingoloFinale" layoutX="50.0" layoutY="146.0" mnemonicParsing="false" text="Dado Singolo Finale" />
       <CheckBox fx:id="dadoSingolo" layoutX="50.0" layoutY="128.0" mnemonicParsing="false" text="Dado Singolo" />
       <CheckBox fx:id="doppioSei" layoutX="50.0" layoutY="164.0" mnemonicParsing="false" text="Doppio Sei" />
-      <CheckBox fx:id="caselleSosta" layoutX="50.0" layoutY="182.0" mnemonicParsing="false" text="Caselle Sosta" />
-      <CheckBox fx:id="casellePremio" layoutX="50.0" layoutY="200.0" mnemonicParsing="false" text="Caselle Premio" />
-      <CheckBox fx:id="casellePescaCarta" layoutX="50.0" layoutY="218.0" mnemonicParsing="false" text="Caselle Pesca Carta" />
+      <CheckBox fx:id="caselleSosta" layoutX="50.0" layoutY="182.0" mnemonicParsing="false" selected="true" text="Caselle Sosta" />
+      <CheckBox fx:id="casellePremio" layoutX="50.0" layoutY="200.0" mnemonicParsing="false" selected="true" text="Caselle Premio" />
+      <CheckBox fx:id="casellePescaCarta" layoutX="50.0" layoutY="218.0" mnemonicParsing="false" selected="true" text="Caselle Pesca Carta" />
       <Button layoutX="477.0" layoutY="310.0" mnemonicParsing="false" onAction="#inviaSettingVarianti" text="Invia" />
       <CheckBox fx:id="ulterioriCarte" layoutX="50.0" layoutY="236.0" mnemonicParsing="false" text="Ulteriori Carte" />
    </children>

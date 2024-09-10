@@ -51,6 +51,12 @@ public class SettingNumeroCaselleSpecialiController {
         casellePremio = addVariante(sistema.isCasellePremio(),"Caselle premio");
         casellePescaCarta = addVariante(sistema.isPescaCarta(),"Casella pesca carta");
 
+
+        //per ora
+        caselleSosta.setText("10");
+        casellePremio.setText("10");
+        casellePescaCarta.setText("10");
+
         setBottone();
 
         gridVarianti.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
