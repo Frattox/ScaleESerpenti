@@ -25,6 +25,9 @@ public class GameController {
 
         int r = t.getR(), c = t.getC();
 
+        tabellone.getColumnConstraints().clear();
+        tabellone.getRowConstraints().clear();
+
         //vincoli di colonna
         for (int i = 0; i < c; i++) {
             ColumnConstraints columnConstraints = new ColumnConstraints();
@@ -41,15 +44,15 @@ public class GameController {
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 casella = t.getCasella(i, j);
-                label = new Label(casella.getTipo().toString());
-                label.setMinSize(50, 50); // Dimensione minima della cella, può essere adattata
+                label = new Label("A");
                 label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Dimensione massima per adattarsi
-                label.setStyle("-fx-border-color: black; -fx-padding: 5;");
                 GridPane.setRowIndex(label, i);
                 GridPane.setColumnIndex(label, j);
                 tabellone.add(label, i,j);
+
             }
         }
+        tabellone.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
 
     }
 
