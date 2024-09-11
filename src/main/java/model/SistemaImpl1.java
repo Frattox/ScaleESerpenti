@@ -262,7 +262,7 @@ public class SistemaImpl1 implements Sistema{
             return new SerpenteFactory();
         return new ScalaFactory();
     }
-    private int rimbalza(int pos){return totCaselle - (pos-totCaselle);}
+    private int rimbalza(int pos){return totCaselle - 1 - (pos-totCaselle);}
 
     @Override
     public void undo(){commandHandler.undo();}
@@ -309,9 +309,9 @@ public class SistemaImpl1 implements Sistema{
         int posSuccessiva = posCorrente+lancio;
 
         //per vincere, deve ottenere il numero esatto di dadi per la casella finale, altrimenti "rimbalza" dall'ultima casella
-        if(posSuccessiva>(totCaselle-1))
+        if(posSuccessiva>(totCaselle-1)) {
             posSuccessiva = rimbalza(posSuccessiva);
-
+        }
         Casella casellaSuccessiva = tabellone.getCasella(posSuccessiva);
         Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
