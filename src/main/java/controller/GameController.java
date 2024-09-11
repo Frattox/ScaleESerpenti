@@ -2,21 +2,33 @@ package controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.stage.Stage;
 import model.Sistema;
 import model.elementi.Casella.Tipo;
 import model.elementi.Casella;
 import model.elementi.Tabellone;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 public class GameController {
 
+    @FXML
+    private Parent root;
+    @FXML
+    private Scene scene;
+    @FXML
+    private Stage stage;
     private HashMap<Tipo,String> coloriCaselle;
     private StackPane[] giocatori;
     private int operazione, r, c;
@@ -89,7 +101,7 @@ public class GameController {
         coloriCaselle.put(Tipo.FINE,toHexString(Color.LIGHTGREEN));
     }
 
-    private static String toHexString(Color color) {
+    public static String toHexString(Color color) {
         return String.format( "#%02X%02X%02X",
                 (int) (color.getRed() * 255),
                 (int) (color.getGreen() * 255),
@@ -129,24 +141,36 @@ public class GameController {
     }
 
     private void setTabellone(Tabellone t, int r, int c){
-        Label label;
+        Label label = new Label(), labelPrimo=new Label(),labelUltimo=new Label();
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 Tipo tipo = t.getCasella(i,j).getTipo();
-                label = new Label(tipo.toString());
-                label.setStyle("-fx-background-color:" + coloriCaselle.get(tipo) + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
-                label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Dimensione massima per adattarsi
-                label.setAlignment(Pos.CENTER);
-                GridPane.setRowIndex(label, i);
-                GridPane.setColumnIndex(label, j);
-                tabellone.add(label,jPos(j),iPos(i));
+                addLabel(label,tipo,i,j);
+                if(i==0 && j==0)
+                    labelPrimo = label;
+                if(i==r-1 && j==c-1)
+                    labelUltimo = label;
             }
         }
+        tabellone.getChildren().remove(labelPrimo);
+        addLabel(labelPrimo,Tipo.INIZIO,0,0);
+        tabellone.getChildren().remove(labelUltimo);
+        addLabel(labelUltimo,Tipo.FINE,r-1,c-1);
+    }
+
+    private void addLabel(Label label, Tipo tipo, int i, int j){
+        label = new Label(tipo.toString());
+        label.setStyle("-fx-background-color:" + coloriCaselle.get(tipo) + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
+        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Dimensione massima per adattarsi
+        label.setAlignment(Pos.CENTER);
+        GridPane.setRowIndex(label, i);
+        GridPane.setColumnIndex(label, j);
+        tabellone.add(label,jPos(j),iPos(i));
     }
 
 //--------------------------------------------UTIL--------------------------------------------
 
-    private void eseguiOperazione(){
+    private void eseguiOperazione() throws IOException{
         if(sistema.redo())
             return;
         operazione++;
@@ -162,7 +186,8 @@ public class GameController {
                 System.out.println("lancia");
                 break;
             case 2:
-                sistema.avanza();
+                if(sistema.avanza())
+                    vittoria(new ActionEvent());
                 //da rimuovere
                 System.out.println("avanza");
                 break;
@@ -173,6 +198,18 @@ public class GameController {
                 break;
             default:break;
         }
+    }
+
+    private void vittoria(ActionEvent e) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Vittoria.fxml"));
+        root = loader.load();
+        VittoriaController vittoriaController = loader.getController();
+        vittoriaController.setSistema(sistema);
+        vittoriaController.initVittoria();
+        stage = (Stage) vbox.getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 
     private void repaint(){
@@ -190,7 +227,7 @@ public class GameController {
 
 //--------------------------------------------GAME--------------------------------------------
 
-    public void forward(ActionEvent e){
+    public void forward(ActionEvent e) throws IOException{
         eseguiOperazione();
         repaint();
     }

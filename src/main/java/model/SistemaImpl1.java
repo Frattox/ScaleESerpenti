@@ -220,6 +220,7 @@ public class SistemaImpl1 implements Sistema{
     public HashMap<Casella,Mezzo> getMezzi(){return mezzi;}
     @Override
     public Casella getCasellaCorrente(){return pedine[turno].getCasella();}
+    public String getVincitore(){return Integer.toString(turno)+1;}
 
     @Override
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}

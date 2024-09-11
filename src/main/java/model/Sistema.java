@@ -38,5 +38,6 @@ public interface Sistema {
     int getTurno();
     int getLancio();
     Casella getCasellaCorrente();
+    String getVincitore();
 
 }
