@@ -27,8 +27,8 @@ public interface Sistema {
     void setNumberCasellePremio(int n) throws IllegalArgumentException;
     void setNumberCasellePescaCarta(int n) throws IllegalArgumentException;
     void setDadi();
-    void undo();
-    void redo();
+    boolean undo();
+    boolean redo();
     void prossimoTurno();
     void lancia();
     boolean avanza() throws IllegalArgumentException;

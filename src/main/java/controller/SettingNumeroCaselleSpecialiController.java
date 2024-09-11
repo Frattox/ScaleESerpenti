@@ -53,9 +53,9 @@ public class SettingNumeroCaselleSpecialiController {
 
 
         //per ora
-        caselleSosta.setText("10");
-        casellePremio.setText("10");
-        casellePescaCarta.setText("10");
+        if(sistema.isCaselleSosta()) caselleSosta.setText("10");
+        if(sistema.isCasellePremio()) casellePremio.setText("10");
+        if(sistema.isPescaCarta()) casellePescaCarta.setText("10");
 
         setBottone();
 

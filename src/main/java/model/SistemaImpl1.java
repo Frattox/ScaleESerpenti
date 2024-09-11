@@ -187,7 +187,6 @@ public class SistemaImpl1 implements Sistema{
             Mezzo m = mezzoFactory.factory();
             m.autoSet(this);
             mezzi.put(m.getFrom(),m);
-            System.out.println(tipo.toString()+":"+m.getFrom().getPos());
         }
     }
 
@@ -265,24 +264,23 @@ public class SistemaImpl1 implements Sistema{
     private int rimbalza(int pos){return totCaselle - 1 - (pos-totCaselle);}
 
     @Override
-    public void undo(){commandHandler.undo();}
+    public boolean undo(){ return commandHandler.undo();}
     @Override
-    public void redo(){commandHandler.redo();}
+    public boolean redo(){return commandHandler.redo();}
 
 
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------
     @Override
     public void prossimoTurno(){
-        int turnoPrima = turno;
+        int turnoPrima = turno<0?0:turno;
         VDoppioSei.action(this);
-        while(pedine[turno].isInSosta() && !isAllInSosta()){
+        if(pedine[turno].isInSosta()){
             pedine[turno].decSosta();
             VDoppioSei.action(this);
         }
         if(turno!=turnoPrima){
             commandHandler.handle(new TurnoCommand(this,turnoPrima,turno));
         }
-        System.out.println("proxTurno");
     }
 
     @Override
@@ -295,7 +293,6 @@ public class SistemaImpl1 implements Sistema{
         int lancioDopo = lancio;
         commandHandler.handle(new DadiCommand(this,lancioPrima,lancioDopo));
         lancioEffettuato = true;
-        System.out.println("lancia");
     }
     @Override
     //ritorna true se il giocatore ha vinto
@@ -316,7 +313,6 @@ public class SistemaImpl1 implements Sistema{
         Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
         lancioEffettuato = false;
-        System.out.println("avanza");
         return posSuccessiva==(totCaselle-1);
 
     }
@@ -328,7 +324,6 @@ public class SistemaImpl1 implements Sistema{
         if(giocatore.getCasella().isCovered()){ //se la casella corrente NON è una normale
             gestoreEffetti.azionaCasella();
         }
-        System.out.println("azionaCasella");
     }
 
 }

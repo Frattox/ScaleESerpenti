@@ -20,7 +20,7 @@ public class Pedina {
     public void setDivietoDiSosta(boolean divietoDiSosta){this.divietoDiSosta=divietoDiSosta;}
     public int getSosta(){return sosta;}
     public void setSosta(int sosta){
-        if(sosta<=0)
+        if(sosta<0)
             throw new IllegalArgumentException("Pedina: inserire una sosta opportuna.");
         this.sosta = sosta;
     }

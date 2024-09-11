@@ -77,7 +77,7 @@ public class GameController {
     }
 
     private void initColoriCaselle(HashMap<Casella.Tipo,String> coloriCaselle) {
-        coloriCaselle.put(Tipo.NORMALE,toHexString(Color.GRAY));
+        coloriCaselle.put(Tipo.NORMALE,toHexString(Color.LIGHTGRAY));
         coloriCaselle.put(Tipo.MEZZO_FROM,toHexString(Color.YELLOW));
         coloriCaselle.put(Tipo.MEZZO_TO,toHexString(Color.ORANGE));
         coloriCaselle.put(Tipo.LOCANDA,toHexString(Color.BROWN));
@@ -85,6 +85,8 @@ public class GameController {
         coloriCaselle.put(Tipo.DADI,toHexString(Color.GREEN));
         coloriCaselle.put(Tipo.MOLLA,toHexString(Color.BLUE));
         coloriCaselle.put(Tipo.PESCA,toHexString(Color.CYAN));
+        coloriCaselle.put(Tipo.INIZIO,toHexString(Color.LIGHTGREEN));
+        coloriCaselle.put(Tipo.FINE,toHexString(Color.LIGHTGREEN));
     }
 
     private static String toHexString(Color color) {
@@ -145,24 +147,31 @@ public class GameController {
 //--------------------------------------------UTIL--------------------------------------------
 
     private void eseguiOperazione(){
-        for(int i=0;i<4;i++) {
-            operazione++;
-            switch (operazione % 4) {
-                case 0:
-                    sistema.prossimoTurno();
-                    break;
-                case 1:
-                    sistema.lancia();
-                    break;
-                case 2:
-                    sistema.avanza();
-                    break;
-                case 3:
-                    sistema.azionaCasella();
-                    break;
-            }
-            //da rimuovere
-            System.out.println(operazione);
+        if(sistema.redo())
+            return;
+        operazione++;
+        switch (operazione % 4) {
+            case 0:
+                sistema.prossimoTurno();
+                //da rimuovere
+                System.out.println("prox turno");
+                break;
+            case 1:
+                sistema.lancia();
+                //da rimuovere
+                System.out.println("lancia");
+                break;
+            case 2:
+                sistema.avanza();
+                //da rimuovere
+                System.out.println("avanza");
+                break;
+            case 3:
+                sistema.azionaCasella();
+                //da rimuovere
+                System.out.println("aziona");
+                break;
+            default:break;
         }
     }
 
@@ -184,13 +193,13 @@ public class GameController {
     public void forward(ActionEvent e){
         eseguiOperazione();
         repaint();
-        //TODO
     }
 
     public void backward(ActionEvent e){
         if(operazione<=0)
             return;
-        //TODO
+        if(sistema.undo())
+            repaint();
     }
 
 

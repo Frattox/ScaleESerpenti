@@ -30,20 +30,24 @@ public class HistoryCommandHandler implements CommandHandler{
             redoList.clear();
     }
 
-    public void redo(){
+    public boolean redo(){
         if(!redoList.isEmpty()){
-            Command redoCmd = redoList.removeLast();
-            redoCmd.doIt();
+            Command redoCmd = redoList.removeFirst();
+            if(redoCmd.doIt())
+                System.out.println("HistoryCommandHandler:"+redoCmd.getClass().toString());
             history.addFirst(redoCmd);
         }
+        return !redoList.isEmpty();
     }
 
-    public void undo(){
+    public boolean undo(){
         if(!history.isEmpty()){
-            Command undoCmd = history.removeLast();
-            undoCmd.undoIt();
+            Command undoCmd = history.removeFirst();
+            if(undoCmd.undoIt())
+                System.out.println("HistoryCommandHandler:"+undoCmd.getClass().toString());
             redoList.addFirst(undoCmd);
         }
+        return !history.isEmpty();
     }
 
     private void addToHistory(Command cmd) {
