@@ -111,8 +111,12 @@ public class SistemaImpl1 implements Sistema{
         VUlterioriCarte.setActivated(flag,this);
     }
 
-    public void setRandomCasellaLibera(Casella.Tipo tipo){caselleLibere.setRandomCasellaLibera(tipo);}
-    public void setCasellaLibera(int i,Casella.Tipo tipo){caselleLibere.setCasellaLibera(i,tipo);}
+    public void setRandomCasellaLibera(Casella.Tipo tipo){
+        caselleLibere.setRandomCasellaLibera(tipo);
+    }
+    public Casella setCasellaLibera(int i,Casella.Tipo tipo){
+        return caselleLibere.setCasellaLibera(i,tipo);
+    }
 
     public void setLancio(int lancio) {this.lancio=lancio;}
     public void setTurno(int turno) {this.turno=turno;}
@@ -183,6 +187,7 @@ public class SistemaImpl1 implements Sistema{
             Mezzo m = mezzoFactory.factory();
             m.autoSet(this);
             mezzi.put(m.getFrom(),m);
+            System.out.println(tipo.toString()+":"+m.getFrom().getPos());
         }
     }
 
@@ -243,6 +248,13 @@ public class SistemaImpl1 implements Sistema{
         return n<=getSizeCaselleLibere();
     }
 
+    private boolean isAllInSosta() {
+        for(int i=0;i<pedine.length;i++)
+            if(!pedine[i].isInSosta())
+                return false;
+        return true;
+    }
+
 //--------------------------------------------UTIL--------------------------------------------
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
@@ -263,11 +275,16 @@ public class SistemaImpl1 implements Sistema{
     public void prossimoTurno(){
         int turnoPrima = turno;
         VDoppioSei.action(this);
+        while(pedine[turno].isInSosta() && !isAllInSosta()){
+            pedine[turno].decSosta();
+            VDoppioSei.action(this);
+        }
         if(turno!=turnoPrima){
             commandHandler.handle(new TurnoCommand(this,turnoPrima,turno));
         }
         System.out.println("proxTurno");
     }
+
     @Override
     public void lancia() {
         if(dadi == null || dadi.isEmpty())

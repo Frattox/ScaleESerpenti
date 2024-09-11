@@ -25,7 +25,6 @@ public class Pedina {
         this.sosta = sosta;
     }
 
-    //ritorna true se la pedina è libera dalla sosta
     public void decSosta(){sosta--;}
 
     public boolean isInSosta(){return sosta>0;}

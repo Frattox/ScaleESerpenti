@@ -32,6 +32,6 @@ public class VarianteDoppioSei extends AbstractVariante{
     }
 
     private boolean isLancioDoppioSei(int lancio){
-        return lancio%6==0;
+        return lancio!=0 && lancio%6==0;
     }
 }

@@ -34,10 +34,11 @@ public class GestoreCaselleLibereImpl implements GestoreCaselleLibere {
     }
 
     @Override
-    public void setCasellaLibera(int i, Casella.Tipo tipo) {
+    public Casella setCasellaLibera(int i, Casella.Tipo tipo) {
         Casella casellaDaSettare = caselleLibere.get(i);
         s.getTabellone().getCasella(casellaDaSettare.getPos()).setTipo(tipo);
         caselleLibere.remove(i);
+        return casellaDaSettare;
     }
 
     @Override

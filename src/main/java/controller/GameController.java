@@ -19,7 +19,7 @@ public class GameController {
 
     private HashMap<Tipo,String> coloriCaselle;
     private StackPane[] giocatori;
-    private int operazione,r, c;
+    private int operazione, r, c;
     @FXML
     private GridPane gridComandi, tabellone;
     @FXML
@@ -112,6 +112,7 @@ public class GameController {
         tabellone.add(pedina,jPos(j),iPos(i));
     }
 
+    //tabellone invertito
     private int iPos(int i){return r-i-1;}
     private int jPos(int j){return c-j-1;}
 
@@ -136,7 +137,7 @@ public class GameController {
                 label.setAlignment(Pos.CENTER);
                 GridPane.setRowIndex(label, i);
                 GridPane.setColumnIndex(label, j);
-                tabellone.add(label,j,i);
+                tabellone.add(label,jPos(j),iPos(i));
             }
         }
     }
@@ -144,23 +145,25 @@ public class GameController {
 //--------------------------------------------UTIL--------------------------------------------
 
     private void eseguiOperazione(){
-        switch(operazione%4){
-            case 0:
-                sistema.prossimoTurno();
-                break;
-            case 1:
-                sistema.lancia();
-                break;
-            case 2:
-                sistema.avanza();
-                break;
-            case 3:
-                sistema.azionaCasella();
-                break;
+        for(int i=0;i<4;i++) {
+            operazione++;
+            switch (operazione % 4) {
+                case 0:
+                    sistema.prossimoTurno();
+                    break;
+                case 1:
+                    sistema.lancia();
+                    break;
+                case 2:
+                    sistema.avanza();
+                    break;
+                case 3:
+                    sistema.azionaCasella();
+                    break;
+            }
+            //da rimuovere
+            System.out.println(operazione);
         }
-
-        //da rimuovere
-        System.out.println(operazione);
     }
 
     private void repaint(){
@@ -179,7 +182,6 @@ public class GameController {
 //--------------------------------------------GAME--------------------------------------------
 
     public void forward(ActionEvent e){
-        operazione++;
         eseguiOperazione();
         repaint();
         //TODO

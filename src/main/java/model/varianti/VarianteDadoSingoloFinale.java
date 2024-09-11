@@ -28,17 +28,15 @@ public class VarianteDadoSingoloFinale extends AbstractVariante{
         lancio += dadi.get(indiceDado).lancia();
         indiceDado++;
 
+        Pedina[] pedine = s.getPedine();
+        int turno = s.getTurno();
+        int pos = pedine[turno].getCasella().getPos();
+        int totCaselle = s.getTotCaselle();
         //controllo
-        if(this.isActivated()){
+        if((!this.isActivated() && !s.isDadoSingolo()) || (this.isActivated() && !isUltimeCaselle(pos,totCaselle))){
             //azione
-            Pedina[] pedine = s.getPedine();
-            int turno = s.getTurno();
-            int pos = pedine[turno].getCasella().getPos();
-            int totCaselle = s.getTotCaselle();
             //Se non sono alle ultime caselle, allora lancio entrambi i dadi
-            if(!isUltimeCaselle(pos,totCaselle)){
-                lancio += dadi.get(indiceDado).lancia();
-            }
+            lancio += dadi.get(indiceDado).lancia();
         }
         s.setLancio(lancio);
     }

@@ -81,6 +81,7 @@ public class GestoreEffettiImpl implements GestoreEffetti{
         azionaCarta(cartaPescata, pedinaCorrente);
     }
     private void mezzo(Pedina pedinaCorrente){
+        System.out.println(pedinaCorrente.getCasella().getPos());
         Mezzo m = sistema.getMezzi().get(pedinaCorrente.getCasella());
         commandHandler.handle(new MezzoCommand(m,pedinaCorrente));
     }

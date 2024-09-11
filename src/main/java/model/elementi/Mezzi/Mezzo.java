@@ -47,8 +47,9 @@ public abstract class Mezzo {
         int nCaselleLibere = s.getSizeCaselleLibere();
         int iFrom = casellaFrom(nCaselleLibere);
         int iTo = casellaTo(iFrom,nCaselleLibere);
-        s.setCasellaLibera(iFrom, Casella.Tipo.MEZZO_FROM);
-        s.setCasellaLibera(iTo==0?iTo:iTo-1, Casella.Tipo.MEZZO_TO);
+        Casella from = s.setCasellaLibera(iFrom, Casella.Tipo.MEZZO_FROM);
+        Casella to = s.setCasellaLibera(iTo==0?iTo:iTo-1, Casella.Tipo.MEZZO_TO);
+        this.setCaselle(from,to);
     }
 
     protected abstract void caselleCorrette(Casella from, Casella to);
