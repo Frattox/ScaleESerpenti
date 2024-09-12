@@ -16,6 +16,7 @@ import java.util.HashMap;
 
 public class GestoreEffettiImpl implements GestoreEffetti{
 
+    private String ultimaSosta, ultimoPremio;
     private final SistemaImpl1 sistema;
     private static final int SOSTA_PANCHINA = 1, SOSTA_LOCANDA = 3;
     private final Mattaro mattaro;
@@ -27,7 +28,11 @@ public class GestoreEffettiImpl implements GestoreEffetti{
         this.sistema=sistema;
         this.commandHandler=sistema.getCommandHandler();
         this.mattaro=new MattaroImpl(sistema);
+        ultimaSosta=null;
+        ultimoPremio=null;
     }
+    public String getUltimaSosta(){return ultimaSosta;}
+    public String getUltimoPremio(){return ultimoPremio;}
 
     @Override
     public boolean azionaCasella() {
@@ -42,18 +47,22 @@ public class GestoreEffettiImpl implements GestoreEffetti{
                 break;
             case LOCANDA:
                 sosta(pedinaCorrente,SOSTA_LOCANDA);
+                ultimaSosta=casellaCorrente.getTipo().name();
                 break;
             case PANCHINA:
                 sosta(pedinaCorrente, SOSTA_PANCHINA);
+                ultimaSosta=casellaCorrente.getTipo().name();
                 break;
             case MOLLA:
                 molla();
                 break;
             case DADI://rilancia i dadi
                 dadi();
+                ultimoPremio=casellaCorrente.getTipo().name();
                 break;
             case PESCA:
                 pesca(pedinaCorrente);
+                ultimoPremio=casellaCorrente.getTipo().name();
                 break;
             case FINE:
                 vittoria = true;

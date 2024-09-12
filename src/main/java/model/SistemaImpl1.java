@@ -19,7 +19,6 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------VARIABILI-------------------------------------------
     private Tabellone tabellone;
-    //CIAO
     private MezzoFactory mezzoFactory;
     private List<Mezzo> mezzi;
 
@@ -206,6 +205,8 @@ public class SistemaImpl1 implements Sistema{
     public int getTurno() {
         return turno;
     }
+    public String getUltimaSosta(){return gestoreEffetti.getUltimaSosta();}
+    public String getUltimoPremio(){return gestoreEffetti.getUltimoPremio();}
 
     public int getLancio() {
         return lancio;

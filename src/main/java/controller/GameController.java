@@ -51,9 +51,11 @@ public class GameController {
     @FXML
     private VBox vbox;
     @FXML
-    private TextField textFieldTurno, textFieldLancioDadi, textFieldCasellaCorrente;
+    private TextField textFieldTurno, textFieldLancioDadi, textFieldCasellaCorrente,textFieldPremio, textFieldSosta,textFieldCartaPescata;
     @FXML
     private ScrollPane scrollPane;
+    @FXML
+    private ColumnConstraints column;
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -179,9 +181,6 @@ public class GameController {
         addLabel(labelUltimo,Tipo.FINE,r-1,c-1);
     }
 
-    private ImageView imageView(String path){return new ImageView(new Image(getClass().getResourceAsStream(path)));}
-
-
     private void addLabel(Label label, Tipo tipo, int i, int j){
         label = new Label();
         label.setStyle("-fx-background-color:" + Util.toHexString(coloriCaselle.get(tipo)) + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
@@ -196,7 +195,6 @@ public class GameController {
         Tabellone t = sistema.getTabellone();
         List<Mezzo> mezzi = sistema.getMezzi();
 
-        // Ottieni le dimensioni delle celle
         double cellWidth = tabellone.getWidth() / c;
         double cellHeight = tabellone.getHeight() / r;
 
@@ -241,26 +239,18 @@ public class GameController {
         switch (operazione % 4) {
             case 0:
                 sistema.prossimoTurno();
-                //da rimuovere
-                System.out.println("prox turno");
                 break;
             case 1:
                 sistema.lancia();
-                //da rimuovere
-                System.out.println("lancia");
                 break;
             case 2:
                 sistema.avanza();
-                //da rimuovere
-                System.out.println("avanza");
                 break;
             case 3:
                 if(sistema.azionaCasella()){
                     vittoria(new ActionEvent());
                     stop(new ActionEvent());
                 }
-                //da rimuovere
-                System.out.println("aziona");
                 break;
             default:break;
         }
@@ -280,6 +270,12 @@ public class GameController {
 
     private void repaint(){
         int turno = sistema.getTurno();
+        if(sistema.isPescaCarta())
+            textFieldCartaPescata.setText(sistema.getCartaPescata()==null?"":sistema.getCartaPescata().name());
+        if(sistema.isCaselleSosta())
+            textFieldSosta.setText(sistema.getUltimaSosta()==null?"":sistema.getUltimaSosta());
+        if(sistema.isCasellePremio())
+            textFieldPremio.setText(sistema.getUltimoPremio()==null?"":sistema.getUltimoPremio());
         textFieldTurno.setText(""+(turno+1));
         textFieldLancioDadi.setText(""+sistema.getLancio());
         textFieldCasellaCorrente.setText(""+sistema.getCasellaCorrente().getTipo().toString());

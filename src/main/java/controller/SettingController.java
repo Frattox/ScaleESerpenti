@@ -33,8 +33,6 @@ public class SettingController {
     @FXML
     private Label righeInadeguate, colonneInadeguate, giocatoriInadeguati, scaleInadeguate, serpentiInadeguati;
     @FXML
-    private CheckBox dadoSingolo,dadoSingoloFinale,doppioSei,caselleSosta,casellePremio,casellePescaCarta,ulterioriCarte;
-    @FXML
     private GridPane gridSetting;
     @FXML
     private VBox vboxAvvisi;

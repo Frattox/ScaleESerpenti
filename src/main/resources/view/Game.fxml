@@ -31,7 +31,10 @@
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                      <ColumnConstraints fx:id="column" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -40,16 +43,22 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button fx:id="backward" mnemonicParsing="false" onAction="#backward" text="Indietro" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <Button fx:id="forward" mnemonicParsing="false" onAction="#forward" text="Avanti" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="backward" mnemonicParsing="false" onAction="#backward" text="Indietro" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <Button fx:id="forward" mnemonicParsing="false" onAction="#forward" text="Avanti" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                         <Label fx:id="labelTurno" text="Turno" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                         <Label fx:id="labelLancioDadi" text="Lancio Dadi" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
                         <Label fx:id="labelCasellaCorrente" text="Casella Corrente" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
-                        <Button fx:id="play" mnemonicParsing="false" onAction="#play" text="Play" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button fx:id="stop" mnemonicParsing="false" onAction="#stop" text="Stop" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="play" mnemonicParsing="false" onAction="#play" text="Play" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button fx:id="stop" mnemonicParsing="false" onAction="#stop" text="Stop" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <TextField fx:id="textFieldCasellaCorrente" editable="false" prefHeight="26.0" prefWidth="32.0" GridPane.rowIndex="1" />
                         <TextField fx:id="textFieldTurno" editable="false" prefHeight="26.0" prefWidth="32.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="textFieldLancioDadi" editable="false" prefHeight="26.0" prefWidth="32.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Label fx:id="labelLancioDadi1" text="Carta Pescata" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="textFieldCartaPescata" editable="false" prefHeight="26.0" prefWidth="32.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Label fx:id="labelLancioDadi11" text="Sosta" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="textFieldSosta" editable="false" prefHeight="26.0" prefWidth="32.0" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+                        <Label fx:id="labelLancioDadi111" text="Premio" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.valignment="BOTTOM" />
+                        <TextField fx:id="textFieldPremio" editable="false" prefHeight="26.0" prefWidth="32.0" GridPane.columnIndex="5" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>

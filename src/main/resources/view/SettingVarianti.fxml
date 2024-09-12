@@ -14,9 +14,9 @@
             <CheckBox fx:id="dadoSingolo" mnemonicParsing="false" text="Dado Singolo" />
             <CheckBox fx:id="dadoSingoloFinale" mnemonicParsing="false" text="Dado Singolo Finale" />
             <CheckBox fx:id="doppioSei" mnemonicParsing="false" text="Doppio Sei" />
-            <CheckBox fx:id="caselleSosta" mnemonicParsing="false" selected="true" text="Caselle Sosta" />
-            <CheckBox fx:id="casellePremio" mnemonicParsing="false" selected="true" text="Caselle Premio" />
-            <CheckBox fx:id="casellePescaCarta" mnemonicParsing="false" selected="true" text="Caselle Pesca Carta" />
+            <CheckBox fx:id="caselleSosta" mnemonicParsing="false" text="Caselle Sosta" />
+            <CheckBox fx:id="casellePremio" mnemonicParsing="false" text="Caselle Premio" />
+            <CheckBox fx:id="casellePescaCarta" mnemonicParsing="false" text="Caselle Pesca Carta" />
             <CheckBox fx:id="ulterioriCarte" mnemonicParsing="false" text="Ulteriori Carte" />
          </children>
       </VBox>

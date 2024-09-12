@@ -1,5 +1,6 @@
 package model;
 
+import model.Mattaro.Carta;
 import model.elementi.Casella;
 import model.elementi.Mezzi.Mezzo;
 import model.elementi.Mezzi.TipoMezzo;
@@ -45,5 +46,8 @@ public interface Sistema {
     String getVincitore();
     List<Mezzo> getMezzi();
     HashMap<Casella,Mezzo> getMezziMap();
+    Carta getCartaPescata();
+    String getUltimaSosta();
+    String getUltimoPremio();
 
 }

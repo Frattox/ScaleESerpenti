@@ -54,14 +54,9 @@ public class SettingNumeroCaselleSpecialiController {
         casellePremio = addVariante(sistema.isCasellePremio(),"Caselle premio");
         casellePescaCarta = addVariante(sistema.isPescaCarta(),"Casella pesca carta");
 
-        Util.setTextFormatter(caselleSosta);
-        Util.setTextFormatter(casellePremio);
-        Util.setTextFormatter(casellePescaCarta);
-
-        //per ora
-        if(sistema.isCaselleSosta()) caselleSosta.setText("10");
-        if(sistema.isCasellePremio()) casellePremio.setText("10");
-        if(sistema.isPescaCarta()) casellePescaCarta.setText("10");
+        if(caselleSosta!=null)Util.setTextFormatter(caselleSosta);
+        if(casellePremio!=null)Util.setTextFormatter(casellePremio);
+        if(casellePescaCarta!=null)Util.setTextFormatter(casellePescaCarta);
 
         gridVarianti.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
     }

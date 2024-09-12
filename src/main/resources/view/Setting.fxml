@@ -30,11 +30,11 @@
             <Label prefHeight="18.0" prefWidth="101.0" text="Numero Giocatori" GridPane.rowIndex="2" />
             <Label prefHeight="18.0" prefWidth="101.0" text="Numero Scale" GridPane.rowIndex="3" />
             <Label prefHeight="18.0" prefWidth="101.0" text="Numero Serpenti" GridPane.rowIndex="4" />
-            <TextField fx:id="righe" prefHeight="26.0" prefWidth="46.0" text="10" GridPane.columnIndex="1" />
-            <TextField fx:id="colonne" prefHeight="26.0" prefWidth="46.0" text="12" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="numeroGiocatori" prefHeight="26.0" prefWidth="46.0" text="3" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <TextField fx:id="scale" prefHeight="26.0" prefWidth="46.0" text="4" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <TextField fx:id="serpenti" prefHeight="26.0" prefWidth="46.0" text="4" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <TextField fx:id="righe" prefHeight="26.0" prefWidth="46.0" GridPane.columnIndex="1" />
+            <TextField fx:id="colonne" prefHeight="26.0" prefWidth="46.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="numeroGiocatori" prefHeight="26.0" prefWidth="46.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="scale" prefHeight="26.0" prefWidth="46.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="serpenti" prefHeight="26.0" prefWidth="46.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
       <VBox fx:id="vboxAvvisi" alignment="CENTER_LEFT" layoutX="242.0" layoutY="41.0" prefHeight="318.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.80000000000001" AnchorPane.leftAnchor="242.0" AnchorPane.topAnchor="41.0">
