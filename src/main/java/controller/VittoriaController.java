@@ -5,6 +5,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import model.Sistema;
+import util.Util;
 
 public class VittoriaController{
 
@@ -19,7 +20,7 @@ public class VittoriaController{
     public void setSistema(Sistema sistema){this.sistema=sistema;}
 
     public void initVittoria(){
-        vbox.setStyle("-fx-background-color: "+GameController.toHexString(Color.BLUEVIOLET));
+        vbox.setStyle("-fx-background-color: "+ Util.toHexString(Color.BLUEVIOLET));
         haVinto.setText("Ha vinto il giocatore: "+sistema.getVincitore());
         haVinto.setFill(Color.GOLD);
         haVinto.setStroke(Color.BLACK);

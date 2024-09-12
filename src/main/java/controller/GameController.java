@@ -5,11 +5,11 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.shape.Line;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -23,6 +23,7 @@ import model.elementi.Casella;
 import model.elementi.Mezzi.Mezzo;
 import model.elementi.Mezzi.TipoMezzo;
 import model.elementi.Tabellone;
+import util.Util;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -49,7 +50,8 @@ public class GameController {
     private VBox vbox;
     @FXML
     private TextField textFieldTurno, textFieldLancioDadi, textFieldCasellaCorrente;
-
+    @FXML
+    private ScrollPane scrollPane;
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -60,8 +62,11 @@ public class GameController {
         operazione=-1;
         giocatori = new StackPane[sistema.getNPedine()];
 
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
         Tabellone t = sistema.getTabellone();
-        r=t.getR() ;
+        r=t.getR();
         c=t.getC();
         coloriCaselle = new HashMap<>();
         initColoriCaselle(coloriCaselle);
@@ -113,6 +118,8 @@ public class GameController {
 
         vbox.getChildren().clear();
         vbox.getChildren().addAll(stackPane,gridComandi);
+        VBox.setVgrow(gridComandi,Priority.NEVER);
+        VBox.setVgrow(stackPane,Priority.ALWAYS);
         tabellone.widthProperty().addListener((obs, oldVal, newVal) -> disegnaScaleESerpenti());
         tabellone.heightProperty().addListener((obs, oldVal, newVal) -> disegnaScaleESerpenti());
 
@@ -122,24 +129,16 @@ public class GameController {
     }
 
     private void initColoriCaselle(HashMap<Casella.Tipo,String> coloriCaselle) {
-        coloriCaselle.put(Tipo.NORMALE,toHexString(Color.LIGHTGRAY));
-        coloriCaselle.put(Tipo.MEZZO_FROM,toHexString(Color.YELLOW));
-        coloriCaselle.put(Tipo.MEZZO_TO,toHexString(Color.ORANGE));
-        coloriCaselle.put(Tipo.LOCANDA,toHexString(Color.BROWN));
-        coloriCaselle.put(Tipo.PANCHINA,toHexString(Color.SANDYBROWN));
-        coloriCaselle.put(Tipo.DADI,toHexString(Color.GREEN));
-        coloriCaselle.put(Tipo.MOLLA,toHexString(Color.BLUE));
-        coloriCaselle.put(Tipo.PESCA,toHexString(Color.CYAN));
-        coloriCaselle.put(Tipo.INIZIO,toHexString(Color.LIGHTGREEN));
-        coloriCaselle.put(Tipo.FINE,toHexString(Color.LIGHTGREEN));
-    }
-
-    public static String toHexString(Color color) {
-        return String.format( "#%02X%02X%02X",
-                (int) (color.getRed() * 255),
-                (int) (color.getGreen() * 255),
-                (int) (color.getBlue() * 255)
-        );
+        coloriCaselle.put(Tipo.NORMALE,Util.toHexString(Color.LIGHTGRAY));
+        coloriCaselle.put(Tipo.MEZZO_FROM,Util.toHexString(Color.YELLOW));
+        coloriCaselle.put(Tipo.MEZZO_TO,Util.toHexString(Color.ORANGE));
+        coloriCaselle.put(Tipo.LOCANDA,Util.toHexString(Color.BROWN));
+        coloriCaselle.put(Tipo.PANCHINA,Util.toHexString(Color.SANDYBROWN));
+        coloriCaselle.put(Tipo.DADI,Util.toHexString(Color.GREEN));
+        coloriCaselle.put(Tipo.MOLLA,Util.toHexString(Color.BLUE));
+        coloriCaselle.put(Tipo.PESCA,Util.toHexString(Color.CYAN));
+        coloriCaselle.put(Tipo.INIZIO,Util.toHexString(Color.LIGHTGREEN));
+        coloriCaselle.put(Tipo.FINE,Util.toHexString(Color.LIGHTGREEN));
     }
 
     private void addPedina(int nPedina, int i, int j){
@@ -327,7 +326,4 @@ public class GameController {
     public void stop(ActionEvent e) throws IOException{
         timeline.stop();
     }
-
-
-
 }

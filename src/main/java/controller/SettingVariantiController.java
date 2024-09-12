@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
@@ -16,7 +17,6 @@ import model.Sistema;
 import java.io.IOException;
 
 public class SettingVariantiController {
-    @FXML
     private Sistema sistema;
     @FXML
     private Parent root;
@@ -27,22 +27,31 @@ public class SettingVariantiController {
     @FXML
     private CheckBox dadoSingolo,dadoSingoloFinale,doppioSei,caselleSosta,casellePremio,casellePescaCarta,ulterioriCarte;
     @FXML
-    private VBox vboxVarianti;
+    private VBox vboxVarianti, vboxAvvisi;
+    @FXML
+    private Label deviDisattivareDiSingoloFinale, deviDisattivareDiDoppioSei, deviAttivare;
 
     public void setSistema(Sistema sistema){
         this.sistema=sistema;
-        double x = vboxVarianti.getPrefHeight()/vboxVarianti.getChildren().size();
-        vboxVarianti.setSpacing(x);
-        vboxVarianti.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
-        for(Node child: vboxVarianti.getChildren()) {
-            CheckBox c = (CheckBox) child;
-            c.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        setVbox(vboxVarianti);
+        setVbox(vboxAvvisi);
+    }
+    private void setVbox(VBox vbox){
+        double x = vbox.getPrefHeight()/vboxVarianti.getChildren().size();
+        vbox.setSpacing(x);
+        vbox.setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
+        for(Node child: vbox.getChildren()) {
+            ((Control) child).setMaxSize(Double.MAX_VALUE,Double.MAX_VALUE);
             VBox.setVgrow(child, Priority.ALWAYS);
         }
     }
     public void inviaSettingVarianti(ActionEvent e) throws IOException {
         if(sistema==null)
             throw new IllegalArgumentException("SettingController: sistema ancora non istanziato");
+
+        if(!controlloVariantiOk())
+            return;
+
         sistema.setDadoSingolo(dadoSingolo.isSelected());
         sistema.setDadoSingoloFinale(dadoSingoloFinale.isSelected());
         sistema.setDoppioSei(doppioSei.isSelected());
@@ -65,5 +74,22 @@ public class SettingVariantiController {
         stage.setScene(scene);
         stage.setTitle("Numero di caselle speciali");
         stage.show();
+    }
+
+    private boolean controlloVariantiOk() {
+        boolean ret = true;
+        if((dadoSingoloFinale.isSelected()) && dadoSingolo.isSelected()) {
+            deviDisattivareDiSingoloFinale.setVisible(true);
+            ret = false;
+        }else deviDisattivareDiSingoloFinale.setVisible(false);
+        if((doppioSei.isSelected()) && dadoSingolo.isSelected()) {
+            deviDisattivareDiDoppioSei.setVisible(true);
+            ret = false;
+        }else deviDisattivareDiDoppioSei.setVisible(false);
+        if(ulterioriCarte.isSelected() && !casellePescaCarta.isSelected()){
+            deviAttivare.setVisible(true);
+            ret = false;
+        }else deviAttivare.setVisible(false);
+        return ret;
     }
 }

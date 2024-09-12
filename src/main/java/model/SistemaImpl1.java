@@ -127,8 +127,10 @@ public class SistemaImpl1 implements Sistema{
 
     @Override
     public void setTabellone(int r, int c) throws IllegalArgumentException{
-        if(r<2 || c<2)
-            throw new IllegalArgumentException("Sistema: numero righe e/o colonne non idonee");
+        if(c<2)
+            throw new IllegalArgumentException("Numero di colonne inadeguato");
+        if(r<2)
+            throw new IllegalArgumentException("Numero di righe inadeguato");
         tabellone = new TabelloneMatrix(r,c);
         totCaselle=tabellone.getR()* tabellone.getC();
         caselleLibere = new GestoreCaselleLibereImpl(this);

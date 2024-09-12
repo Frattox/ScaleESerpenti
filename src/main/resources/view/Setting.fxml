@@ -7,10 +7,11 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingController">
    <children>
-      <Button layoutX="300.0" layoutY="332.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inviaSettingIniziale" prefHeight="26.0" prefWidth="46.0" text="Invia" AnchorPane.bottomAnchor="41.6" AnchorPane.leftAnchor="300.0" />
+      <Button layoutX="466.0" layoutY="358.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inviaSettingIniziale" prefHeight="26.0" prefWidth="46.0" text="Invia" AnchorPane.bottomAnchor="15.600000000000023" AnchorPane.leftAnchor="466.0" />
       <GridPane fx:id="gridSetting" layoutX="42.0" layoutY="41.0" prefHeight="318.0" prefWidth="200.0" AnchorPane.bottomAnchor="41.39999999999998" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="41.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -36,5 +37,14 @@
             <TextField fx:id="serpenti" prefHeight="26.0" prefWidth="46.0" text="4" GridPane.columnIndex="1" GridPane.rowIndex="4" />
          </children>
       </GridPane>
+      <VBox fx:id="vboxAvvisi" alignment="CENTER_LEFT" layoutX="242.0" layoutY="41.0" prefHeight="318.0" prefWidth="200.0" AnchorPane.bottomAnchor="40.80000000000001" AnchorPane.leftAnchor="242.0" AnchorPane.topAnchor="41.0">
+         <children>
+            <Label fx:id="righeInadeguate" text="Righe inadeguate" visible="false" />
+            <Label fx:id="colonneInadeguate" text="Colonne inadeguate" visible="false" />
+            <Label fx:id="giocatoriInadeguati" text="Numero di Giocatori inadeguato" visible="false" />
+            <Label fx:id="scaleInadeguate" text="Numero di Scale inadeguato" visible="false" />
+            <Label fx:id="serpentiInadeguati" text="Numero di Serpenti Inadeguato" visible="false" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
