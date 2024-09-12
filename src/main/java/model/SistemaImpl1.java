@@ -12,6 +12,7 @@ import model.elementi.Mezzi.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 public class SistemaImpl1 implements Sistema{
@@ -20,7 +21,9 @@ public class SistemaImpl1 implements Sistema{
     private Tabellone tabellone;
     //CIAO
     private MezzoFactory mezzoFactory;
-    private HashMap<Casella, Mezzo> mezzi;
+    private List<Mezzo> mezzi;
+
+    private HashMap<Casella,Mezzo> mezziMap;
     //Utile per le caselle speciali e mezzi
     private GestoreCaselleLibere caselleLibere;
     //per ogni tipo di mezzo, la sua quantità corrispondente
@@ -61,7 +64,8 @@ public class SistemaImpl1 implements Sistema{
         tabellone = new TabelloneMatrix();//tabellone di default = 10*10
         commandHandler = new HistoryCommandHandler(); //maxHistoryLenght di default = 100
         totCaselle = tabellone.getR()* tabellone.getC();
-        mezzi = new HashMap<>();
+        mezzi = new LinkedList<>();
+        mezziMap = new HashMap<>();
         mezziQuantita = new HashMap<>();
         pedine = new Pedina[2]; //default
         dadi = new ArrayList<>();
@@ -186,7 +190,8 @@ public class SistemaImpl1 implements Sistema{
         for(int i=0; i<n; i++){
             Mezzo m = mezzoFactory.factory();
             m.autoSet(this);
-            mezzi.put(m.getFrom(),m);
+            mezzi.add(m);
+            mezziMap.put(m.getFrom(),m);
         }
     }
 
@@ -203,6 +208,9 @@ public class SistemaImpl1 implements Sistema{
     public int getLancio() {
         return lancio;
     }
+    public HashMap<Casella, Mezzo> getMezziMap() {
+        return mezziMap;
+    }
 
     public List<Dado> getDadi() {
         return dadi;
@@ -217,10 +225,10 @@ public class SistemaImpl1 implements Sistema{
     public Tabellone getTabellone(){return tabellone;}
     public Carta getCartaPescata(){return cartaPescata;}
     public CommandHandler getCommandHandler(){return commandHandler;}
-    public HashMap<Casella,Mezzo> getMezzi(){return mezzi;}
+    public List<Mezzo> getMezzi(){return mezzi;}
     @Override
     public Casella getCasellaCorrente(){return pedine[turno].getCasella();}
-    public String getVincitore(){return Integer.toString(turno)+1;}
+    public String getVincitore(){return (Integer.toString(turno+1));}
 
     @Override
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}

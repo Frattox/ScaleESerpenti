@@ -52,9 +52,13 @@ public abstract class Mezzo {
         this.setCaselle(from,to);
     }
 
+    public abstract TipoMezzo getTipo();
+
     protected abstract void caselleCorrette(Casella from, Casella to);
 
     protected abstract int casellaFrom(int nCaselleLibere);
 
     protected abstract int casellaTo(int iFrom, int nCaselleLibere);
+
+
 }

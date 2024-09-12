@@ -57,16 +57,7 @@ public class SettingNumeroCaselleSpecialiController {
         if(sistema.isCasellePremio()) casellePremio.setText("10");
         if(sistema.isPescaCarta()) casellePescaCarta.setText("10");
 
-        setBottone();
-
         gridVarianti.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
-    }
-
-    private void setBottone(){
-        invia.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        invia.setAlignment(Pos.BASELINE_CENTER);
-        invia.setMaxSize(60,20);
-        gridVarianti.add(invia,1,i);
     }
 
     private TextField addVariante(boolean flag, String s) {
@@ -80,7 +71,6 @@ public class SettingNumeroCaselleSpecialiController {
         label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         label.setAlignment(Pos.BASELINE_LEFT);
         gridVarianti.add(label,0,i);
-
         TextField textField = new TextField();
         textField.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         textField.setAlignment(Pos.BASELINE_CENTER);

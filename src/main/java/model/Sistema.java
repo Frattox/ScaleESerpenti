@@ -1,8 +1,11 @@
 package model;
 
 import model.elementi.Casella;
+import model.elementi.Mezzi.Mezzo;
 import model.elementi.Mezzi.TipoMezzo;
 import model.elementi.Tabellone;
+
+import java.util.List;
 
 public interface Sistema {
     void setDadoSingolo(boolean flag);
@@ -39,5 +42,6 @@ public interface Sistema {
     int getLancio();
     Casella getCasellaCorrente();
     String getVincitore();
+    List<Mezzo> getMezzi();
 
 }

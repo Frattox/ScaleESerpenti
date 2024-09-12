@@ -7,16 +7,16 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingVariantiController">
    <children>
-      <Button layoutX="477.0" layoutY="310.0" mnemonicParsing="false" onAction="#inviaSettingVarianti" text="Invia" />
-      <VBox fx:id="vboxVarianti" alignment="CENTER_LEFT" layoutX="36.0" layoutY="52.0" prefHeight="309.0" prefWidth="290.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="274.0" AnchorPane.topAnchor="52.0">
+      <Button layoutX="477.0" layoutY="310.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inviaSettingVarianti" prefHeight="26.0" prefWidth="42.0" text="Invia" AnchorPane.bottomAnchor="64.0" AnchorPane.leftAnchor="476.80000000000007" />
+      <VBox fx:id="vboxVarianti" alignment="CENTER_LEFT" layoutX="36.0" layoutY="52.0" prefHeight="309.0" prefWidth="290.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="36.0" AnchorPane.topAnchor="52.0">
          <children>
             <CheckBox fx:id="dadoSingoloFinale" mnemonicParsing="false" text="Dado Singolo Finale" />
             <CheckBox fx:id="dadoSingolo" mnemonicParsing="false" text="Dado Singolo" />
             <CheckBox fx:id="doppioSei" mnemonicParsing="false" text="Doppio Sei" />
-            <CheckBox fx:id="ulterioriCarte" mnemonicParsing="false" text="Ulteriori Carte" />
             <CheckBox fx:id="casellePremio" mnemonicParsing="false" selected="true" text="Caselle Premio" />
             <CheckBox fx:id="casellePescaCarta" mnemonicParsing="false" selected="true" text="Caselle Pesca Carta" />
             <CheckBox fx:id="caselleSosta" mnemonicParsing="false" selected="true" text="Caselle Sosta" />
+            <CheckBox fx:id="ulterioriCarte" mnemonicParsing="false" text="Ulteriori Carte" />
          </children>
       </VBox>
    </children>

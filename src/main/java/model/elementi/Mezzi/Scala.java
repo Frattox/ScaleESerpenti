@@ -27,4 +27,7 @@ public class Scala extends Mezzo{
             throw new IllegalArgumentException("Scala: Caselle non idonee");
     }
 
+    @Override
+    public TipoMezzo getTipo(){return TipoMezzo.SCALA;}
+
 }

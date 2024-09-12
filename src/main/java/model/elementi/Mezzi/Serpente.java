@@ -26,4 +26,7 @@ public class Serpente extends Mezzo{
         return (int) (Math.random()*iFrom);//casella libera random in [0,iFrom-1]
     }
 
+    @Override
+    public TipoMezzo getTipo(){return TipoMezzo.SERPENTE;}
+
 }

@@ -5,11 +5,13 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.shape.Line;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -18,10 +20,13 @@ import javafx.util.Duration;
 import model.Sistema;
 import model.elementi.Casella.Tipo;
 import model.elementi.Casella;
+import model.elementi.Mezzi.Mezzo;
+import model.elementi.Mezzi.TipoMezzo;
 import model.elementi.Tabellone;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class GameController {
 
@@ -29,6 +34,7 @@ public class GameController {
     private HashMap<Tipo,String> coloriCaselle;
     private StackPane[] giocatori;
     private int operazione, r, c;
+    private Pane overlayPane;
     @FXML
     private Parent root;
     @FXML
@@ -42,7 +48,8 @@ public class GameController {
     @FXML
     private VBox vbox;
     @FXML
-    private Label labelTurno, labelLancioDadi, labelCasellaCorrente;
+    private TextField textFieldTurno, textFieldLancioDadi, textFieldCasellaCorrente;
+
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -51,7 +58,6 @@ public class GameController {
 
     public void initGame() {
         operazione=-1;
-
         giocatori = new StackPane[sistema.getNPedine()];
 
         Tabellone t = sistema.getTabellone();
@@ -97,6 +103,21 @@ public class GameController {
                 System.out.println("Forward problem.");
             }
         }));
+
+        overlayPane = new Pane();
+        overlayPane.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        overlayPane.setMouseTransparent(true);
+
+        StackPane stackPane = new StackPane();
+        stackPane.getChildren().addAll(tabellone,overlayPane);
+
+        vbox.getChildren().clear();
+        vbox.getChildren().addAll(stackPane,gridComandi);
+        tabellone.widthProperty().addListener((obs, oldVal, newVal) -> disegnaScaleESerpenti());
+        tabellone.heightProperty().addListener((obs, oldVal, newVal) -> disegnaScaleESerpenti());
+
+        disegnaScaleESerpenti();
+
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
@@ -180,6 +201,46 @@ public class GameController {
         tabellone.add(label,jPos(j),iPos(i));
     }
 
+    private void disegnaScaleESerpenti() {
+        Tabellone t = sistema.getTabellone();
+        List<Mezzo> mezzi = sistema.getMezzi();
+
+        // Ottieni le dimensioni delle celle
+        double cellWidth = tabellone.getWidth() / c;
+        double cellHeight = tabellone.getHeight() / r;
+
+        overlayPane.getChildren().clear();
+
+        for (Mezzo mezzo : mezzi) {
+            int xFrom = t.getPosCasella(mezzo.getFrom()).getX();
+            int yFrom = t.getPosCasella(mezzo.getFrom()).getY();
+            int xTo = t.getPosCasella(mezzo.getTo()).getX();
+            int yTo = t.getPosCasella(mezzo.getTo()).getY();
+
+            Line line = creaLinea(
+                    jPos(yFrom) * cellWidth + cellWidth / 2,
+                    iPos(xFrom) * cellHeight + cellHeight / 2,
+                    jPos(yTo) * cellWidth + cellWidth / 2,
+                    iPos(xTo) * cellHeight + cellHeight / 2,
+                    mezzo.getTipo()
+            );
+            overlayPane.getChildren().add(line); // Usa overlayPane per aggiungere le linee
+        }
+    }
+
+
+    public Line creaLinea(double x1, double y1, double x2, double y2, TipoMezzo tipoMezzo) {
+        Line line = new Line();
+        line.setStartX(x1);
+        line.setStartY(y1);
+        line.setEndX(x2);
+        line.setEndY(y2);
+        line.setStrokeWidth(2);
+        line.setStroke(tipoMezzo==TipoMezzo.SERPENTE?Color.GREEN:Color.BROWN);
+        return line;
+    }
+
+
 //--------------------------------------------UTIL--------------------------------------------
 
     private void eseguiOperazione() throws IOException{
@@ -228,9 +289,9 @@ public class GameController {
 
     private void repaint(){
         int turno = sistema.getTurno();
-        labelTurno.setText("Turno:"+(turno+1));
-        labelLancioDadi.setText("Lancio Dadi:"+sistema.getLancio());
-        labelCasellaCorrente.setText("Casella Corrente:"+sistema.getCasellaCorrente().getTipo().toString());
+        textFieldTurno.setText(""+(turno+1));
+        textFieldLancioDadi.setText(""+sistema.getLancio());
+        textFieldCasellaCorrente.setText(""+sistema.getCasellaCorrente().getTipo().toString());
 
         Casella casellaTo = sistema.getCasellaCorrente();
         tabellone.getChildren().remove(giocatori[turno]);

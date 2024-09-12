@@ -8,7 +8,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingNumeroCaselleSpecialiController">
    <children>
-      <GridPane fx:id="gridVarianti" layoutX="15.2" layoutY="14.0" prefHeight="286.0" prefWidth="574.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="14.0">
+      <GridPane fx:id="gridVarianti" layoutX="15.2" layoutY="15.2" prefHeight="363.0" prefWidth="392.0" AnchorPane.bottomAnchor="21.600000000000023" AnchorPane.leftAnchor="15.2" AnchorPane.rightAnchor="192.79999999999995" AnchorPane.topAnchor="15.199999999999989">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -19,6 +19,6 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button fx:id="invia" layoutX="416.0" layoutY="308.0" mnemonicParsing="false" onAction="#inviaNumeroCaselleSpeciali" text="Invia" />
+      <Button fx:id="invia" layoutX="457.0" layoutY="320.0" mnemonicParsing="false" onAction="#inviaNumeroCaselleSpeciali" text="Invia" AnchorPane.bottomAnchor="54.99999999999994" AnchorPane.leftAnchor="457.0" />
    </children>
 </AnchorPane>
