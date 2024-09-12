@@ -24,6 +24,8 @@ public class TabelloneMatrix extends Tabellone{
                 int pos = i*this.c+j;
                 this.tabella[i][j] = new Casella(Casella.Tipo.NORMALE,pos);
             }
+        this.tabella[0][0] = new Casella(Casella.Tipo.INIZIO,0);
+        this.tabella[this.r-1][this.c-1] = new Casella(Casella.Tipo.FINE,(this.r*this.c)-1);
     }
 
     @Override

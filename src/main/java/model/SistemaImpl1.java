@@ -297,7 +297,7 @@ public class SistemaImpl1 implements Sistema{
     }
     @Override
     //ritorna true se il giocatore ha vinto
-    public boolean avanza() throws IllegalArgumentException{
+    public void avanza() throws IllegalArgumentException{
         if(!lancioEffettuato)
             throw new IllegalArgumentException("Sistema: il lancio non è stato ancora effettuato");
 
@@ -314,17 +314,14 @@ public class SistemaImpl1 implements Sistema{
         Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
         lancioEffettuato = false;
-        return posSuccessiva==(totCaselle-1);
 
     }
     @Override
-    public void azionaCasella() throws IllegalArgumentException{
+    public boolean azionaCasella() throws IllegalArgumentException{
         if(lancioEffettuato)
             throw new IllegalArgumentException("Sistema: bisogna far avanzare la pedina prima");
         Pedina giocatore = pedine[turno];
-        if(giocatore.getCasella().isCovered()){ //se la casella corrente NON è una normale
-            gestoreEffetti.azionaCasella();
-        }
+        return gestoreEffetti.azionaCasella();
     }
 
 }

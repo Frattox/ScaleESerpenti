@@ -52,6 +52,7 @@ public class SettingController {
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Seleziona Varianti");
         stage.show();
     }
 

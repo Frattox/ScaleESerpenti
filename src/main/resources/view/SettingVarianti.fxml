@@ -2,19 +2,22 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingVariantiController">
    <children>
-      <Label layoutX="286.0" layoutY="23.0" text="Varianti" />
-      <CheckBox fx:id="dadoSingoloFinale" layoutX="50.0" layoutY="146.0" mnemonicParsing="false" text="Dado Singolo Finale" />
-      <CheckBox fx:id="dadoSingolo" layoutX="50.0" layoutY="128.0" mnemonicParsing="false" text="Dado Singolo" />
-      <CheckBox fx:id="doppioSei" layoutX="50.0" layoutY="164.0" mnemonicParsing="false" text="Doppio Sei" />
-      <CheckBox fx:id="caselleSosta" layoutX="50.0" layoutY="182.0" mnemonicParsing="false" selected="true" text="Caselle Sosta" />
-      <CheckBox fx:id="casellePremio" layoutX="50.0" layoutY="200.0" mnemonicParsing="false" selected="true" text="Caselle Premio" />
-      <CheckBox fx:id="casellePescaCarta" layoutX="50.0" layoutY="218.0" mnemonicParsing="false" selected="true" text="Caselle Pesca Carta" />
       <Button layoutX="477.0" layoutY="310.0" mnemonicParsing="false" onAction="#inviaSettingVarianti" text="Invia" />
-      <CheckBox fx:id="ulterioriCarte" layoutX="50.0" layoutY="236.0" mnemonicParsing="false" text="Ulteriori Carte" />
+      <VBox fx:id="vboxVarianti" alignment="CENTER_LEFT" layoutX="36.0" layoutY="52.0" prefHeight="309.0" prefWidth="290.0" AnchorPane.bottomAnchor="39.0" AnchorPane.leftAnchor="36.0" AnchorPane.rightAnchor="274.0" AnchorPane.topAnchor="52.0">
+         <children>
+            <CheckBox fx:id="dadoSingoloFinale" mnemonicParsing="false" text="Dado Singolo Finale" />
+            <CheckBox fx:id="dadoSingolo" mnemonicParsing="false" text="Dado Singolo" />
+            <CheckBox fx:id="doppioSei" mnemonicParsing="false" text="Doppio Sei" />
+            <CheckBox fx:id="ulterioriCarte" mnemonicParsing="false" text="Ulteriori Carte" />
+            <CheckBox fx:id="casellePremio" mnemonicParsing="false" selected="true" text="Caselle Premio" />
+            <CheckBox fx:id="casellePescaCarta" mnemonicParsing="false" selected="true" text="Caselle Pesca Carta" />
+            <CheckBox fx:id="caselleSosta" mnemonicParsing="false" selected="true" text="Caselle Sosta" />
+         </children>
+      </VBox>
    </children>
 </AnchorPane>

@@ -30,11 +30,12 @@ public class GestoreEffettiImpl implements GestoreEffetti{
     }
 
     @Override
-    public void azionaCasella() {
+    public boolean azionaCasella() {
         Pedina[] pedine = sistema.getPedine();
         int turno = sistema.getTurno();
         Pedina pedinaCorrente = pedine[turno];
         Casella casellaCorrente = pedinaCorrente.getCasella();
+        boolean vittoria = false;
         switch (casellaCorrente.getTipo()){
             case MEZZO_FROM:
                 mezzo(pedinaCorrente);
@@ -54,8 +55,12 @@ public class GestoreEffettiImpl implements GestoreEffetti{
             case PESCA:
                 pesca(pedinaCorrente);
                 break;
+            case FINE:
+                vittoria = true;
+                break;
             default:break;
             }
+        return vittoria;
     }
 
     //per semplicità, il divieto di sosta viene usato ogni qualvolta si arriva su una sosta
@@ -73,6 +78,7 @@ public class GestoreEffettiImpl implements GestoreEffetti{
     }
     private void dadi(){
         sistema.lancia();//dadi command viene gestito già qui
+        sistema.avanza();
     }
     private void pesca(Pedina pedinaCorrente){
         Carta cartaPrecedente = sistema.getCartaPescata();

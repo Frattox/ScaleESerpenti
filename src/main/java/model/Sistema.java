@@ -31,8 +31,8 @@ public interface Sistema {
     boolean redo();
     void prossimoTurno();
     void lancia();
-    boolean avanza() throws IllegalArgumentException;
-    void azionaCasella() throws IllegalArgumentException;
+    void avanza() throws IllegalArgumentException;
+    boolean azionaCasella() throws IllegalArgumentException;
     Tabellone getTabellone();
     int getNPedine();
     int getTurno();

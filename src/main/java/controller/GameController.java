@@ -1,10 +1,11 @@
 package controller;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +14,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.Sistema;
 import model.elementi.Casella.Tipo;
 import model.elementi.Casella;
@@ -23,15 +25,16 @@ import java.util.HashMap;
 
 public class GameController {
 
+    private Timeline timeline;
+    private HashMap<Tipo,String> coloriCaselle;
+    private StackPane[] giocatori;
+    private int operazione, r, c;
     @FXML
     private Parent root;
     @FXML
     private Scene scene;
     @FXML
     private Stage stage;
-    private HashMap<Tipo,String> coloriCaselle;
-    private StackPane[] giocatori;
-    private int operazione, r, c;
     @FXML
     private GridPane gridComandi, tabellone;
     @FXML
@@ -86,6 +89,15 @@ public class GameController {
         for (int i = 0; i < sistema.getNPedine(); i++) {
             addPedina(i, 0, 0); // Posiziona tutte le pedine sulla casella di partenza (0,0)
         }
+
+        timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), event -> {
+            try {
+                avanti();
+            } catch (IOException e) {
+                System.out.println("Forward problem.");
+            }
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
     private void initColoriCaselle(HashMap<Casella.Tipo,String> coloriCaselle) {
@@ -186,13 +198,15 @@ public class GameController {
                 System.out.println("lancia");
                 break;
             case 2:
-                if(sistema.avanza())
-                    vittoria(new ActionEvent());
+                sistema.avanza();
                 //da rimuovere
                 System.out.println("avanza");
                 break;
             case 3:
-                sistema.azionaCasella();
+                if(sistema.azionaCasella()){
+                    vittoria(new ActionEvent());
+                    stop(new ActionEvent());
+                }
                 //da rimuovere
                 System.out.println("aziona");
                 break;
@@ -225,18 +239,32 @@ public class GameController {
         tabellone.add(giocatori[turno],jPos(j),iPos(i));
     }
 
-//--------------------------------------------GAME--------------------------------------------
-
-    public void forward(ActionEvent e) throws IOException{
+    private void avanti() throws IOException{
         eseguiOperazione();
         repaint();
     }
 
-    public void backward(ActionEvent e){
+//--------------------------------------------GAME--------------------------------------------
+
+    public void forward(ActionEvent e) throws IOException{
+        stop(e);
+        avanti();
+    }
+
+    public void backward(ActionEvent e) throws IOException{
+        stop(e);
         if(operazione<=0)
             return;
         if(sistema.undo())
             repaint();
+    }
+
+    public void play(ActionEvent e) throws IOException{
+        timeline.play();
+    }
+
+    public void stop(ActionEvent e) throws IOException{
+        timeline.stop();
     }
 
 
