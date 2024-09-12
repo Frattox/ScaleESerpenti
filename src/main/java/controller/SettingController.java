@@ -45,22 +45,7 @@ public class SettingController {
         double rowHeight = gridSetting.getPrefHeight() / gridSetting.getRowCount();
         double colWidth = gridSetting.getPrefWidth() / gridSetting.getColumnCount();
 
-        gridSetting.getRowConstraints().clear();
-        gridSetting.getColumnConstraints().clear();
-//  vincoli di riga
-        for (int i = 0; i < gridSetting.getRowCount(); i++) {
-            RowConstraints row = new RowConstraints();
-            row.setPercentHeight(100.0 / gridSetting.getRowCount()); // Ogni riga occuperà una percentuale uguale
-            gridSetting.getRowConstraints().add(row);
-        }
-
-//  vincoli di colonna
-        for (int i = 0; i < gridSetting.getColumnCount(); i++) {
-            ColumnConstraints column = new ColumnConstraints();
-            column.setPercentWidth(100.0 / gridSetting.getColumnCount()); // Ogni colonna occuperà una percentuale uguale
-            gridSetting.getColumnConstraints().add(column);
-        }
-
+        Util.initGrid(gridSetting);
         for (Node child : gridSetting.getChildren()) {
             TextField t;
             if(child.getClass()==TextField.class){

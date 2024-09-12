@@ -10,6 +10,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -32,7 +34,7 @@ import java.util.List;
 public class GameController {
 
     private Timeline timeline;
-    private HashMap<Tipo,String> coloriCaselle;
+    private HashMap<Tipo,Color> coloriCaselle;
     private StackPane[] giocatori;
     private int operazione, r, c;
     private Pane overlayPane;
@@ -69,7 +71,7 @@ public class GameController {
         r=t.getR();
         c=t.getC();
         coloriCaselle = new HashMap<>();
-        initColoriCaselle(coloriCaselle);
+        Util.initColoriCaselle(coloriCaselle);
 
         tabellone.getColumnConstraints().clear();
         tabellone.getRowConstraints().clear();
@@ -128,19 +130,6 @@ public class GameController {
         timeline.setCycleCount(Timeline.INDEFINITE);
     }
 
-    private void initColoriCaselle(HashMap<Casella.Tipo,String> coloriCaselle) {
-        coloriCaselle.put(Tipo.NORMALE,Util.toHexString(Color.LIGHTGRAY));
-        coloriCaselle.put(Tipo.MEZZO_FROM,Util.toHexString(Color.YELLOW));
-        coloriCaselle.put(Tipo.MEZZO_TO,Util.toHexString(Color.ORANGE));
-        coloriCaselle.put(Tipo.LOCANDA,Util.toHexString(Color.BROWN));
-        coloriCaselle.put(Tipo.PANCHINA,Util.toHexString(Color.SANDYBROWN));
-        coloriCaselle.put(Tipo.DADI,Util.toHexString(Color.GREEN));
-        coloriCaselle.put(Tipo.MOLLA,Util.toHexString(Color.BLUE));
-        coloriCaselle.put(Tipo.PESCA,Util.toHexString(Color.CYAN));
-        coloriCaselle.put(Tipo.INIZIO,Util.toHexString(Color.LIGHTGREEN));
-        coloriCaselle.put(Tipo.FINE,Util.toHexString(Color.LIGHTGREEN));
-    }
-
     private void addPedina(int nPedina, int i, int j){
         StackPane pedina = new StackPane();
 
@@ -190,9 +179,12 @@ public class GameController {
         addLabel(labelUltimo,Tipo.FINE,r-1,c-1);
     }
 
+    private ImageView imageView(String path){return new ImageView(new Image(getClass().getResourceAsStream(path)));}
+
+
     private void addLabel(Label label, Tipo tipo, int i, int j){
-        label = new Label(tipo.toString());
-        label.setStyle("-fx-background-color:" + coloriCaselle.get(tipo) + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
+        label = new Label();
+        label.setStyle("-fx-background-color:" + Util.toHexString(coloriCaselle.get(tipo)) + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
         label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Dimensione massima per adattarsi
         label.setAlignment(Pos.CENTER);
         GridPane.setRowIndex(label, i);

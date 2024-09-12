@@ -97,15 +97,15 @@ public class SettingNumeroCaselleSpecialiController {
         if(sistema.isPescaCarta())
             sistema.setNumberCasellePescaCarta(Integer.parseInt(casellePescaCarta.getText()));
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Game.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Info.fxml"));
         root = loader.load();
-        GameController gameController = loader.getController();
-        gameController.setSistema(sistema);
-        gameController.initGame();
+        InfoController infoController = loader.getController();
+        infoController.init(this.sistema);
+
         stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Scale e Serpenti");
+        stage.setTitle("Informazioni");
         stage.show();
     }
 

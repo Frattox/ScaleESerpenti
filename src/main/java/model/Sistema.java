@@ -5,6 +5,7 @@ import model.elementi.Mezzi.Mezzo;
 import model.elementi.Mezzi.TipoMezzo;
 import model.elementi.Tabellone;
 
+import java.util.HashMap;
 import java.util.List;
 
 public interface Sistema {
@@ -43,5 +44,6 @@ public interface Sistema {
     Casella getCasellaCorrente();
     String getVincitore();
     List<Mezzo> getMezzi();
+    HashMap<Casella,Mezzo> getMezziMap();
 
 }
