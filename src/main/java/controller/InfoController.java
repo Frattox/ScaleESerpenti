@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -69,10 +68,7 @@ public class InfoController{
         GameController gameController = loader.getController();
         gameController.setSistema(sistema);
         gameController.initGame();
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Scale e Serpenti");
-        stage.show();
+
+        Util.changeScene(e,"Scale e Serpenti",root,stage,scene);
     }
 }

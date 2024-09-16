@@ -1,6 +1,10 @@
 package util;
 
 import controller.GameController;
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -10,6 +14,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import model.elementi.Casella;
 
 import java.util.HashMap;
@@ -65,5 +70,13 @@ public class Util {
             column.setPercentWidth(100.0 / gridPane.getColumnCount()); // Ogni colonna occuperà una percentuale uguale
             gridPane.getColumnConstraints().add(column);
         }
+    }
+
+    public static void changeScene(ActionEvent e, String title, Parent root, Stage stage, Scene scene){
+        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
     }
 }

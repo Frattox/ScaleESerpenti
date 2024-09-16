@@ -13,6 +13,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Sistema;
+import util.Util;
 
 import java.io.IOException;
 
@@ -69,11 +70,7 @@ public class SettingVariantiController {
         settingNumeroCaselleSpecialiController.setSistema(sistema);
         settingNumeroCaselleSpecialiController.init();
 
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Numero di caselle speciali");
-        stage.show();
+        Util.changeScene(e,"Numero di Caselle Speciali",root,stage,scene);
     }
 
     private boolean controlloVariantiOk() {

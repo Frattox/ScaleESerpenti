@@ -262,10 +262,8 @@ public class GameController {
         VittoriaController vittoriaController = loader.getController();
         vittoriaController.setSistema(sistema);
         vittoriaController.initVittoria();
-        stage = (Stage) vbox.getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        Util.changeScene(e,"Vittoria",root,stage,scene);
     }
 
     private void repaint(){

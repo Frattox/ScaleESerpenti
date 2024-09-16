@@ -63,7 +63,7 @@ public class SettingController {
 
     }
 
-    public void inviaSettingIniziale(ActionEvent event) throws IOException {
+    public void inviaSettingIniziale(ActionEvent e) throws IOException {
         if(isEmpty(righe) || isEmpty(colonne) || isEmpty(numeroGiocatori) || isEmpty(scale) || isEmpty(serpenti))
             return;
         sistema = new SistemaImpl1();
@@ -74,7 +74,7 @@ public class SettingController {
             sistema.setTabellone(r,c);
             colonneInadeguate.setVisible(false);
             righeInadeguate.setVisible(false);
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException event){
                 colonneInadeguate.setVisible(true);
                 righeInadeguate.setVisible(true);
                 return;
@@ -84,7 +84,7 @@ public class SettingController {
         try{
             sistema.setNPedine(numGiocatori);
             giocatoriInadeguati.setVisible(false);
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException event){
             giocatoriInadeguati.setVisible(true);
             verifica = false;
         }
@@ -93,7 +93,7 @@ public class SettingController {
         try{
             sistema.setNumberMezzi(TipoMezzo.SCALA,numScale);
             scaleInadeguate.setVisible(false);
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException event){
             scaleInadeguate.setVisible(true);
             verifica = false;
         }
@@ -102,7 +102,7 @@ public class SettingController {
         try{
             sistema.setNumberMezzi(TipoMezzo.SERPENTE,numSerpenti);
             serpentiInadeguati.setVisible(false);
-        }catch (IllegalArgumentException e){
+        }catch (IllegalArgumentException event){
             serpentiInadeguati.setVisible(true);
             verifica = false;
         }
@@ -112,11 +112,8 @@ public class SettingController {
         root = loader.load();
         SettingVariantiController controllerVarianti = loader.getController();
         controllerVarianti.setSistema(sistema);
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Seleziona Varianti");
-        stage.show();
+
+        Util.changeScene(e,"Seleziona Varianti",root,stage,scene);
     }
 
     private boolean isEmpty(TextField t){return t.getText().trim().isEmpty();}

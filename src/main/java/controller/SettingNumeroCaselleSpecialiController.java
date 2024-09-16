@@ -1,5 +1,6 @@
 package controller;
 
+import DB.ConfigurazioneDAO;
 import DB.ConnectConfigurazioneDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -37,6 +38,7 @@ public class SettingNumeroCaselleSpecialiController {
     private Button invia;
     private int i;
     private boolean salvato;
+    private ConfigurazioneDAO config;
 
     public void setSistema(Sistema sistema){this.sistema=sistema;}
 
@@ -61,6 +63,7 @@ public class SettingNumeroCaselleSpecialiController {
         gridVarianti.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
 
         salvato = false;
+        config = new ConfigurazioneDAO(this.sistema);
     }
 
     private TextField addVariante(boolean flag, String s) {
@@ -99,11 +102,7 @@ public class SettingNumeroCaselleSpecialiController {
         InfoController infoController = loader.getController();
         infoController.init(this.sistema);
 
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Informazioni");
-        stage.show();
+        Util.changeScene(e,"Informazioni",root,stage,scene);
     }
 
     public void salva(ActionEvent e) throws IOException{
