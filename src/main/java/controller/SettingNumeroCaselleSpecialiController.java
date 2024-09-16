@@ -1,5 +1,6 @@
 package controller;
 
+import DB.ConnectConfigurazioneDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +11,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -19,7 +19,6 @@ import model.Sistema;
 import util.Util;
 
 import java.io.IOException;
-import java.util.function.UnaryOperator;
 
 public class SettingNumeroCaselleSpecialiController {
     @FXML
@@ -37,6 +36,7 @@ public class SettingNumeroCaselleSpecialiController {
     @FXML
     private Button invia;
     private int i;
+    private boolean salvato;
 
     public void setSistema(Sistema sistema){this.sistema=sistema;}
 
@@ -59,6 +59,8 @@ public class SettingNumeroCaselleSpecialiController {
         if(casellePescaCarta!=null)Util.setTextFormatter(casellePescaCarta);
 
         gridVarianti.setPrefSize(Double.MAX_VALUE,Double.MAX_VALUE);
+
+        salvato = false;
     }
 
     private TextField addVariante(boolean flag, String s) {
@@ -102,6 +104,10 @@ public class SettingNumeroCaselleSpecialiController {
         stage.setScene(scene);
         stage.setTitle("Informazioni");
         stage.show();
+    }
+
+    public void salva(ActionEvent e) throws IOException{
+
     }
 
 }

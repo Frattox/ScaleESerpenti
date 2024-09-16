@@ -4,6 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingNumeroCaselleSpecialiController">
@@ -19,6 +20,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <Button fx:id="invia" layoutX="457.0" layoutY="320.0" mnemonicParsing="false" onAction="#inviaNumeroCaselleSpeciali" text="Invia" AnchorPane.bottomAnchor="54.99999999999994" AnchorPane.leftAnchor="457.0" />
+      <HBox alignment="CENTER" layoutX="407.0" layoutY="344.0" spacing="10.0" AnchorPane.bottomAnchor="30.399999999999977" AnchorPane.leftAnchor="407.0">
+         <children>
+            <Button fx:id="salva" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salva" text="Salva" HBox.hgrow="ALWAYS" />
+            <Button fx:id="invia" mnemonicParsing="false" onAction="#inviaNumeroCaselleSpeciali" text="Invia" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

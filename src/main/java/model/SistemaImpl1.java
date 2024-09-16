@@ -1,5 +1,6 @@
 package model;
 
+import DB.ConfigurazioneGioco;
 import model.elementi.*;
 import model.GestoreCaselleLibere.GestoreCaselleLibere;
 import model.GestoreCaselleLibere.GestoreCaselleLibereImpl;
@@ -232,6 +233,23 @@ public class SistemaImpl1 implements Sistema{
     @Override
     public Casella getCasellaCorrente(){return pedine[turno].getCasella();}
     public String getVincitore(){return (Integer.toString(turno+1));}
+    public ConfigurazioneGioco getConfigurazioneGioco(){
+        return new ConfigurazioneGioco(
+                this.tabellone.getR(),
+                this.tabellone.getC(),
+                this.pedine.length,
+                this.mezziQuantita.get(TipoMezzo.SCALA),
+                this.mezziQuantita.get(TipoMezzo.SERPENTE),
+                this.isDadoSingolo(),
+                this.isDadoSingoloFinale(),
+                this.isDoppioSei(),
+                this.isCaselleSosta(),
+                this.isCasellePremio(),
+                this.isPescaCarta(),
+                this.nCaselleSosta,
+                this.nCasellePremio,
+                this.nCasellePescaCarta);
+    }
 
     @Override
     public boolean isDadoSingolo(){return VDadoSingolo.isActivated();}

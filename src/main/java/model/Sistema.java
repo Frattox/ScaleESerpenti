@@ -1,5 +1,6 @@
 package model;
 
+import DB.ConfigurazioneGioco;
 import model.Mattaro.Carta;
 import model.elementi.Casella;
 import model.elementi.Mezzi.Mezzo;
@@ -49,5 +50,6 @@ public interface Sistema {
     Carta getCartaPescata();
     String getUltimaSosta();
     String getUltimoPremio();
+    ConfigurazioneGioco getConfigurazioneGioco();
 
 }
