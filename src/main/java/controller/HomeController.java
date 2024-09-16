@@ -1,5 +1,6 @@
 package controller;
 
+import DB.ConnectDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,13 +15,10 @@ import java.io.IOException;
 public class HomeController {
 
     @FXML
-    private Parent root;
-    @FXML
     private Scene scene;
     @FXML
     private Stage stage;
-    @FXML
-    private Button nuovaPartita;
+    private ConnectDB connectDB;
 
     public void nuovaPartita(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Setting.fxml"));
@@ -33,4 +31,9 @@ public class HomeController {
         stage.setTitle("Home");
         stage.show();
     }
+
+    public void caricaPartita(ActionEvent e)  throws IOException {
+        //TODO
+    }
+
 }

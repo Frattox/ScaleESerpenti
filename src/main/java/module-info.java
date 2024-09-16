@@ -10,6 +10,7 @@ module scaleeserpenti {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.sql;
     opens controller to javafx.fxml;
     opens view to javafx.fxml;
     opens model to javafx.fxml;
