@@ -82,21 +82,19 @@ public class SettingNumeroCaselleSpecialiController {
         textField.setAlignment(Pos.BASELINE_CENTER);
         textField.setMaxSize(100,30);
         gridVarianti.add(textField,1,i);
+        label = new Label("E' vuota!");
+        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        label.setAlignment(Pos.BASELINE_LEFT);
+        label.setVisible(false);
+        gridVarianti.add(label,2,i);
         i++;
 
         return textField;
     }
 
     public void inviaNumeroCaselleSpeciali(ActionEvent e) throws IOException {
-        if(sistema==null)
-            throw new IllegalArgumentException("SettingController: sistema ancora non istanziato");
-        if(sistema.isCaselleSosta())
-            sistema.setNumberCaselleSosta(Integer.parseInt(caselleSosta.getText()));
-        if(sistema.isCasellePremio())
-            sistema.setNumberCasellePremio(Integer.parseInt(casellePremio.getText()));
-        if(sistema.isPescaCarta())
-            sistema.setNumberCasellePescaCarta(Integer.parseInt(casellePescaCarta.getText()));
-
+        if(!setCaselle())
+            return;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Info.fxml"));
         root = loader.load();
         InfoController infoController = loader.getController();
@@ -104,6 +102,42 @@ public class SettingNumeroCaselleSpecialiController {
 
         Util.changeScene(e,"Informazioni",root,stage,scene);
     }
+
+    private boolean setCaselle() {
+        boolean ret = true;
+        final int n = 3;
+        int i = 1;
+        if (sistema == null)
+            throw new IllegalArgumentException("SettingController: sistema ancora non istanziato");
+        if (sistema.isCaselleSosta())
+            if (caselleSosta.getText().isEmpty()) {
+                ret = false;
+                gridVarianti.getChildren().get((n * i) - 1).setVisible(true);
+            } else {
+                gridVarianti.getChildren().get((n * i) - 1).setVisible(false);
+                sistema.setNumberCaselleSosta(Integer.parseInt(caselleSosta.getText()));
+            }
+        i++;
+        if (sistema.isCasellePremio())
+            if (casellePremio.getText().isEmpty()) {
+                ret = false;
+                gridVarianti.getChildren().get((n * i) - 1).setVisible(true);
+            } else {
+                gridVarianti.getChildren().get((n * i) - 1).setVisible(false);
+                sistema.setNumberCasellePremio(Integer.parseInt(casellePremio.getText()));
+            }
+        i++;
+        if (sistema.isPescaCarta())
+            if (casellePescaCarta.getText().isEmpty()) {
+                ret = false;
+                gridVarianti.getChildren().get((n * i) - 1).setVisible(true);
+            } else {
+                gridVarianti.getChildren().get((n * i) - 1).setVisible(false);
+                sistema.setNumberCasellePescaCarta(Integer.parseInt(casellePescaCarta.getText()));
+            }
+        return ret;
+    }
+
 
     public void salva(ActionEvent e) throws IOException{
 
