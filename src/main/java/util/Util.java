@@ -79,4 +79,9 @@ public class Util {
         stage.setTitle(title);
         stage.show();
     }
+    public enum CaselleSpeciali{
+        SOSTA,
+        PREMIO,
+        PESCA
+    }
 }

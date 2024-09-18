@@ -10,6 +10,7 @@ import model.Mattaro.Carta;
 import model.commands.*;
 import model.varianti.*;
 import model.elementi.Mezzi.*;
+import util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,8 +29,10 @@ public class SistemaImpl1 implements Sistema{
     private GestoreCaselleLibere caselleLibere;
     //per ogni tipo di mezzo, la sua quantità corrispondente
     private HashMap<TipoMezzo,Integer> mezziQuantita;
+    private HashMap<Util.CaselleSpeciali,Integer> caselleSpecialiQuantita;
     private int
             nMezzi,
+            nCaselleSpeciali,
             nCaselleSosta,
             nCasellePremio,
             nCasellePescaCarta,
@@ -70,6 +73,7 @@ public class SistemaImpl1 implements Sistema{
         pedine = new Pedina[2]; //default
         dadi = new ArrayList<>();
         nMezzi=0;
+        nCaselleSpeciali=0;
         nCaselleSosta=0;
         nCasellePremio=0;
         nCasellePescaCarta=0;
@@ -77,6 +81,7 @@ public class SistemaImpl1 implements Sistema{
         VUlterioriCarte = new VarianteUlterioriCarte();
         cartaPescata = null;
         gestoreEffetti = new GestoreEffettiImpl(this);
+        caselleSpecialiQuantita = new HashMap<>();
     }
 
     @Override
@@ -159,8 +164,37 @@ public class SistemaImpl1 implements Sistema{
         nMezzi+=n;
         setMezziAutomatico(tipo,n);
     }
-    @Override
-    public void setNumberCaselleSosta(int n) throws IllegalArgumentException{
+
+    public void setNumberCaselleSpeciali(Util.CaselleSpeciali tipoCasellaSpeciale, int n){
+        if(!tipoCasellaSpecialeOk(tipoCasellaSpeciale)) return;
+        caselleSpecialiQuantita.put(tipoCasellaSpeciale,n);
+        nCaselleSpeciali+=n;
+    }
+    public void beginSettingCaselleSpeciali() throws IllegalArgumentException{
+        if(!isNumberCaselleSpecialiOk(nCaselleSpeciali)){
+            nCaselleSpeciali=0;
+            caselleSpecialiQuantita.clear();
+            throw new IllegalArgumentException("Numero totale di caselle non idoneo.");
+        }
+        for (Util.CaselleSpeciali tipo : caselleSpecialiQuantita.keySet()) {
+            if (tipo == Util.CaselleSpeciali.SOSTA) {
+                nCaselleSosta=caselleSpecialiQuantita.get(tipo);
+                setNumberCaselleSosta(nCaselleSosta);
+            }
+            else if (tipo == Util.CaselleSpeciali.PREMIO) {
+                nCasellePremio=caselleSpecialiQuantita.get(tipo);
+                setNumberCasellePremio(nCasellePremio);
+            } else if (tipo == Util.CaselleSpeciali.PESCA) {
+                nCasellePescaCarta=caselleSpecialiQuantita.get(tipo);
+                setNumberCasellePescaCarta(nCasellePescaCarta);
+            }
+        }
+    }
+
+    private boolean tipoCasellaSpecialeOk(Util.CaselleSpeciali tipoCasellaSpeciale) {return tipoCasellaSpeciale== Util.CaselleSpeciali.PESCA || tipoCasellaSpeciale== Util.CaselleSpeciali.SOSTA || tipoCasellaSpeciale== Util.CaselleSpeciali.PREMIO;}
+
+
+    private void setNumberCaselleSosta(int n) throws IllegalArgumentException{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta non idoneo");
         if(!isNumberCaselleSpecialiOk(n))
@@ -168,8 +202,8 @@ public class SistemaImpl1 implements Sistema{
         nCaselleSosta=n;
         VCaselleSosta.action(this);
     }
-    @Override
-    public void setNumberCasellePremio(int n) throws IllegalArgumentException{
+
+    private void setNumberCasellePremio(int n) throws IllegalArgumentException{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
         if(!isNumberCaselleSpecialiOk(n))
@@ -177,8 +211,8 @@ public class SistemaImpl1 implements Sistema{
         nCasellePremio=n;
         VCasellePremio.action(this);
     }
-    @Override
-    public void setNumberCasellePescaCarta(int n) throws IllegalArgumentException{
+
+    private void setNumberCasellePescaCarta(int n) throws IllegalArgumentException{
         if(n<0)
             throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
         if(!isNumberCaselleSpecialiOk(n))

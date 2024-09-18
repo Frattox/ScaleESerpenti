@@ -6,6 +6,7 @@ import model.elementi.Casella;
 import model.elementi.Mezzi.Mezzo;
 import model.elementi.Mezzi.TipoMezzo;
 import model.elementi.Tabellone;
+import util.Util;
 
 import java.util.HashMap;
 import java.util.List;
@@ -29,9 +30,8 @@ public interface Sistema {
     boolean isPescaCarta();
     boolean isUlterioriCarte();
 
-    void setNumberCaselleSosta(int n) throws IllegalArgumentException;
-    void setNumberCasellePremio(int n) throws IllegalArgumentException;
-    void setNumberCasellePescaCarta(int n) throws IllegalArgumentException;
+    void setNumberCaselleSpeciali(Util.CaselleSpeciali tipoCasellaSpeciale, int n);
+    void beginSettingCaselleSpeciali() throws IllegalArgumentException;
     void setDadi();
     boolean undo();
     boolean redo();

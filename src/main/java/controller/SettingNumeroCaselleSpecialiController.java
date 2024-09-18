@@ -20,6 +20,8 @@ import model.Sistema;
 import util.Util;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 public class SettingNumeroCaselleSpecialiController {
     @FXML
@@ -36,9 +38,12 @@ public class SettingNumeroCaselleSpecialiController {
     private TextField caselleSosta, casellePremio, casellePescaCarta;
     @FXML
     private Button invia;
+    @FXML
+    private Label avvisoNumeroNonIdoneo;
     private int i;
     private boolean salvato;
     private ConfigurazioneDAO config;
+    private List<Label> avvisiEVuota;
 
     public void setSistema(Sistema sistema){this.sistema=sistema;}
 
@@ -50,6 +55,10 @@ public class SettingNumeroCaselleSpecialiController {
         gridVarianti.getColumnConstraints().add(c);
         c.setPercentWidth(70);
         gridVarianti.getColumnConstraints().add(c);
+
+        avvisiEVuota = new LinkedList<>();
+        avvisoNumeroNonIdoneo = new Label();
+        avvisoNumeroNonIdoneo.setVisible(false);
 
         i=0;
         caselleSosta = addVariante(sistema.isCaselleSosta(),"Caselle sosta");
@@ -87,6 +96,7 @@ public class SettingNumeroCaselleSpecialiController {
         label.setAlignment(Pos.BASELINE_LEFT);
         label.setVisible(false);
         gridVarianti.add(label,2,i);
+        avvisiEVuota.add(label);
         i++;
 
         return textField;
@@ -105,36 +115,47 @@ public class SettingNumeroCaselleSpecialiController {
 
     private boolean setCaselle() {
         boolean ret = true;
-        final int n = 3;
-        int i = 1;
+        int i = 0;
         if (sistema == null)
-            throw new IllegalArgumentException("SettingController: sistema ancora non istanziato");
+            throw new IllegalArgumentException("SettingNumeroCaselleSpecialiController: sistema ancora non istanziato");
         if (sistema.isCaselleSosta())
-            if (caselleSosta.getText().isEmpty()) {
+            if (caselleSosta.getText().trim().isEmpty()) {
                 ret = false;
-                gridVarianti.getChildren().get((n * i) - 1).setVisible(true);
+                avvisiEVuota.get(i).setVisible(true);
             } else {
-                gridVarianti.getChildren().get((n * i) - 1).setVisible(false);
-                sistema.setNumberCaselleSosta(Integer.parseInt(caselleSosta.getText()));
+                avvisiEVuota.get(i).setVisible(false);
+                sistema.setNumberCaselleSpeciali(Util.CaselleSpeciali.SOSTA,Integer.parseInt(caselleSosta.getText()));
             }
-        i++;
-        if (sistema.isCasellePremio())
-            if (casellePremio.getText().isEmpty()) {
+        if (sistema.isCasellePremio()) {
+            i++;
+            if (casellePremio.getText().trim().isEmpty()) {
                 ret = false;
-                gridVarianti.getChildren().get((n * i) - 1).setVisible(true);
+                avvisiEVuota.get(i).setVisible(true);
             } else {
-                gridVarianti.getChildren().get((n * i) - 1).setVisible(false);
-                sistema.setNumberCasellePremio(Integer.parseInt(casellePremio.getText()));
+                avvisiEVuota.get(i).setVisible(false);
+                sistema.setNumberCaselleSpeciali(Util.CaselleSpeciali.PREMIO,Integer.parseInt(casellePremio.getText()));
             }
-        i++;
-        if (sistema.isPescaCarta())
-            if (casellePescaCarta.getText().isEmpty()) {
+        }
+        if (sistema.isPescaCarta()) {
+            i++;
+            if (casellePescaCarta.getText().trim().isEmpty()) {
                 ret = false;
-                gridVarianti.getChildren().get((n * i) - 1).setVisible(true);
+                avvisiEVuota.get(i).setVisible(true);
             } else {
-                gridVarianti.getChildren().get((n * i) - 1).setVisible(false);
-                sistema.setNumberCasellePescaCarta(Integer.parseInt(casellePescaCarta.getText()));
+                avvisiEVuota.get(i).setVisible(false);
+                sistema.setNumberCaselleSpeciali(Util.CaselleSpeciali.PESCA,Integer.parseInt(casellePescaCarta.getText()));
             }
+        }
+        try{
+            sistema.beginSettingCaselleSpeciali();
+            avvisoNumeroNonIdoneo.setVisible(false);
+            System.out.println("Ciao1");
+        }catch(IllegalArgumentException e){
+            avvisoNumeroNonIdoneo.setText(e.getMessage());
+            avvisoNumeroNonIdoneo.setVisible(true);
+            ret=false;
+            System.out.println("Ciao2");
+        }
         return ret;
     }
 
