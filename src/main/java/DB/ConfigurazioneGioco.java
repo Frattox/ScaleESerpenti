@@ -16,6 +16,7 @@ public class ConfigurazioneGioco{
     private int numeroCaselleSosta;
     private int numeroCasellePremio;
     private int numeroCasellePescaCarta;
+    public ConfigurazioneGioco(){}
 
     // Costruttore con tutti i campi
     public ConfigurazioneGioco(int numeroRighe, int numeroColonne, int numeroGiocatori, int numeroScale, int numeroSerpenti,

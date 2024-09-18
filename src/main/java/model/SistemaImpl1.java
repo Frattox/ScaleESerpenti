@@ -29,13 +29,11 @@ public class SistemaImpl1 implements Sistema{
     private GestoreCaselleLibere caselleLibere;
     //per ogni tipo di mezzo, la sua quantità corrispondente
     private HashMap<TipoMezzo,Integer> mezziQuantita;
+    private ConfigurazioneGioco config;
     private HashMap<Util.CaselleSpeciali,Integer> caselleSpecialiQuantita;
     private int
             nMezzi,
             nCaselleSpeciali,
-            nCaselleSosta,
-            nCasellePremio,
-            nCasellePescaCarta,
             turno,
             lancio,
             totCaselle; //utile per il setting dei tipi di caselle
@@ -74,9 +72,6 @@ public class SistemaImpl1 implements Sistema{
         dadi = new ArrayList<>();
         nMezzi=0;
         nCaselleSpeciali=0;
-        nCaselleSosta=0;
-        nCasellePremio=0;
-        nCasellePescaCarta=0;
         turno=-1;
         VUlterioriCarte = new VarianteUlterioriCarte();
         cartaPescata = null;
@@ -165,59 +160,36 @@ public class SistemaImpl1 implements Sistema{
         setMezziAutomatico(tipo,n);
     }
 
+    @Override
     public void setNumberCaselleSpeciali(Util.CaselleSpeciali tipoCasellaSpeciale, int n){
-        if(!tipoCasellaSpecialeOk(tipoCasellaSpeciale)) return;
         caselleSpecialiQuantita.put(tipoCasellaSpeciale,n);
         nCaselleSpeciali+=n;
     }
-    public void beginSettingCaselleSpeciali() throws IllegalArgumentException{
+
+    @Override
+    public void controlNumberCaselleSpeciali() throws IllegalArgumentException{
         if(!isNumberCaselleSpecialiOk(nCaselleSpeciali)){
-            nCaselleSpeciali=0;
-            caselleSpecialiQuantita.clear();
+            initCaselleSpeciali();
             throw new IllegalArgumentException("Numero totale di caselle non idoneo.");
-        }
-        for (Util.CaselleSpeciali tipo : caselleSpecialiQuantita.keySet()) {
-            if (tipo == Util.CaselleSpeciali.SOSTA) {
-                nCaselleSosta=caselleSpecialiQuantita.get(tipo);
-                setNumberCaselleSosta(nCaselleSosta);
-            }
-            else if (tipo == Util.CaselleSpeciali.PREMIO) {
-                nCasellePremio=caselleSpecialiQuantita.get(tipo);
-                setNumberCasellePremio(nCasellePremio);
-            } else if (tipo == Util.CaselleSpeciali.PESCA) {
-                nCasellePescaCarta=caselleSpecialiQuantita.get(tipo);
-                setNumberCasellePescaCarta(nCasellePescaCarta);
-            }
         }
     }
 
-    private boolean tipoCasellaSpecialeOk(Util.CaselleSpeciali tipoCasellaSpeciale) {return tipoCasellaSpeciale== Util.CaselleSpeciali.PESCA || tipoCasellaSpeciale== Util.CaselleSpeciali.SOSTA || tipoCasellaSpeciale== Util.CaselleSpeciali.PREMIO;}
-
+    @Override
+    public void beginSettingCaselleSpeciali(){
+        setNumberCaselleSosta(caselleSpecialiQuantita.get(Util.CaselleSpeciali.SOSTA));
+        setNumberCasellePremio(caselleSpecialiQuantita.get(Util.CaselleSpeciali.PREMIO));
+        setNumberCasellePescaCarta(caselleSpecialiQuantita.get(Util.CaselleSpeciali.PESCA));
+    }
 
     private void setNumberCaselleSosta(int n) throws IllegalArgumentException{
-        if(n<0)
-            throw new IllegalArgumentException("Sistema: numero di caselle sosta non idoneo");
-        if(!isNumberCaselleSpecialiOk(n))
-            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
-        nCaselleSosta=n;
         VCaselleSosta.action(this);
     }
 
     private void setNumberCasellePremio(int n) throws IllegalArgumentException{
-        if(n<0)
-            throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
-        if(!isNumberCaselleSpecialiOk(n))
-            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
-        nCasellePremio=n;
         VCasellePremio.action(this);
     }
 
     private void setNumberCasellePescaCarta(int n) throws IllegalArgumentException{
-        if(n<0)
-            throw new IllegalArgumentException("Sistema: numero di caselle sosta invalido");
-        if(!isNumberCaselleSpecialiOk(n))
-            throw new IllegalArgumentException("Sistema: numero superiore a quello disponibile di caselle.");
-        nCasellePescaCarta=n;
         VCasellePescaCarta.action(this);
     }
 
@@ -255,9 +227,9 @@ public class SistemaImpl1 implements Sistema{
     }
     public int getTotCaselle(){return totCaselle;}
     public int getSizeCaselleLibere(){return caselleLibere.getSize();}
-    public int getnCaselleSosta(){return nCaselleSosta;}
-    public int getnCasellePremio() {return nCasellePremio;}
-    public int getnCasellePescaCarta(){return nCasellePescaCarta;}
+    public int getnCaselleSosta(){return caselleSpecialiQuantita.get(Util.CaselleSpeciali.SOSTA);}
+    public int getnCasellePremio() {return caselleSpecialiQuantita.get(Util.CaselleSpeciali.PREMIO);}
+    public int getnCasellePescaCarta(){return caselleSpecialiQuantita.get(Util.CaselleSpeciali.PESCA);}
     public int getNPedine(){return pedine.length;}
     public Pedina[] getPedine(){return pedine;}
     public Tabellone getTabellone(){return tabellone;}
@@ -280,9 +252,9 @@ public class SistemaImpl1 implements Sistema{
                 this.isCaselleSosta(),
                 this.isCasellePremio(),
                 this.isPescaCarta(),
-                this.nCaselleSosta,
-                this.nCasellePremio,
-                this.nCasellePescaCarta);
+                this.caselleSpecialiQuantita.get(Util.CaselleSpeciali.SOSTA),
+                this.caselleSpecialiQuantita.get(Util.CaselleSpeciali.PREMIO),
+                this.caselleSpecialiQuantita.get(Util.CaselleSpeciali.PESCA));
     }
 
     @Override
@@ -331,6 +303,12 @@ public class SistemaImpl1 implements Sistema{
     public boolean undo(){ return commandHandler.undo();}
     @Override
     public boolean redo(){return commandHandler.redo();}
+
+    @Override
+    public void initCaselleSpeciali() {
+        caselleSpecialiQuantita.clear();
+        nCaselleSpeciali = 0;
+    }
 
 
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------

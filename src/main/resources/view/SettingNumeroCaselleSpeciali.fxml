@@ -22,7 +22,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <HBox alignment="CENTER" layoutX="407.0" layoutY="344.0" spacing="10.0" AnchorPane.bottomAnchor="30.399999999999977" AnchorPane.leftAnchor="407.0">
+      <HBox alignment="CENTER" layoutX="407.0" layoutY="344.0" spacing="10.0" AnchorPane.bottomAnchor="30.399999999999977" AnchorPane.leftAnchor="407.0" AnchorPane.rightAnchor="59.20000000000002">
          <children>
             <Label fx:id="avvisoNumeroNonIdoneo" text="Label" visible="false" />
             <Button fx:id="salva" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#salva" text="Salva" HBox.hgrow="ALWAYS" />

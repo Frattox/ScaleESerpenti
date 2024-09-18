@@ -31,16 +31,22 @@ public interface Sistema {
     boolean isUlterioriCarte();
 
     void setNumberCaselleSpeciali(Util.CaselleSpeciali tipoCasellaSpeciale, int n);
-    void beginSettingCaselleSpeciali() throws IllegalArgumentException;
+    void controlNumberCaselleSpeciali() throws IllegalArgumentException;
     void setDadi();
     boolean undo();
     boolean redo();
+
+    void initCaselleSpeciali();
+
     void prossimoTurno();
     void lancia();
     void avanza() throws IllegalArgumentException;
     boolean azionaCasella() throws IllegalArgumentException;
     Tabellone getTabellone();
     int getNPedine();
+
+    void beginSettingCaselleSpeciali();
+
     int getTurno();
     int getLancio();
     Casella getCasellaCorrente();

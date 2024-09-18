@@ -1,12 +1,10 @@
 package controller;
 
 import DB.ConfigurazioneDAO;
-import DB.ConnectConfigurazioneDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -57,7 +55,6 @@ public class SettingNumeroCaselleSpecialiController {
         gridVarianti.getColumnConstraints().add(c);
 
         avvisiEVuota = new LinkedList<>();
-        avvisoNumeroNonIdoneo = new Label();
         avvisoNumeroNonIdoneo.setVisible(false);
 
         i=0;
@@ -105,6 +102,7 @@ public class SettingNumeroCaselleSpecialiController {
     public void inviaNumeroCaselleSpeciali(ActionEvent e) throws IOException {
         if(!setCaselle())
             return;
+        sistema.beginSettingCaselleSpeciali();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Info.fxml"));
         root = loader.load();
         InfoController infoController = loader.getController();
@@ -116,6 +114,7 @@ public class SettingNumeroCaselleSpecialiController {
     private boolean setCaselle() {
         boolean ret = true;
         int i = 0;
+        sistema.initCaselleSpeciali();
         if (sistema == null)
             throw new IllegalArgumentException("SettingNumeroCaselleSpecialiController: sistema ancora non istanziato");
         if (sistema.isCaselleSosta())
@@ -147,9 +146,8 @@ public class SettingNumeroCaselleSpecialiController {
             }
         }
         try{
-            sistema.beginSettingCaselleSpeciali();
+            sistema.controlNumberCaselleSpeciali();
             avvisoNumeroNonIdoneo.setVisible(false);
-            System.out.println("Ciao1");
         }catch(IllegalArgumentException e){
             avvisoNumeroNonIdoneo.setText(e.getMessage());
             avvisoNumeroNonIdoneo.setVisible(true);
@@ -161,7 +159,10 @@ public class SettingNumeroCaselleSpecialiController {
 
 
     public void salva(ActionEvent e) throws IOException{
-
+        if(!setCaselle())
+            return;
+        config = new ConfigurazioneDAO(this.sistema);
+        config.save();
     }
 
 }
