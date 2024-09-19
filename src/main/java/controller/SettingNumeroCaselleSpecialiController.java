@@ -113,18 +113,20 @@ public class SettingNumeroCaselleSpecialiController {
 
     private boolean setCaselle() {
         boolean ret = true;
-        int i = 0;
+        int i = -1;
         sistema.initCaselleSpeciali();
         if (sistema == null)
             throw new IllegalArgumentException("SettingNumeroCaselleSpecialiController: sistema ancora non istanziato");
-        if (sistema.isCaselleSosta())
+        if (sistema.isCaselleSosta()) {
+            i++;
             if (caselleSosta.getText().trim().isEmpty()) {
                 ret = false;
                 avvisiEVuota.get(i).setVisible(true);
             } else {
                 avvisiEVuota.get(i).setVisible(false);
-                sistema.setNumberCaselleSpeciali(Util.CaselleSpeciali.SOSTA,Integer.parseInt(caselleSosta.getText()));
+                sistema.setNumberCaselleSpeciali(Util.CaselleSpeciali.SOSTA, Integer.parseInt(caselleSosta.getText()));
             }
+        }
         if (sistema.isCasellePremio()) {
             i++;
             if (casellePremio.getText().trim().isEmpty()) {

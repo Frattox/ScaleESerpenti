@@ -23,11 +23,11 @@ public class ConfigurazioneDAO{
     public void save() {
         String sql = "INSERT INTO ConfigurazioneGioco (numeroRighe, numeroColonne, numeroGiocatori, numeroScale, numeroSerpenti, "
                 + "varianteDadoSingolo, varianteDadoSingoloFinale, varianteDoppioSei, varianteCaselleSosta, varianteCasellePremio, "
-                + "variantePescaCarta, numeroCaselleSosta, numeroCasellePremio, numeroCasellePescaCarta) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "variantePescaCarta, varianteUlterioriCarte, numeroCaselleSosta, numeroCasellePremio, numeroCasellePescaCarta) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         ConfigurazioneGioco config = sistema.getConfigurazioneGioco();
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            setInt(config, pstmt);
+            setParameters(config, pstmt);
             pstmt.executeUpdate();
             System.out.println("Configurazione salvata con successo.");
         } catch (SQLException e) {
@@ -36,7 +36,7 @@ public class ConfigurazioneDAO{
         }
     }
 
-    private void setInt(ConfigurazioneGioco config, PreparedStatement pstmt) throws SQLException {
+    private void setParameters(ConfigurazioneGioco config, PreparedStatement pstmt) throws SQLException {
         pstmt.setInt(1, config.getNumeroRighe());
         pstmt.setInt(2, config.getNumeroColonne());
         pstmt.setInt(3, config.getNumeroGiocatori());
@@ -48,9 +48,10 @@ public class ConfigurazioneDAO{
         pstmt.setBoolean(9, config.isVarianteCaselleSosta());
         pstmt.setBoolean(10, config.isVarianteCasellePremio());
         pstmt.setBoolean(11, config.isVariantePescaCarta());
-        pstmt.setInt(12, config.getNumeroCaselleSosta());
-        pstmt.setInt(13, config.getNumeroCasellePremio());
-        pstmt.setInt(14, config.getNumeroCasellePescaCarta());
+        pstmt.setBoolean(12, config.isVarianteUlterioriCarte());
+        pstmt.setInt(13, config.getNumeroCaselleSosta());
+        pstmt.setInt(14, config.getNumeroCasellePremio());
+        pstmt.setInt(15, config.getNumeroCasellePescaCarta());
     }
 
     // Metodo per recuperare una configurazione per ID
@@ -75,6 +76,7 @@ public class ConfigurazioneDAO{
                         rs.getBoolean("varianteCaselleSosta"),
                         rs.getBoolean("varianteCasellePremio"),
                         rs.getBoolean("variantePescaCarta"),
+                        rs.getBoolean("varianteUlterioriCarte"),
                         rs.getInt("numeroCaselleSosta"),
                         rs.getInt("numeroCasellePremio"),
                         rs.getInt("numeroCasellePescaCarta")
@@ -93,13 +95,13 @@ public class ConfigurazioneDAO{
         String sql = "UPDATE ConfigurazioneGioco SET "
                 + "numeroRighe = ?, numeroColonne = ?, numeroGiocatori = ?, numeroScale = ?, numeroSerpenti = ?, "
                 + "varianteDadoSingolo = ?, varianteDadoSingoloFinale = ?, varianteDoppioSei = ?, "
-                + "varianteCaselleSosta = ?, varianteCasellePremio = ?, variantePescaCarta = ?, "
+                + "varianteCaselleSosta = ?, varianteCasellePremio = ?, variantePescaCarta = ?,  varianteUlterioriCarte = ?,"
                 + "numeroCaselleSosta = ?, numeroCasellePremio = ?, numeroCasellePescaCarta = ? "
                 + "WHERE id = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            setInt(config, pstmt);
-            pstmt.setInt(15, id);
+            setParameters(config, pstmt);
+            pstmt.setInt(16, id);
 
             pstmt.executeUpdate();
             System.out.println("Configurazione aggiornata con successo.");

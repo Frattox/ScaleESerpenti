@@ -45,6 +45,7 @@ public class ConnectConfigurazioneDB {
                 + "varianteCaselleSosta BOOLEAN NOT NULL,"
                 + "varianteCasellePremio BOOLEAN NOT NULL,"
                 + "variantePescaCarta BOOLEAN NOT NULL,"
+                + "varianteUlterioriCarte BOOLEAN NOT NULL,"
                 + "numeroCaselleSosta INTEGER DEFAULT 0,"
                 + "numeroCasellePremio INTEGER DEFAULT 0,"
                 + "numeroCasellePescaCarta INTEGER DEFAULT 0"

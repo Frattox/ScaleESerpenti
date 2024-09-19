@@ -13,6 +13,7 @@ public class ConfigurazioneGioco{
     private boolean varianteCaselleSosta;
     private boolean varianteCasellePremio;
     private boolean variantePescaCarta;
+    private boolean varianteUlterioriCarte;
     private int numeroCaselleSosta;
     private int numeroCasellePremio;
     private int numeroCasellePescaCarta;
@@ -21,7 +22,7 @@ public class ConfigurazioneGioco{
     // Costruttore con tutti i campi
     public ConfigurazioneGioco(int numeroRighe, int numeroColonne, int numeroGiocatori, int numeroScale, int numeroSerpenti,
                                boolean varianteDadoSingolo, boolean varianteDadoSingoloFinale, boolean varianteDoppioSei,
-                               boolean varianteCaselleSosta, boolean varianteCasellePremio, boolean variantePescaCarta,
+                               boolean varianteCaselleSosta, boolean varianteCasellePremio, boolean variantePescaCarta, boolean varianteUlterioriCarte,
                                int numeroCaselleSosta, int numeroCasellePremio, int numeroCasellePescaCarta) {
         this.numeroRighe = numeroRighe;
         this.numeroColonne = numeroColonne;
@@ -34,6 +35,7 @@ public class ConfigurazioneGioco{
         this.varianteCaselleSosta = varianteCaselleSosta;
         this.varianteCasellePremio = varianteCasellePremio;
         this.variantePescaCarta = variantePescaCarta;
+        this.varianteUlterioriCarte = varianteUlterioriCarte;
         this.numeroCaselleSosta = numeroCaselleSosta;
         this.numeroCasellePremio = numeroCasellePremio;
         this.numeroCasellePescaCarta = numeroCasellePescaCarta;
@@ -126,6 +128,14 @@ public class ConfigurazioneGioco{
 
     public void setVariantePescaCarta(boolean variantePescaCarta) {
         this.variantePescaCarta = variantePescaCarta;
+    }
+
+    public boolean isVarianteUlterioriCarte() {
+        return varianteUlterioriCarte;
+    }
+
+    public void setVarianteUlterioriCarte(boolean varianteUlterioriCarte) {
+        this.varianteUlterioriCarte = varianteUlterioriCarte;
     }
 
     public int getNumeroCaselleSosta() {

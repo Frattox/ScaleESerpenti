@@ -29,7 +29,6 @@ public class SistemaImpl1 implements Sistema{
     private GestoreCaselleLibere caselleLibere;
     //per ogni tipo di mezzo, la sua quantità corrispondente
     private HashMap<TipoMezzo,Integer> mezziQuantita;
-    private ConfigurazioneGioco config;
     private HashMap<Util.CaselleSpeciali,Integer> caselleSpecialiQuantita;
     private int
             nMezzi,
@@ -77,6 +76,7 @@ public class SistemaImpl1 implements Sistema{
         cartaPescata = null;
         gestoreEffetti = new GestoreEffettiImpl(this);
         caselleSpecialiQuantita = new HashMap<>();
+        initCaselleSpeciali();
     }
 
     @Override
@@ -252,6 +252,7 @@ public class SistemaImpl1 implements Sistema{
                 this.isCaselleSosta(),
                 this.isCasellePremio(),
                 this.isPescaCarta(),
+                this.isUlterioriCarte(),
                 this.caselleSpecialiQuantita.get(Util.CaselleSpeciali.SOSTA),
                 this.caselleSpecialiQuantita.get(Util.CaselleSpeciali.PREMIO),
                 this.caselleSpecialiQuantita.get(Util.CaselleSpeciali.PESCA));
@@ -306,7 +307,8 @@ public class SistemaImpl1 implements Sistema{
 
     @Override
     public void initCaselleSpeciali() {
-        caselleSpecialiQuantita.clear();
+        for(Util.CaselleSpeciali tipo: Util.CaselleSpeciali.values())
+            caselleSpecialiQuantita.put(tipo,0);
         nCaselleSpeciali = 0;
     }
 
