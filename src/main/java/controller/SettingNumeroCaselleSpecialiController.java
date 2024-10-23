@@ -21,7 +21,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class SettingNumeroCaselleSpecialiController {
+public class SettingNumeroCaselleSpecialiController  implements Controller{
     @FXML
     private Sistema sistema;
     @FXML
@@ -43,7 +43,8 @@ public class SettingNumeroCaselleSpecialiController {
     private ConfigurazioneDAO config;
     private List<Label> avvisiEVuota;
 
-    public void setting(Sistema sistema,Stage stage){
+    @Override
+    public void init(Sistema sistema,Stage stage){
         this.sistema=sistema;
         this.stage = stage;
     }
@@ -167,4 +168,21 @@ public class SettingNumeroCaselleSpecialiController {
         config.save();
     }
 
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
+    public void indietro(ActionEvent e) throws IOException {
+        Util.indietro("Seleziona Varianti","/view/SettingVarianti.fxml",this);
+    }
 }

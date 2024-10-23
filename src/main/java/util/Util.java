@@ -1,7 +1,10 @@
 package util;
 
+import controller.Controller;
 import controller.GameController;
+import controller.InfoController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -15,8 +18,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import model.Sistema;
 import model.elementi.Casella;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.function.UnaryOperator;
 
@@ -82,6 +87,18 @@ public class Util {
         stage.setTitle(title);
         stage.show();
     }
+
+    public static void indietro(String name, String path, Controller controller) throws IOException {
+        FXMLLoader loader = new FXMLLoader(controller.getClass().getResource(path));
+        Parent root = loader.load();
+        Controller controllerIndietro = loader.getController();
+        Sistema sistema = controller.getSistema();
+        Stage stage = controller.getStage();
+        Scene scene = controller.getScene();
+        controllerIndietro.init(controller.getSistema(), controller.getStage());
+        Util.changeScene("Informazioni",root,stage,null,null,scene);
+    }
+
     public enum CaselleSpeciali{
         SOSTA,
         PREMIO,

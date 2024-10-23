@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CaricaPartitaController {
+public class CaricaPartitaController implements Controller{
 
     @FXML
     private Scene scene;
@@ -33,7 +33,8 @@ public class CaricaPartitaController {
     private ConfigurazioneDAO configurazioneDAO;
     private Sistema sistema;
 
-    public void init(Stage stage) {
+    @Override
+    public void init(Sistema sistema, Stage stage) {
         this.sistema = new SistemaImpl1();
         this.stage=stage;
         configurazioneDAO = new ConfigurazioneDAO(this.sistema);
@@ -106,6 +107,8 @@ public class CaricaPartitaController {
     }
 
     public void carica(ActionEvent e) throws IOException {
+        if(tableView.getSelectionModel().isEmpty())
+            return;
         ConfigurazioneGioco configurazioneGioco = tableView.getSelectionModel().getSelectedItem();
         sistema.setTabellone(
                 Integer.parseInt(configurazioneGioco.getNumeroRighe()),
@@ -143,22 +146,45 @@ public class CaricaPartitaController {
         sistema.setUlterioriCarte(
                 Boolean.parseBoolean(configurazioneGioco.getVarianteUlterioriCarte())
         );
+        System.out.println(Integer.parseInt(configurazioneGioco.getNumeroCaselleSosta()));
         sistema.setNumberCaselleSpeciali(
                 Util.CaselleSpeciali.SOSTA,
                 Integer.parseInt(configurazioneGioco.getNumeroCaselleSosta())
         );
+        System.out.println(Integer.parseInt(configurazioneGioco.getNumeroCasellePremio()));
         sistema.setNumberCaselleSpeciali(
                 Util.CaselleSpeciali.PREMIO,
                 Integer.parseInt(configurazioneGioco.getNumeroCasellePremio())
         );
+        System.out.println(Integer.parseInt(configurazioneGioco.getNumeroCasellePescaCarta()));
         sistema.setNumberCaselleSpeciali(
                 Util.CaselleSpeciali.PESCA,
                 Integer.parseInt(configurazioneGioco.getNumeroCasellePescaCarta())
         );
+        sistema.beginSettingCaselleSpeciali();
+        sistema.setDadi();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Info.fxml"));
         Parent root = loader.load();
         InfoController infoController = loader.getController();
         infoController.init(this.sistema,this.stage);
         Util.changeScene("Informazioni",root,stage,null,null,scene);
+    }
+
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
+    public void indietro(ActionEvent e) throws IOException {
+        Util.indietro("Home","/view/Home.fxml",this);
     }
 }

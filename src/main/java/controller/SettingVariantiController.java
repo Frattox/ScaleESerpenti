@@ -17,7 +17,7 @@ import util.Util;
 
 import java.io.IOException;
 
-public class SettingVariantiController {
+public class SettingVariantiController  implements Controller{
     private Sistema sistema;
     @FXML
     private Parent root;
@@ -32,7 +32,8 @@ public class SettingVariantiController {
     @FXML
     private Label deviDisattivareDiSingoloFinale, deviDisattivareDiDoppioSei, deviAttivare;
 
-    public void setting(Sistema sistema, Stage stage){
+    @Override
+    public void init(Sistema sistema, Stage stage){
         this.sistema=sistema;
         this.stage = stage;
         setVbox(vboxVarianti);
@@ -68,7 +69,7 @@ public class SettingVariantiController {
         root = loader.load();
 
         SettingNumeroCaselleSpecialiController settingNumeroCaselleSpecialiController = loader.getController();
-        settingNumeroCaselleSpecialiController.setting(sistema,stage);
+        settingNumeroCaselleSpecialiController.init(sistema,stage);
         settingNumeroCaselleSpecialiController.init();
         Util.changeScene("Numero di Caselle Speciali",root,stage,500.0,750.0,scene);
     }
@@ -88,5 +89,24 @@ public class SettingVariantiController {
             ret = false;
         }else deviAttivare.setVisible(false);
         return ret;
+    }
+
+    public void indietro(ActionEvent e) throws IOException {
+        Util.indietro("Setting","/view/Setting.fxml",this);
+    }
+
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
     }
 }

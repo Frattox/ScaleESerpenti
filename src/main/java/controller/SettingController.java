@@ -19,7 +19,7 @@ import util.Util;
 import java.io.IOException;
 import java.util.function.UnaryOperator;
 
-public class SettingController {
+public class SettingController  implements Controller{
     @FXML
     private Sistema sistema;
     @FXML
@@ -37,7 +37,8 @@ public class SettingController {
     @FXML
     private VBox vboxAvvisi;
 
-    public void setting(Stage stage){
+    @Override
+    public void init(Sistema sistema,Stage stage){
 
         this.stage = stage;
         Util.initGrid(gridSetting);
@@ -108,10 +109,29 @@ public class SettingController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SettingVarianti.fxml"));
         root = loader.load();
         SettingVariantiController controllerVarianti = loader.getController();
-        controllerVarianti.setting(sistema,stage);
+        controllerVarianti.init(sistema,stage);
 
         Util.changeScene("Seleziona Varianti",root,stage,null,null,scene);
     }
 
+    public void indietro(ActionEvent e) throws IOException {
+        Util.indietro("Home","/view/Home.fxml",this);
+    }
+
     private boolean isEmpty(TextField t){return t.getText().trim().isEmpty();}
+
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
 }

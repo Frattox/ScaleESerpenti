@@ -29,5 +29,6 @@
             <Button fx:id="invia" mnemonicParsing="false" onAction="#inviaNumeroCaselleSpeciali" text="Invia" />
          </children>
       </HBox>
+      <Button fx:id="indietro" mnemonicParsing="false" onAction="#indietro" text="Indietro" />
    </children>
 </AnchorPane>

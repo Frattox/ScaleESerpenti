@@ -11,6 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingController">
    <children>
+      <Button fx:id="indietro" mnemonicParsing="false" onAction="#indietro" text="Indietro" />
       <Button layoutX="466.0" layoutY="358.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#inviaSettingIniziale" prefHeight="26.0" prefWidth="46.0" text="Invia" AnchorPane.bottomAnchor="15.600000000000023" AnchorPane.leftAnchor="466.0" />
       <GridPane fx:id="gridSetting" layoutX="42.0" layoutY="41.0" prefHeight="318.0" prefWidth="200.0" AnchorPane.bottomAnchor="41.39999999999998" AnchorPane.leftAnchor="42.0" AnchorPane.topAnchor="41.0">
         <columnConstraints>

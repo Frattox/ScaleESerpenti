@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -8,7 +9,7 @@ import javafx.stage.Stage;
 import model.Sistema;
 import util.Util;
 
-public class VittoriaController{
+public class VittoriaController  implements Controller{
 
 
     @FXML
@@ -18,7 +19,7 @@ public class VittoriaController{
     @FXML
     private Text vittoria, haVinto;
 
-    public void init(Sistema sistema){
+    public void init(Sistema sistema, Stage stage){
         this.sistema=sistema;
     }
 
@@ -34,4 +35,18 @@ public class VittoriaController{
 
     }
 
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return null;
+    }
+
+    @Override
+    public Scene getScene() {
+        return null;
+    }
 }

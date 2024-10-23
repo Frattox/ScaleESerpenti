@@ -20,7 +20,7 @@ import util.Util;
 import java.io.IOException;
 import java.util.HashMap;
 
-public class InfoController{
+public class InfoController implements Controller{
 
     private Sistema sistema;
     private Parent root;
@@ -31,6 +31,7 @@ public class InfoController{
     @FXML
     private Line scala,serpente;
 
+    @Override
     public void init(Sistema sistema,Stage stage){
         this.stage=stage;
         this.sistema=sistema;
@@ -63,12 +64,26 @@ public class InfoController{
         Util.initGrid(gridPane);
     }
 
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
+    }
+
     public void inizia(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Game.fxml"));
         root = loader.load();
         GameController gameController = loader.getController();
         gameController.init(sistema,stage);
-        gameController.initGame();
 
         Util.changeScene("Scale e Serpenti",root,stage,null,null,scene);
     }

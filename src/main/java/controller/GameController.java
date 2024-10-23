@@ -32,8 +32,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
-public class GameController {
-
+public class GameController implements Controller{
     private Timeline timeline;
     private HashMap<Tipo,Color> coloriCaselle;
     private StackPane[] giocatori;
@@ -55,17 +54,37 @@ public class GameController {
     private TextField textFieldTurno, textFieldLancioDadi, textFieldCasellaCorrente,textFieldPremio, textFieldSosta,textFieldCartaPescata;
     @FXML
     private ScrollPane scrollPane;
+    private double duration;
 
 //--------------------------------------------SETTING--------------------------------------------
 
 
+    @Override
     public void init(Sistema sistema, Stage stage){
         this.sistema=sistema;
         this.stage=stage;
+        initGame();
+    }
+
+    @Override
+    public Sistema getSistema() {
+        return sistema;
+    }
+
+    @Override
+    public Stage getStage() {
+        return stage;
+    }
+
+    @Override
+    public Scene getScene() {
+        return scene;
     }
 
     public void initGame() {
         operazione=-1;
+        duration = 0.5;
+
         giocatori = new StackPane[sistema.getNPedine()];
 
         scrollPane.setFitToWidth(true);
@@ -107,7 +126,7 @@ public class GameController {
             addPedina(i, 0, 0); // Posiziona tutte le pedine sulla casella di partenza (0,0)
         }
 
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0.2), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(duration), event -> {
             try {
                 avanti();
             } catch (IOException e) {
@@ -170,7 +189,8 @@ public class GameController {
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 Tipo tipo = t.getCasella(i,j).getTipo();
-                addLabel(label,tipo,i,j);
+                addLabel(label,tipo,i,j,c);
+                addNumber(i,j);
                 if(i==0 && j==0)
                     labelPrimo = label;
                 if(i==r-1 && j==c-1)
@@ -178,19 +198,28 @@ public class GameController {
             }
         }
         tabellone.getChildren().remove(labelPrimo);
-        addLabel(labelPrimo,Tipo.INIZIO,0,0);
+        addLabel(labelPrimo,Tipo.INIZIO,0,0, c);
         tabellone.getChildren().remove(labelUltimo);
-        addLabel(labelUltimo,Tipo.FINE,r-1,c-1);
+        addLabel(labelUltimo,Tipo.FINE,r-1,c-1, c);
     }
 
-    private void addLabel(Label label, Tipo tipo, int i, int j){
+    private void addLabel(Label label, Tipo tipo, int i, int j, int c){
         label = new Label();
-        label.setStyle("-fx-background-color:" + Util.toHexString(coloriCaselle.get(tipo)) + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
+        int numeroCasella = (j + 1) + (i * c); // Calcola il numero della casella
+        label.setText(String.valueOf(numeroCasella)); // Imposta il numero della casella come testo
+
+        label.setStyle("-fx-background-color:" + Util.toHexString(coloriCaselle.get(tipo))
+                + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;"
+                + "-fx-font-weight: bold;");
         label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Dimensione massima per adattarsi
         label.setAlignment(Pos.CENTER);
         GridPane.setRowIndex(label, i);
         GridPane.setColumnIndex(label, j);
         tabellone.add(label,jPos(j),iPos(i));
+    }
+
+    private void addNumber(int i, int j){
+
     }
 
     private void disegnaScaleESerpenti() {
@@ -262,7 +291,7 @@ public class GameController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Vittoria.fxml"));
         root = loader.load();
         VittoriaController vittoriaController = loader.getController();
-        vittoriaController.init(sistema);
+        vittoriaController.init(sistema,stage);
         vittoriaController.initVittoria();
         Util.changeScene("Vittoria",root,stage,400.0,600.0,scene);
     }

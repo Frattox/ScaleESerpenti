@@ -31,5 +31,6 @@
             <Label fx:id="deviAttivare" text="Devi attivare Caselle Pesca Carta" visible="false" />
          </children>
       </VBox>
+      <Button fx:id="indietro" mnemonicParsing="false" onAction="#indietro" text="Indietro" />
    </children>
 </AnchorPane>
