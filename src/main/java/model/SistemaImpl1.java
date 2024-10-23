@@ -241,6 +241,7 @@ public class SistemaImpl1 implements Sistema{
     public String getVincitore(){return (Integer.toString(turno+1));}
     public ConfigurazioneGioco getConfigurazioneGioco(){
         return new ConfigurazioneGioco(
+                0,
                 this.tabellone.getR(),
                 this.tabellone.getC(),
                 this.pedine.length,

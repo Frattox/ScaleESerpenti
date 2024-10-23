@@ -5,11 +5,12 @@ import javafx.beans.property.StringProperty;
 
 public class ConfigurazioneGioco {
 
-    public ConfigurazioneGioco(int numeroRighe, int numeroColonne, int numeroGiocatori, int numeroScale,
+    public ConfigurazioneGioco(int id, int numeroRighe, int numeroColonne, int numeroGiocatori, int numeroScale,
                                int numeroSerpenti, boolean varianteDadoSingolo, boolean varianteDadoSingoloFinale,
                                boolean varianteDoppioSei, boolean varianteCaselleSosta, boolean varianteCasellePremio,
                                boolean variantePescaCarta, boolean varianteUlterioriCarte, int numeroCaselleSosta,
                                int numeroCasellePremio, int numeroCasellePescaCarta) {
+        setId(String.valueOf(id));
         setNumeroRighe(String.valueOf(numeroRighe));
         setNumeroColonne(String.valueOf(numeroColonne));
         setNumeroGiocatori(String.valueOf(numeroGiocatori));
@@ -27,6 +28,13 @@ public class ConfigurazioneGioco {
         setNumeroCasellePescaCarta(String.valueOf(numeroCasellePescaCarta));
     }
 
+    private StringProperty id;
+    public void setId(String value) { idProperty().set(value); }
+    public String getId() { return idProperty().get(); }
+    public StringProperty idProperty() {
+        if (id == null) id = new SimpleStringProperty(this, "id");
+        return id;
+    }
 
     private StringProperty numeroRighe;
     public void setNumeroRighe(String value) { numeroRigheProperty().set(value); }

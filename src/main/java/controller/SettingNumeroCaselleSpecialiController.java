@@ -110,7 +110,6 @@ public class SettingNumeroCaselleSpecialiController {
         root = loader.load();
         InfoController infoController = loader.getController();
         infoController.init(this.sistema,this.stage);
-
         Util.changeScene("Informazioni",root,stage,null,null,scene);
     }
 

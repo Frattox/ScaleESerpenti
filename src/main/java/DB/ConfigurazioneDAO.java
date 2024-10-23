@@ -68,6 +68,7 @@ public class ConfigurazioneDAO{
 
             if (rs.next()) {
                 config = new ConfigurazioneGioco(
+                        rs.getInt("id"),
                         rs.getInt("numeroRighe"),
                         rs.getInt("numeroColonne"),
                         rs.getInt("numeroGiocatori"),
@@ -137,6 +138,7 @@ public class ConfigurazioneDAO{
 
             while (rs.next()) {
                 ConfigurazioneGioco config = new ConfigurazioneGioco(
+                        rs.getInt("id"),
                         rs.getInt("numeroRighe"),
                         rs.getInt("numeroColonne"),
                         rs.getInt("numeroGiocatori"),
@@ -160,7 +162,6 @@ public class ConfigurazioneDAO{
             System.out.println("Errore nel recupero delle configurazioni.");
             e.printStackTrace();
         }
-
         return configurazioni;
     }
 }

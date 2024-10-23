@@ -14,8 +14,8 @@
             <TableView fx:id="tableView" prefHeight="457.0" prefWidth="722.0" />
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="20.0">
                <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Elimina" />
-                  <Button mnemonicParsing="false" text="Carica" />
+                  <Button fx:id="elimina" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#elimina" text="Elimina" />
+                  <Button fx:id="carica" mnemonicParsing="false" onAction="#carica" text="Carica" />
                </children>
                <padding>
                   <Insets right="20.0" />
