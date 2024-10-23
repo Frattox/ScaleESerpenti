@@ -19,11 +19,13 @@ public class HomeController {
     private Stage stage;
     private ConfigurazioneDAO configurazioneDAO;
 
+    public void setStage(Stage stage){this.stage=stage;}
+
     public void nuovaPartita(ActionEvent e) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Setting.fxml"));
         Parent root = loader.load();
         SettingController controllerSetting = loader.getController();
-        controllerSetting.setting();
+        controllerSetting.setting(stage);
         Util.changeScene("Setting",root,stage,null,null,scene);
     }
 

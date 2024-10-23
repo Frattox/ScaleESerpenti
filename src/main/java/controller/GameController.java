@@ -59,7 +59,10 @@ public class GameController {
 //--------------------------------------------SETTING--------------------------------------------
 
 
-    public void setSistema(Sistema sistema){this.sistema=sistema;}
+    public void init(Sistema sistema, Stage stage){
+        this.sistema=sistema;
+        this.stage=stage;
+    }
 
     public void initGame() {
         operazione=-1;
@@ -259,7 +262,7 @@ public class GameController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Vittoria.fxml"));
         root = loader.load();
         VittoriaController vittoriaController = loader.getController();
-        vittoriaController.setSistema(sistema);
+        vittoriaController.init(sistema);
         vittoriaController.initVittoria();
         Util.changeScene("Vittoria",root,stage,400.0,600.0,scene);
     }

@@ -37,8 +37,9 @@ public class SettingController {
     @FXML
     private VBox vboxAvvisi;
 
-    public void setting(){
+    public void setting(Stage stage){
 
+        this.stage = stage;
         Util.initGrid(gridSetting);
         for (Node child : gridSetting.getChildren()) {
             TextField t;
@@ -107,7 +108,7 @@ public class SettingController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/SettingVarianti.fxml"));
         root = loader.load();
         SettingVariantiController controllerVarianti = loader.getController();
-        controllerVarianti.setSistema(sistema);
+        controllerVarianti.setting(sistema,stage);
 
         Util.changeScene("Seleziona Varianti",root,stage,null,null,scene);
     }

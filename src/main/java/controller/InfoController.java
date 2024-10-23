@@ -31,7 +31,8 @@ public class InfoController{
     @FXML
     private Line scala,serpente;
 
-    public void init(Sistema sistema){
+    public void init(Sistema sistema,Stage stage){
+        this.stage=stage;
         this.sistema=sistema;
         int i=0;
         gridPane.getChildren().clear();
@@ -66,7 +67,7 @@ public class InfoController{
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Game.fxml"));
         root = loader.load();
         GameController gameController = loader.getController();
-        gameController.setSistema(sistema);
+        gameController.init(sistema,stage);
         gameController.initGame();
 
         Util.changeScene("Scale e Serpenti",root,stage,null,null,scene);

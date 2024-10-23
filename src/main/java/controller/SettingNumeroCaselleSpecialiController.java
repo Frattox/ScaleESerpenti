@@ -43,7 +43,10 @@ public class SettingNumeroCaselleSpecialiController {
     private ConfigurazioneDAO config;
     private List<Label> avvisiEVuota;
 
-    public void setSistema(Sistema sistema){this.sistema=sistema;}
+    public void setting(Sistema sistema,Stage stage){
+        this.sistema=sistema;
+        this.stage = stage;
+    }
 
     public void init() throws IOException{
         gridVarianti.getColumnConstraints().clear();
@@ -106,7 +109,7 @@ public class SettingNumeroCaselleSpecialiController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Info.fxml"));
         root = loader.load();
         InfoController infoController = loader.getController();
-        infoController.init(this.sistema);
+        infoController.init(this.sistema,this.stage);
 
         Util.changeScene("Informazioni",root,stage,null,null,scene);
     }

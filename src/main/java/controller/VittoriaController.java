@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import model.Sistema;
 import util.Util;
 
@@ -17,7 +18,9 @@ public class VittoriaController{
     @FXML
     private Text vittoria, haVinto;
 
-    public void setSistema(Sistema sistema){this.sistema=sistema;}
+    public void init(Sistema sistema){
+        this.sistema=sistema;
+    }
 
     public void initVittoria(){
         vbox.setStyle("-fx-background-color: "+ Util.toHexString(Color.BLUEVIOLET));

@@ -32,8 +32,9 @@ public class SettingVariantiController {
     @FXML
     private Label deviDisattivareDiSingoloFinale, deviDisattivareDiDoppioSei, deviAttivare;
 
-    public void setSistema(Sistema sistema){
+    public void setting(Sistema sistema, Stage stage){
         this.sistema=sistema;
+        this.stage = stage;
         setVbox(vboxVarianti);
         setVbox(vboxAvvisi);
     }
@@ -67,7 +68,7 @@ public class SettingVariantiController {
         root = loader.load();
 
         SettingNumeroCaselleSpecialiController settingNumeroCaselleSpecialiController = loader.getController();
-        settingNumeroCaselleSpecialiController.setSistema(sistema);
+        settingNumeroCaselleSpecialiController.setting(sistema,stage);
         settingNumeroCaselleSpecialiController.init();
         Util.changeScene("Numero di Caselle Speciali",root,stage,500.0,750.0,scene);
     }

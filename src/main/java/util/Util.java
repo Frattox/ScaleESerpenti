@@ -73,7 +73,6 @@ public class Util {
     }
 
     public static void changeScene(String title, Parent root, Stage stage, Double h, Double w, Scene scene){
-        stage = new Stage();
         if(h!=null && w!=null){
             stage.setMinWidth(w);
             stage.setMinHeight(h);
