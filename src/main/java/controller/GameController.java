@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -54,8 +55,6 @@ public class GameController {
     private TextField textFieldTurno, textFieldLancioDadi, textFieldCasellaCorrente,textFieldPremio, textFieldSosta,textFieldCartaPescata;
     @FXML
     private ScrollPane scrollPane;
-    @FXML
-    private ColumnConstraints column;
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -248,7 +247,7 @@ public class GameController {
                 break;
             case 3:
                 if(sistema.azionaCasella()){
-                    vittoria(new ActionEvent());
+                    vittoria();
                     stop(new ActionEvent());
                 }
                 break;
@@ -256,14 +255,13 @@ public class GameController {
         }
     }
 
-    private void vittoria(ActionEvent e) throws IOException {
+    private void vittoria() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Vittoria.fxml"));
         root = loader.load();
         VittoriaController vittoriaController = loader.getController();
         vittoriaController.setSistema(sistema);
         vittoriaController.initVittoria();
-
-        Util.changeScene(e,"Vittoria",root,stage,scene);
+        Util.changeScene("Vittoria",root,stage,400.0,600.0,scene);
     }
 
     private void repaint(){

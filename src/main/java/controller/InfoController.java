@@ -69,6 +69,6 @@ public class InfoController{
         gameController.setSistema(sistema);
         gameController.initGame();
 
-        Util.changeScene(e,"Scale e Serpenti",root,stage,scene);
+        Util.changeScene("Scale e Serpenti",root,stage,null,null,scene);
     }
 }

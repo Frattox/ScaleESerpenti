@@ -1,5 +1,4 @@
 package DB;
-
 public class ConfigurazioneGioco{
 
     private int numeroRighe;

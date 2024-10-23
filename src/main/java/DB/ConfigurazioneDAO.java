@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConfigurazioneDAO{
 
@@ -123,5 +125,41 @@ public class ConfigurazioneDAO{
             System.out.println("Errore nell'eliminazione della configurazione.");
             e.printStackTrace();
         }
+    }
+
+    public List<ConfigurazioneGioco> getAll() {
+        List<ConfigurazioneGioco> configurazioni = new ArrayList<>();
+        String sql = "SELECT * FROM ConfigurazioneGioco";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            while (rs.next()) {
+                ConfigurazioneGioco config = new ConfigurazioneGioco(
+                        rs.getInt("numeroRighe"),
+                        rs.getInt("numeroColonne"),
+                        rs.getInt("numeroGiocatori"),
+                        rs.getInt("numeroScale"),
+                        rs.getInt("numeroSerpenti"),
+                        rs.getBoolean("varianteDadoSingolo"),
+                        rs.getBoolean("varianteDadoSingoloFinale"),
+                        rs.getBoolean("varianteDoppioSei"),
+                        rs.getBoolean("varianteCaselleSosta"),
+                        rs.getBoolean("varianteCasellePremio"),
+                        rs.getBoolean("variantePescaCarta"),
+                        rs.getBoolean("varianteUlterioriCarte"),
+                        rs.getInt("numeroCaselleSosta"),
+                        rs.getInt("numeroCasellePremio"),
+                        rs.getInt("numeroCasellePescaCarta")
+                );
+                configurazioni.add(config);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Errore nel recupero delle configurazioni.");
+            e.printStackTrace();
+        }
+
+        return configurazioni;
     }
 }

@@ -69,8 +69,7 @@ public class SettingVariantiController {
         SettingNumeroCaselleSpecialiController settingNumeroCaselleSpecialiController = loader.getController();
         settingNumeroCaselleSpecialiController.setSistema(sistema);
         settingNumeroCaselleSpecialiController.init();
-
-        Util.changeScene(e,"Numero di Caselle Speciali",root,stage,scene);
+        Util.changeScene("Numero di Caselle Speciali",root,stage,500.0,750.0,scene);
     }
 
     private boolean controlloVariantiOk() {

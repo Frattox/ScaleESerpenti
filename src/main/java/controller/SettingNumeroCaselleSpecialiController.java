@@ -108,7 +108,7 @@ public class SettingNumeroCaselleSpecialiController {
         InfoController infoController = loader.getController();
         infoController.init(this.sistema);
 
-        Util.changeScene(e,"Informazioni",root,stage,scene);
+        Util.changeScene("Informazioni",root,stage,null,null,scene);
     }
 
     private boolean setCaselle() {
@@ -151,10 +151,8 @@ public class SettingNumeroCaselleSpecialiController {
             sistema.controlNumberCaselleSpeciali();
             avvisoNumeroNonIdoneo.setVisible(false);
         }catch(IllegalArgumentException e){
-            avvisoNumeroNonIdoneo.setText(e.getMessage());
             avvisoNumeroNonIdoneo.setVisible(true);
             ret=false;
-            System.out.println("Ciao2");
         }
         return ret;
     }

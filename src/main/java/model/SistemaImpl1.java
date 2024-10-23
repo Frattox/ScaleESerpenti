@@ -170,7 +170,7 @@ public class SistemaImpl1 implements Sistema{
     public void controlNumberCaselleSpeciali() throws IllegalArgumentException{
         if(!isNumberCaselleSpecialiOk(nCaselleSpeciali)){
             initCaselleSpeciali();
-            throw new IllegalArgumentException("Numero totale di caselle non idoneo.");
+            throw new IllegalArgumentException(">");
         }
     }
 
@@ -357,13 +357,11 @@ public class SistemaImpl1 implements Sistema{
         Command avanzamento = new AvanzamentoCommand(casellaCorrente,casellaSuccessiva,giocatore);
         commandHandler.handle(avanzamento);
         lancioEffettuato = false;
-
     }
     @Override
     public boolean azionaCasella() throws IllegalArgumentException{
         if(lancioEffettuato)
             throw new IllegalArgumentException("Sistema: bisogna far avanzare la pedina prima");
-        Pedina giocatore = pedine[turno];
         return gestoreEffetti.azionaCasella();
     }
 

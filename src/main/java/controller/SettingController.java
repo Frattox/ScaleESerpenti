@@ -38,10 +38,6 @@ public class SettingController {
     private VBox vboxAvvisi;
 
     public void setting(){
-        double x = gridSetting.getPrefHeight()/gridSetting.getChildren().size();
-
-        double rowHeight = gridSetting.getPrefHeight() / gridSetting.getRowCount();
-        double colWidth = gridSetting.getPrefWidth() / gridSetting.getColumnCount();
 
         Util.initGrid(gridSetting);
         for (Node child : gridSetting.getChildren()) {
@@ -113,7 +109,7 @@ public class SettingController {
         SettingVariantiController controllerVarianti = loader.getController();
         controllerVarianti.setSistema(sistema);
 
-        Util.changeScene(e,"Seleziona Varianti",root,stage,scene);
+        Util.changeScene("Seleziona Varianti",root,stage,null,null,scene);
     }
 
     private boolean isEmpty(TextField t){return t.getText().trim().isEmpty();}

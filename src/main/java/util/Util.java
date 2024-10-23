@@ -72,8 +72,12 @@ public class Util {
         }
     }
 
-    public static void changeScene(ActionEvent e, String title, Parent root, Stage stage, Scene scene){
-        stage = (Stage) ((Node)e.getSource()).getScene().getWindow();
+    public static void changeScene(String title, Parent root, Stage stage, Double h, Double w, Scene scene){
+        stage = new Stage();
+        if(h!=null && w!=null){
+            stage.setMinWidth(w);
+            stage.setMinHeight(h);
+        }
         scene = new Scene(root);
         stage.setScene(scene);
         stage.setTitle(title);
