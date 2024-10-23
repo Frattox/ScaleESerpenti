@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Sistema;
+import model.SistemaImpl1;
 import util.Util;
 
 import java.io.IOException;
@@ -33,9 +35,8 @@ public class HomeController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CaricaPartita.fxml"));
         Parent root = loader.load();
         CaricaPartitaController controllerCarica = loader.getController();
-        controllerCarica.init();
+        controllerCarica.init(stage);
         Util.changeScene("Carica Partita",root,stage,400.0,600.0,scene);
-
     }
 
 }

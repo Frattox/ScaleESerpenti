@@ -12,6 +12,7 @@ module scaleeserpenti {
     requires com.almasb.fxgl.all;
     requires java.sql;
     opens controller to javafx.fxml;
+    opens DB to javafx.base;
     opens view to javafx.fxml;
     opens model to javafx.fxml;
     exports controller;

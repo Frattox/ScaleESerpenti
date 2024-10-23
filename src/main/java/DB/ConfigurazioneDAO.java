@@ -1,6 +1,7 @@
 package DB;
 
 import model.Sistema;
+import model.SistemaImpl1;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -39,21 +40,21 @@ public class ConfigurazioneDAO{
     }
 
     private void setParameters(ConfigurazioneGioco config, PreparedStatement pstmt) throws SQLException {
-        pstmt.setInt(1, config.getNumeroRighe());
-        pstmt.setInt(2, config.getNumeroColonne());
-        pstmt.setInt(3, config.getNumeroGiocatori());
-        pstmt.setInt(4, config.getNumeroScale());
-        pstmt.setInt(5, config.getNumeroSerpenti());
-        pstmt.setBoolean(6, config.isVarianteDadoSingolo());
-        pstmt.setBoolean(7, config.isVarianteDadoSingoloFinale());
-        pstmt.setBoolean(8, config.isVarianteDoppioSei());
-        pstmt.setBoolean(9, config.isVarianteCaselleSosta());
-        pstmt.setBoolean(10, config.isVarianteCasellePremio());
-        pstmt.setBoolean(11, config.isVariantePescaCarta());
-        pstmt.setBoolean(12, config.isVarianteUlterioriCarte());
-        pstmt.setInt(13, config.getNumeroCaselleSosta());
-        pstmt.setInt(14, config.getNumeroCasellePremio());
-        pstmt.setInt(15, config.getNumeroCasellePescaCarta());
+        pstmt.setInt(1, Integer.parseInt(config.getNumeroRighe()));
+        pstmt.setInt(2, Integer.parseInt(config.getNumeroColonne()));
+        pstmt.setInt(3, Integer.parseInt(config.getNumeroGiocatori()));
+        pstmt.setInt(4, Integer.parseInt(config.getNumeroScale()));
+        pstmt.setInt(5, Integer.parseInt(config.getNumeroSerpenti()));
+        pstmt.setBoolean(6, Boolean.parseBoolean(config.getVarianteDadoSingolo()));
+        pstmt.setBoolean(7, Boolean.parseBoolean(config.getVarianteDadoSingoloFinale()));
+        pstmt.setBoolean(8, Boolean.parseBoolean(config.getVarianteDoppioSei()));
+        pstmt.setBoolean(9, Boolean.parseBoolean(config.getVarianteCaselleSosta()));
+        pstmt.setBoolean(10, Boolean.parseBoolean(config.getVarianteCasellePremio()));
+        pstmt.setBoolean(11, Boolean.parseBoolean(config.getVariantePescaCarta()));
+        pstmt.setBoolean(12, Boolean.parseBoolean(config.getVarianteUlterioriCarte()));
+        pstmt.setInt(13, Integer.parseInt(config.getNumeroCaselleSosta()));
+        pstmt.setInt(14, Integer.parseInt(config.getNumeroCasellePremio()));
+        pstmt.setInt(15, Integer.parseInt(config.getNumeroCasellePescaCarta()));
     }
 
     // Metodo per recuperare una configurazione per ID
