@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-import model.Sistema;
+import model.sistema.Sistema;
 import model.elementi.Casella;
 import model.elementi.Mezzi.TipoMezzo;
 import util.Util;

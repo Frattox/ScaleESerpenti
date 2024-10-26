@@ -1,4 +1,4 @@
-package model;
+package model.sistema;
 
 import DB.ConfigurazioneGioco;
 import model.Mattaro.Carta;

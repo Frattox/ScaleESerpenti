@@ -1,6 +1,6 @@
 package model.varianti;
 
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 //SINGLETON
 public class VarianteUlterioriCarte extends AbstractVariante{

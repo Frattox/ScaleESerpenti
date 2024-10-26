@@ -2,7 +2,7 @@ package model.varianti;
 
 import model.elementi.Dado;
 import model.elementi.Pedina;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 import java.util.List;
 

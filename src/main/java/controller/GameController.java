@@ -8,11 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
@@ -20,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Sistema;
+import model.sistema.Sistema;
 import model.elementi.Casella.Tipo;
 import model.elementi.Casella;
 import model.elementi.Mezzi.Mezzo;
@@ -83,7 +80,7 @@ public class GameController implements Controller{
 
     public void initGame() {
         operazione=-1;
-        duration = 0.5;
+        duration = 0.3;
 
         giocatori = new StackPane[sistema.getNPedine()];
 
@@ -125,7 +122,6 @@ public class GameController implements Controller{
         for (int i = 0; i < sistema.getNPedine(); i++) {
             addPedina(i, 0, 0); // Posiziona tutte le pedine sulla casella di partenza (0,0)
         }
-
         timeline = new Timeline(new KeyFrame(Duration.seconds(duration), event -> {
             try {
                 avanti();
@@ -205,13 +201,13 @@ public class GameController implements Controller{
 
     private void addLabel(Label label, Tipo tipo, int i, int j, int c){
         label = new Label();
-        int numeroCasella = (j + 1) + (i * c); // Calcola il numero della casella
-        label.setText(String.valueOf(numeroCasella)); // Imposta il numero della casella come testo
+        int numeroCasella = (j + 1) + (i * c);
+        label.setText(String.valueOf(numeroCasella));
 
         label.setStyle("-fx-background-color:" + Util.toHexString(coloriCaselle.get(tipo))
                 + ";-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;"
                 + "-fx-font-weight: bold;");
-        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE); // Dimensione massima per adattarsi
+        label.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         label.setAlignment(Pos.CENTER);
         GridPane.setRowIndex(label, i);
         GridPane.setColumnIndex(label, j);
@@ -232,10 +228,10 @@ public class GameController implements Controller{
         overlayPane.getChildren().clear();
 
         for (Mezzo mezzo : mezzi) {
-            int xFrom = t.getPosCasella(mezzo.getFrom()).getX();
-            int yFrom = t.getPosCasella(mezzo.getFrom()).getY();
-            int xTo = t.getPosCasella(mezzo.getTo()).getX();
-            int yTo = t.getPosCasella(mezzo.getTo()).getY();
+            int xFrom = t.getPosCasella(mezzo.getFrom()).x();
+            int yFrom = t.getPosCasella(mezzo.getFrom()).y();
+            int xTo = t.getPosCasella(mezzo.getTo()).x();
+            int yTo = t.getPosCasella(mezzo.getTo()).y();
 
             Line line = creaLinea(
                     jPos(yFrom) * cellWidth + cellWidth / 2,
@@ -244,7 +240,7 @@ public class GameController implements Controller{
                     iPos(xTo) * cellHeight + cellHeight / 2,
                     mezzo.getTipo()
             );
-            overlayPane.getChildren().add(line); // Usa overlayPane per aggiungere le linee
+            overlayPane.getChildren().add(line);
         }
     }
 
@@ -310,8 +306,8 @@ public class GameController implements Controller{
 
         Casella casellaTo = sistema.getCasellaCorrente();
         tabellone.getChildren().remove(giocatori[turno]);
-        int i = sistema.getTabellone().getPosCasella(casellaTo).getX();
-        int j = sistema.getTabellone().getPosCasella(casellaTo).getY();
+        int i = sistema.getTabellone().getPosCasella(casellaTo).x();
+        int j = sistema.getTabellone().getPosCasella(casellaTo).y();
         tabellone.add(giocatori[turno],jPos(j),iPos(i));
     }
 

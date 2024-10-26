@@ -6,10 +6,6 @@ public class Scala extends Mezzo{
 
     public Scala(){super();}
 
-    public Scala(Casella from, Casella to) {
-        super(from, to);
-    }
-
     protected int casellaFrom(int nCaselleLibere) {
         // Genera una posizione casuale per iFrom nell'intervallo [0, nCaselleLibere - 2]
         return (int) (Math.random() * (nCaselleLibere - 1));

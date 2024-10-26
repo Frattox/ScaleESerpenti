@@ -1,7 +1,7 @@
 package model.varianti;
 
 import model.elementi.Casella;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 public class VarianteCaselleSosta extends AbstractVariante{
 

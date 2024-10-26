@@ -6,10 +6,6 @@ public class Serpente extends Mezzo{
 
     public Serpente(){super();}
 
-    public Serpente(Casella from, Casella to){
-        super(from, to);
-    }
-
     @Override
     public void caselleCorrette(Casella from, Casella to) {
         if(from.compareTo(to)<=0)

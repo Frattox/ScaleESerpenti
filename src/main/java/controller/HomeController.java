@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Sistema;
+import model.sistema.Sistema;
 import util.Util;
 
 import java.io.IOException;

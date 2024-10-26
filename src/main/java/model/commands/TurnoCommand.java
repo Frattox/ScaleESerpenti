@@ -1,11 +1,11 @@
 package model.commands;
 
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 public class TurnoCommand implements Command{
 
-    private int turnoPrima, turnoDopo;
-    private SistemaImpl1 s;
+    private final int turnoPrima,turnoDopo;
+    private final SistemaImpl1 s;
 
     public TurnoCommand(SistemaImpl1 s, int turnoPrima, int turnoDopo) {
         this.turnoPrima = turnoPrima;

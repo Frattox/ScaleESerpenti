@@ -1,24 +1,16 @@
 package util;
 
 import controller.Controller;
-import controller.GameController;
-import controller.InfoController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Control;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import model.Sistema;
 import model.elementi.Casella;
 
 import java.io.IOException;
@@ -92,11 +84,10 @@ public class Util {
         FXMLLoader loader = new FXMLLoader(controller.getClass().getResource(path));
         Parent root = loader.load();
         Controller controllerIndietro = loader.getController();
-        Sistema sistema = controller.getSistema();
         Stage stage = controller.getStage();
         Scene scene = controller.getScene();
         controllerIndietro.init(controller.getSistema(), controller.getStage());
-        Util.changeScene("Informazioni",root,stage,null,null,scene);
+        Util.changeScene(name,root,stage,null,null,scene);
     }
 
     public enum CaselleSpeciali{

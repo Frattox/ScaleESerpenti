@@ -1,7 +1,7 @@
 package model.commands;
 
 import model.Mattaro.Carta;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 public class CartaCommand implements Command{
 

@@ -13,8 +13,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Sistema;
-import model.SistemaImpl1;
+import model.sistema.Sistema;
+import model.sistema.SistemaImpl1;
 import model.elementi.Mezzi.TipoMezzo;
 import util.Util;
 
@@ -146,17 +146,14 @@ public class CaricaPartitaController implements Controller{
         sistema.setUlterioriCarte(
                 Boolean.parseBoolean(configurazioneGioco.getVarianteUlterioriCarte())
         );
-        System.out.println(Integer.parseInt(configurazioneGioco.getNumeroCaselleSosta()));
         sistema.setNumberCaselleSpeciali(
                 Util.CaselleSpeciali.SOSTA,
                 Integer.parseInt(configurazioneGioco.getNumeroCaselleSosta())
         );
-        System.out.println(Integer.parseInt(configurazioneGioco.getNumeroCasellePremio()));
         sistema.setNumberCaselleSpeciali(
                 Util.CaselleSpeciali.PREMIO,
                 Integer.parseInt(configurazioneGioco.getNumeroCasellePremio())
         );
-        System.out.println(Integer.parseInt(configurazioneGioco.getNumeroCasellePescaCarta()));
         sistema.setNumberCaselleSpeciali(
                 Util.CaselleSpeciali.PESCA,
                 Integer.parseInt(configurazioneGioco.getNumeroCasellePescaCarta())

@@ -1,11 +1,10 @@
 package model.Mattaro;
 
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 public class MattaroImpl implements Mattaro{
 
-    private Carta[] mazzo;
-    private final int DEFAULT_MAX_MAZZO = 100;
+    private final Carta[] mazzo;
     private int cima;
 
     public MattaroImpl(SistemaImpl1 s){
@@ -14,6 +13,7 @@ public class MattaroImpl implements Mattaro{
     }
 
     private Carta[] mazzoRandom(boolean isUlterioriCarte){
+        int DEFAULT_MAX_MAZZO = 100;
         Carta[] ret = new Carta[DEFAULT_MAX_MAZZO];
         int x;
         Carta[] carte = Carta.values();

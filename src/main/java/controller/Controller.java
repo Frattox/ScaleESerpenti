@@ -2,7 +2,7 @@ package controller;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Sistema;
+import model.sistema.Sistema;
 
 public interface Controller {
     void init(Sistema sistema, Stage stage);

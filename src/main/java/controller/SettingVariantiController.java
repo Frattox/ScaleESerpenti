@@ -12,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.Sistema;
+import model.sistema.Sistema;
 import util.Util;
 
 import java.io.IOException;

@@ -2,13 +2,13 @@ package model.GestoreCaselleLibere;
 
 import model.elementi.Casella;
 import model.elementi.Tabellone;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 import java.util.ArrayList;
 
 public class GestoreCaselleLibereImpl implements GestoreCaselleLibere {
-    private SistemaImpl1 s;
-    private ArrayList<Casella> caselleLibere;
+    private final SistemaImpl1 s;
+    private final ArrayList<Casella> caselleLibere;
 
     public GestoreCaselleLibereImpl(SistemaImpl1 s)
     {

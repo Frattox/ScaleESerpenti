@@ -1,6 +1,6 @@
 package model.commands;
 
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 public class DadiCommand implements Command{
 

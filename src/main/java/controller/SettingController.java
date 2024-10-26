@@ -3,7 +3,6 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -11,13 +10,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
-import model.Sistema;
-import model.SistemaImpl1;
+import model.sistema.Sistema;
+import model.sistema.SistemaImpl1;
 import model.elementi.Mezzi.TipoMezzo;
 import util.Util;
 
 import java.io.IOException;
-import java.util.function.UnaryOperator;
 
 public class SettingController  implements Controller{
     @FXML
@@ -48,8 +46,8 @@ public class SettingController  implements Controller{
                 t = (TextField) child;
                 Util.setTextFormatter(t);
             }
-            GridPane.setHgrow(child, Priority.ALWAYS);  // Crescita orizzontale
-            GridPane.setVgrow(child, Priority.ALWAYS);  // Crescita verticale
+            GridPane.setHgrow(child, Priority.ALWAYS);
+            GridPane.setVgrow(child, Priority.ALWAYS);
         }
 
         vboxAvvisi.setAlignment(Pos.TOP_LEFT);

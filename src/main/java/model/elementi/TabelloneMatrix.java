@@ -2,7 +2,7 @@ package model.elementi;
 
 public class TabelloneMatrix extends Tabellone{
 
-    private Casella[][] tabella;
+    private final Casella[][] tabella;
 
     public TabelloneMatrix()
     {
@@ -34,6 +34,6 @@ public class TabelloneMatrix extends Tabellone{
     @Override
     public Casella getCasella(int pos) {
         Posizione p = getPosCasella(pos);
-        return tabella[p.getX()][p.getY()];
+        return tabella[p.x()][p.y()];
     }
 }

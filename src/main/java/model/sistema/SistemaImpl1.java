@@ -1,4 +1,4 @@
-package model;
+package model.sistema;
 
 import DB.ConfigurazioneGioco;
 import model.elementi.*;
@@ -21,15 +21,14 @@ public class SistemaImpl1 implements Sistema{
 
 //--------------------------------------------VARIABILI-------------------------------------------
     private Tabellone tabellone;
-    private MezzoFactory mezzoFactory;
-    private List<Mezzo> mezzi;
+    private final List<Mezzo> mezzi;
 
-    private HashMap<Casella,Mezzo> mezziMap;
+    private final HashMap<Casella,Mezzo> mezziMap;
     //Utile per le caselle speciali e mezzi
     private GestoreCaselleLibere caselleLibere;
     //per ogni tipo di mezzo, la sua quantità corrispondente
-    private HashMap<TipoMezzo,Integer> mezziQuantita;
-    private HashMap<Util.CaselleSpeciali,Integer> caselleSpecialiQuantita;
+    private final HashMap<TipoMezzo,Integer> mezziQuantita;
+    private final HashMap<Util.CaselleSpeciali,Integer> caselleSpecialiQuantita;
     private int
             nMezzi,
             nCaselleSpeciali,
@@ -49,14 +48,14 @@ public class SistemaImpl1 implements Sistema{
             VUlterioriCarte;
 
     private Pedina[] pedine;
-    private HistoryCommandHandler commandHandler;
+    private final HistoryCommandHandler commandHandler;
 
     // per questioni di evolvibilità del sistema, ho scelto di utilizzare una
     // lista di dadi nel caso si utilizzassero più di 2 dadi per delle
     // implementazioni future
-    private List<Dado> dadi;
+    private final List<Dado> dadi;
     private Carta cartaPescata;
-    private GestoreEffetti gestoreEffetti;
+    private final GestoreEffetti gestoreEffetti;
 
 //--------------------------------------------SETTING--------------------------------------------
 
@@ -106,7 +105,7 @@ public class SistemaImpl1 implements Sistema{
     }
     @Override
     public void setPescaCarta(boolean flag){
-        VCasellePescaCarta = new VarianteCasellePescaCarta(this);
+        VCasellePescaCarta = new VarianteCasellePescaCarta();
         VCasellePescaCarta.setActivated(flag,this);
     }
     @Override
@@ -176,25 +175,25 @@ public class SistemaImpl1 implements Sistema{
 
     @Override
     public void beginSettingCaselleSpeciali(){
-        setNumberCaselleSosta(caselleSpecialiQuantita.get(Util.CaselleSpeciali.SOSTA));
-        setNumberCasellePremio(caselleSpecialiQuantita.get(Util.CaselleSpeciali.PREMIO));
-        setNumberCasellePescaCarta(caselleSpecialiQuantita.get(Util.CaselleSpeciali.PESCA));
+        setNumberCaselleSosta();
+        setNumberCasellePremio();
+        setNumberCasellePescaCarta();
     }
 
-    private void setNumberCaselleSosta(int n) throws IllegalArgumentException{
+    private void setNumberCaselleSosta() throws IllegalArgumentException{
         VCaselleSosta.action(this);
     }
 
-    private void setNumberCasellePremio(int n) throws IllegalArgumentException{
+    private void setNumberCasellePremio() throws IllegalArgumentException{
         VCasellePremio.action(this);
     }
 
-    private void setNumberCasellePescaCarta(int n) throws IllegalArgumentException{
+    private void setNumberCasellePescaCarta() throws IllegalArgumentException{
         VCasellePescaCarta.action(this);
     }
 
     private void setMezziAutomatico(TipoMezzo tipo, int n){
-        mezzoFactory = createMezzoFactory(tipo);
+        MezzoFactory mezzoFactory = createMezzoFactory(tipo);
         for(int i=0; i<n; i++){
             Mezzo m = mezzoFactory.factory();
             m.autoSet(this);
@@ -285,13 +284,6 @@ public class SistemaImpl1 implements Sistema{
         return n<=getSizeCaselleLibere();
     }
 
-    private boolean isAllInSosta() {
-        for(int i=0;i<pedine.length;i++)
-            if(!pedine[i].isInSosta())
-                return false;
-        return true;
-    }
-
 //--------------------------------------------UTIL--------------------------------------------
 
     private MezzoFactory createMezzoFactory(TipoMezzo tipo){
@@ -317,7 +309,7 @@ public class SistemaImpl1 implements Sistema{
 //--------------------------------------------GAME: OPERAZIONI DI BASE--------------------------------------------
     @Override
     public void prossimoTurno(){
-        int turnoPrima = turno<0?0:turno;
+        int turnoPrima = Math.max(turno, 0);
         VDoppioSei.action(this);
         if(pedine[turno].isInSosta()){
             pedine[turno].decSosta();

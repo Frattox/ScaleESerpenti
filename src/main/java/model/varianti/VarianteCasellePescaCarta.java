@@ -1,14 +1,11 @@
 package model.varianti;
 
 import model.elementi.Casella;
-import model.Mattaro.Mattaro;
-import model.Mattaro.MattaroImpl;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 //SINGLETON
 public class VarianteCasellePescaCarta extends AbstractVariante{
-    private Mattaro mattaro;
-    public VarianteCasellePescaCarta(SistemaImpl1 s){mattaro = new MattaroImpl(s);}
+    public VarianteCasellePescaCarta(){}
 
     @Override
     public void setActivated(boolean activated, SistemaImpl1 s) {this.activated=activated;}

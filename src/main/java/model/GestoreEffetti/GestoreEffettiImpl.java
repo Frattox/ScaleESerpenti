@@ -1,18 +1,16 @@
 package model.GestoreEffetti;
 
-import model.elementi.Casella;
-import model.elementi.Mezzi.Mezzo;
-import model.elementi.Pedina;
 import model.Mattaro.Carta;
 import model.Mattaro.Mattaro;
 import model.Mattaro.MattaroImpl;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 import model.commands.CartaCommand;
 import model.commands.CommandHandler;
 import model.commands.MezzoCommand;
 import model.commands.SostaCommand;
-
-import java.util.HashMap;
+import model.elementi.Casella;
+import model.elementi.Mezzi.Mezzo;
+import model.elementi.Pedina;
 
 public class GestoreEffettiImpl implements GestoreEffetti{
 

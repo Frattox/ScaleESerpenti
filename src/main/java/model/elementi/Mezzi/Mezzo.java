@@ -1,7 +1,7 @@
 package model.elementi.Mezzi;
 
 import model.elementi.Casella;
-import model.SistemaImpl1;
+import model.sistema.SistemaImpl1;
 
 //Classe astratta che definisce elementi di "movimento" da una casella ad un'altra della tabella
 public abstract class Mezzo {
