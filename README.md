@@ -9,7 +9,7 @@ La struttura del progetto si basa sul pattern Model-View-Control (MVC), quindi s
 ## Istruzioni per l'esecuzione 
 Per effettuare una simulazione della applicazione:  
 - bisogna scaricare l'SDK di JavaFX su https://gluonhq.com/products/javafx/
-- entrare nella cartella dove è presente il file ScaleESerpenti3.jar attraverso il CMD
+- entrare nella cartella dove è presente il file ScaleESerpenti3.jar attraverso il CMD, scaricabile dalle release
 - eseguire questo comando:
 ```
 java --module-path "/path/to/javafx-sdk/lib" --add-modules javafx.controls,javafx.fxml -jar .\ScaleESerpenti3.jar
