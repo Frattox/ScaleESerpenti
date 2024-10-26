@@ -75,42 +75,42 @@ public class SistemaImpl1 implements Sistema{
         cartaPescata = null;
         gestoreEffetti = new GestoreEffettiImpl(this);
         caselleSpecialiQuantita = new HashMap<>();
+        VDadoSingolo = new VarianteDadoSingolo();
+        VDadoSingoloFinale = new VarianteDadoSingoloFinale();
+        VDoppioSei = new VarianteDoppioSei();
+        VCaselleSosta = new VarianteCaselleSosta();
+        VCasellePremio = new VarianteCasellePremio();
+        VCasellePescaCarta = new VarianteCasellePescaCarta();
+        VUlterioriCarte = new VarianteUlterioriCarte();
         initCaselleSpeciali();
     }
 
     @Override
     public void setDadoSingolo(boolean flag){
-        VDadoSingolo = new VarianteDadoSingolo();
         VDadoSingolo.setActivated(flag,this);
     }
     @Override
     public void setDadoSingoloFinale(boolean flag) throws IllegalArgumentException{
-        VDadoSingoloFinale = new VarianteDadoSingoloFinale();
         VDadoSingoloFinale.setActivated(flag,this);
     }
     @Override
     public void setDoppioSei(boolean flag) throws IllegalArgumentException{
-        VDoppioSei = new VarianteDoppioSei();
         VDoppioSei.setActivated(flag,this);
     }
     @Override
     public void setCaselleSosta(boolean flag){
-        VCaselleSosta = new VarianteCaselleSosta();
         VCaselleSosta.setActivated(flag,this);
     }
     @Override
     public void setCasellePremio(boolean flag){
-        VCasellePremio = new VarianteCasellePremio();
         VCasellePremio.setActivated(flag,this);
     }
     @Override
     public void setPescaCarta(boolean flag){
-        VCasellePescaCarta = new VarianteCasellePescaCarta();
         VCasellePescaCarta.setActivated(flag,this);
     }
     @Override
     public void setUlterioriCarte(boolean flag) throws IllegalArgumentException{
-        VUlterioriCarte = new VarianteUlterioriCarte();
         VUlterioriCarte.setActivated(flag,this);
     }
 
